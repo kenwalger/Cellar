@@ -217,6 +217,7 @@ Stage 1 of the build plan.
   thing, well judged.
 - `sanity mcp configure` was a single command, used my logged-in CLI session,
   and needed no API token to generate, store, or accidentally commit.
+- Setting up the Sanity MCP server in Claude code worked, authentication was easy and painless. Thirty seconds.
 
 #### Onboarding
 
@@ -354,9 +355,8 @@ npm notice run sanity mcp configure
 ```
 
 Note the prompt: this ran from the home directory, not the repo, so it likely
-wrote a user-scoped config rather than a project-scoped one. To verify: start
-Claude Code from the `Cellar` folder and confirm the Sanity server appears. If
-it does not, rerun from the repo root.
+wrote a user-scoped config rather than a project-scoped one. 
+
 
 **Would have helped:** one sentence in the init prompt saying that other
 editors are supported and pointing at `sanity mcp configure`. As written, the

@@ -43,3 +43,12 @@ as friction log material rather than as lost time.
   against a criterion about how deep you got into the platform.
 - The fallback must stay genuinely available. Do not let App SDK work leak
   into the resolution module in ways that make a Next.js fallback expensive.
+- The fallback is no longer free. The scaffold installed Next 16.3.5, and the
+  generated `web/AGENTS.md` warns that this version's APIs, conventions, and
+  file structure may differ from model training data, directing agents to the
+  bundled guides in `node_modules/next/dist/docs/` before writing code. When
+  this ADR was written the fallback was costed as cheap because Next is well
+  represented in training data. At 16.3.5 that assumption is weaker: falling
+  back would mean working against a version the model is likely to get wrong,
+  on a deadline. This does not change the decision, and it does raise the
+  value of the day-four gate being honest rather than hopeful.
