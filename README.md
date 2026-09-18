@@ -1,12 +1,12 @@
 # The Cellar
 
-Design workspace for a DEV Challenge entry sponsored by Sanity. Contest runs
+Design workspace for a [DEV Challenge entry sponsored by Sanity](https://dev.to/challenges/sanity-2026-09-16). Contest runs
 September 18 to October 4, 2026. Entering Path Two, "Vibe-Code Something
-Strange", per ADR 0009.
+Strange", per [ADR 0009](docs/ADRs/0009-enter-path-two.md).
 
 ## What this is
 
-A structured wine cellar built on Sanity, where the cellar's state at any point
+A structured wine cellar built on [Sanity](https://www.sanity.io/), where the cellar's state at any point
 in time is derived from an event log rather than stored as current inventory.
 The application answers a question a flat inventory cannot: what was true then,
 not just what is true now.
@@ -41,17 +41,17 @@ the end.
 
 | ADR | Decision |
 | --- | --- |
-| 0001 | Cellar state is event-sourced; stored status is a projection |
-| 0002 | Drinking windows are dated, attributed assessments, not fields on a wine |
-| 0003 | Wine and vintage collapse into a single document |
-| 0004 | Acquisition and consumption are independent event documents |
-| 0005 | Consumption verdict is derived, never authored |
-| 0006 | Conflicting assessments resolve by source authority, then recency |
-| 0007 | Two surfaces: Studio authors and governs, the frontend travels in time. Superseded by 0010. |
-| 0008 | Scope exclusions, including no pairing engine. Amended by 0011. |
-| 0009 | Enter Path Two; defer Path One behind a September 28 gate |
-| 0010 | The temporal view is a Sanity App built on the App SDK |
-| 0011 | Assessment review is modeled as a three-state workflow |
+| [0001](docs/ADRs/0001-event-sourced-cellar-state.md) | Cellar state is event-sourced; stored status is a projection |
+| [0002](docs/ADRs/0002-assessments-as-dated-claims.md) | Drinking windows are dated, attributed assessments, not fields on a wine |
+| [0003](docs/ADRs/0003-collapse-wine-and-vintage.md) | Wine and vintage collapse into a single document |
+| [0004](docs/ADRs/0004-acquisition-as-event.md) | Acquisition and consumption are independent event documents |
+| [0005](docs/ADRs/0005-verdict-is-derived.md) | Consumption verdict is derived, never authored |
+| [0006](docs/ADRs/0006-assessment-resolution-authority-then-recency.md) | Conflicting assessments resolve by source authority, then recency |
+| [0007](docs/ADRs/0007-two-surfaces.md) | Two surfaces: Studio authors and governs, the frontend travels in time. Superseded by 0010. |
+| [0008](docs/ADRs/0008-scope-enclusions.md) | Scope exclusions, including no pairing engine. Amended by 0011. |
+| [0009](docs/ADRs/0009-enter-path-two.md) | Enter Path Two; defer Path One behind a September 28 gate |
+| [0010](docs/ADRs/0010-time-machine-as-sanity-app.md) | The temporal view is a Sanity App built on the App SDK |
+| [0011](docs/ADRs/0011-assessment-review-as-workflow.md) | Assessment review is modeled as a three-state workflow |
 
 ## The spine
 
