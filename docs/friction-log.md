@@ -160,11 +160,11 @@ time-to-value claims usually lack.
 
 | Marker | Time | Notes |
 | --- | --- | --- |
-| Account created to Studio running locally | | |
-| Studio running to first custom schema saved | | |
-| First document created by hand | | |
-| First successful GROQ query against real data | | |
-| First dataset import completed | | |
+| Account created to Studio running locally | 18 Sep, 1h 15m at most | Session 0. Upper bound, includes an unrelated local problem |
+| Studio running to first custom schema saved | 21 Sep, 2:46 pm | Session 1, Prompt 1. Generated after ten clarifying findings; about 9.5 minutes of model time |
+| First document created by hand | skipped | Seed import used instead |
+| First successful GROQ query against real data | 21 Sep, after 3:19 pm | Session 1, via Vision, which onboarding never mentioned |
+| First dataset import completed | 21 Sep, after 3:19 pm | 1,645 documents in about 8 seconds, after a 5 minute wrong-directory detour |
 | First Function deployed and firing | | |
 | First Agent Action returning usable structured output | | |
 | First App SDK view rendering real data | | |
@@ -355,7 +355,9 @@ npm notice run sanity mcp configure
 ```
 
 Note the prompt: this ran from the home directory, not the repo, so it likely
-wrote a user-scoped config rather than a project-scoped one. 
+wrote a user-scoped config rather than a project-scoped one.
+Resolved in a later session: Claude Code, started from the `Cellar` folder,
+sees the Sanity server.
 
 
 **Would have helped:** one sentence in the init prompt saying that other
@@ -365,12 +367,148 @@ Cursor-only list reads as "Cursor is the supported editor," which is not true.
 **Would also have helped:** `mcp configure` saying which config file it wrote
 and at what scope, rather than only that it succeeded.
 
+### 21 September 2026, Session 1
 
-### 21 September 2026
+#### Stage 1: schemas, spec corrections, seed import
 
-#### Stage 1, Prompt 1
+IDE / tool: WebStorm + Claude Code v2.1.229, Opus 5 (1M context), Windows /
+PowerShell. Sanity MCP server connected.
+What I was trying to build: the six document types, the seed dataset
+imported, and one GROQ query resolving a 2023 consumption through bottle,
+wine, and producer.
+Outcome: Stage 1 gate passed. 1,645 documents imported.
+Elapsed: roughly 2:30 to 3:30 pm for the build itself. Prompt 1's start time
+was not recorded.
 
-> Read CLAUDE.md, then docs/content-model.md and the ADRs in docs/ADRs.
+Prompts were drafted in a separate planning session with Claude in the chat
+app, then pasted into Claude Code and adjusted. Decisions at each fork were
+made in that planning session and relayed. Recorded here because the
+writeup's first criterion is honesty about process.
+
+#### Timeline
+
+| Time | Step | Model time |
+| --- | --- | --- |
+| before 2:46 pm | Prompt 1: read specs, report conflicts, then write schemas | 9m 26s after answers |
+| to 2:59 pm | Prompt 1.5: correct the specs; Prompt 1.75: align code | 3m 57s, 1m 24s |
+| 3:02 to 3:12 pm | Prompt 2: seed transform to NDJSON | 6m 14s |
+| 3:12 to 3:18 pm | Prompt 2.5: derivedFrom rule and cleanups | 3m 19s |
+| from 3:19 pm | Commits, import, verification in Vision | about 5m lost to a path error |
+
+#### What worked
+
+- **The model read before it wrote.** Prompt 1 asked for conflicts before
+  code. It read CLAUDE.md, every spec, and all eleven ADRs, pulled current
+  Sanity docs through the MCP server rather than working from memory, wrote
+  nothing, and came back with ten findings. Three were real spec bugs.
+- **It asked instead of guessing,** through a tabbed decision menu in Claude
+  Code, with a recommended option and the tradeoff of each alternative.
+- **It refused to fabricate data.** The ledger had no `derivedFrom` column.
+  Rather than infer links from the obvious day-after pattern, it declined and
+  asked for an explicit rule. That also exposed that my own `check.py` was
+  passing demo moment 4 on a proxy.
+- **Deterministic, idempotent output.** Byte-identical NDJSON across runs,
+  integrity checks built into the transform, and a correct note that
+  `--replace` makes reruns safe.
+- **It noticed things outside its task:** stale counts in the seed README, a
+  Python rule in CLAUDE.md contradicted by the repo, and uncommitted changes
+  it had not made.
+- **The import itself:** 1,645 documents in about eight seconds, with
+  references strengthened after load so document order did not matter.
+- **Preview dot notation** through references works as documented, once the
+  model checked.
+
+#### Spec errors found in implementation
+
+These were in documents written before any code. Recorded as errors, not
+refinements.
+
+1. **Validation rule 0, second clause.** "An assessment with `derivedFrom` set
+   was created as `proposed`." Sanity validates current state, not creation
+   history, so the rule as written would have made the accept transition
+   permanently invalid, breaking the one thing ADR 0011 exists to model.
+2. **Validation does not run on import.** The spec assumed schema rules
+   protect the data. They run in Studio only; imports and API mutations
+   bypass them, as does `initialValue`. The seed plan's ledger had no
+   `reviewState` column as a result.
+3. **Underscore-prefixed projection fields** are rejected by the schema
+   validator. The spec flagged this as unconfirmed; it was wrong.
+4. **Cross-document uniqueness** on `producer.name` has no declarative
+   equivalent.
+5. **CLAUDE.md pointed at `docs/adr/`**; the directory is `docs/ADRs/`.
+6. **`check.py` moment 4 tested a proxy.** It checked that a personal note
+   shortened a window, not the `derivedFrom` chain the seed plan describes.
+7. **The `_createdAt` tie-break** in ADR 0006 is not deterministic against a
+   bulk import. Amended to fall back on `_id`.
+
+#### Model errors
+
+- **Preview references.** Claimed preview `select` cannot follow references
+  and deferred bottle previews to a Stage 5 custom component. Wrong. Asked to
+  verify against the docs, it found the section demonstrating exactly that
+  and said so plainly. One-line fix.
+- **Right conclusion, wrong reasoning.** Said strict date comparison would
+  reject same-year windows in the seed data. It would not: same-year windows
+  normalize to January 1 and December 31. Inclusive was still correct.
+- **Deprecated CLI syntax.** Gave `sanity dataset import <file> production`;
+  the CLI warns the positional dataset argument is deprecated in favor of
+  `--dataset`.
+- **Working-directory assumption.** The import path `..\sample_data\...` only
+  works from `studio/`, mentioned once in passing. Run from the repo root it
+  resolved to `C:\Users\kenal\sample_data` and failed. About five minutes.
+
+#### Platform friction
+
+**Vision was never mentioned.** The primary way to check your data is a
+query tool inside Studio, and nothing in onboarding or the scaffold output
+pointed at it. I did not know it existed until the verification step.
+
+- *Would have helped:* one line after scaffolding saying a Vision tab exists
+  for running GROQ against your dataset.
+
+**Validation runs in Studio only.** Reasonable design, but it is the single
+most consequential fact for anyone seeding a dataset, and it surfaced through
+the model reading docs rather than through any setup path.
+
+- *Would have helped:* a callout on the dataset import docs page stating that
+  imported documents are not validated until opened in Studio.
+
+**Running `npx sanity` outside the project** silently fetched a fresh CLI and
+prompted for which project to use, rather than saying no Sanity config was
+found in the current directory.
+
+- *Would have helped:* an error that names the missing config and the
+  directory searched.
+
+Minor: `npm warn deprecated uuid@10.0.0` on every CLI invocation.
+
+#### Spec-first, so far
+
+- **Did pointing the model at spec files beat describing things in the
+  prompt?** Yes, clearly. The explicit specs gave it something to check
+  against the platform, which is how seven errors surfaced before any code
+  ran. A vibe-coded project would have carried the same misconceptions with
+  nothing written down to catch them.
+- **Where did the model ignore the spec?** Nowhere silently. Every departure
+  was raised as a question or a stated judgement call.
+- **Which spec was wrong in a way only implementation revealed?** Rule 0,
+  import-time validation, and the tie-break. See above.
+- **What had to be decided mid-build that no spec covered?** Bottle format
+  default on import, `consumedAt` time of day, source-type mapping for
+  unmatched rows, the `derivedFrom` rule, and where wine display names are
+  composed.
+- **Honest caveat.** The specs contained errors, several of them mine. They
+  were also detailed enough that the errors were findable. Both are true.
+
+#### Transcripts
+
+Full prompts and outputs, unedited.
+
+<details>
+<summary>Prompt 1</summary>
+
+```text
+Read CLAUDE.md, then docs/content-model.md and the ADRs in docs/ADRs.
 
 Create the six document types in studio/schemaTypes: producer, wine, bottle,
 acquisition, consumption, assessment. Follow the field tables in the content
@@ -380,8 +518,12 @@ Stage 1 only: no projection or derived fields yet, no custom input
 components, no structure customization. Before writing code, list any place
 where the content model and your understanding of the Sanity schema API
 disagree, and ask me rather than resolving it yourself.
+```
 
-Partway through the prompt, CLaude Code asked this:
+</details>
+
+<details>
+<summary>Prompt 1: clarifying findings before any code</summary>
 
 ```text
 Read 1 file, called Sanity 9 times (ctrl+o to expand)
@@ -443,43 +585,20 @@ Validation rule 0 says an assessment with `derivedFrom` set was created as `prop
 Enter to select · Tab/Arrow keys to navigate · Esc to cancel
 ```
 
-Pick 1. It's right, and the clause was my error. I wrote a creation-time rule into a system that only validates current state, and it would have broken the exact transition ADR 0011 exists to model.
+Planning-session guidance relayed back: choose option 1 for rule 0; route
+uniqueness to dataset health; take the spec enum lists; make `wine.title`
+optional with a composed preview; map ledger `sourceName` into
+`acquisition.source` and infer `sourceType` where obvious; keep `drinkUntil`
+inclusive; varietal sum as a warning only when every percentage is filled;
+accept the model's date-boundary default; keep vintage required; fix the
+`docs/adr/` path.
 
-Quick answers for the other tabs and items, so you can move through the menu:
+</details>
 
-**Uniqueness.** Do not add an async validator. Route it to dataset health, same as invariants 5 to 7. A GROQ query on every keystroke for a field that nobody will realistically duplicate is not worth it.
-
-**Enums.** Take the spec lists as written.
-
-**Previews.** Make `wine.title` optional and have the preview compose producer, cuvée, and vintage. `wines.csv` has no title column anyway, so a required title would force the import to fabricate one.
-
-**Item 5, acquisition source.** Its reading is correct: `source` is the free-text name. Tell it to map the ledger's `sourceName` into `source`, and infer `sourceType` where obvious (winery club to winery, grocery store to retail, auction lot to auction, gift to gift).
-
-**Item 7, inclusive min.** Inclusive is correct. Windows normalize to January 1 and December 31, so a same-year window still spans a whole year. Several wines in the dataset depend on that.
-
-**Item 8, varietals.** Warning, not blocking, and only when every percentage is filled.
-
-**Item 9, dates.** Accept its default. It's more careful than the spec.
-
-**Item 10.** Leave vintage required. The dataset has no non-vintage wines.
-
-**The path nit.** Also mine. Fix CLAUDE.md to say `docs/ADRs/`.
-
-Now the important part: log this before you continue, because it's the best spec-first data point you'll get all week. The model read every document, pulled current Sanity docs through the MCP server rather than working from memory, wrote no code, and returned ten issues, three of them genuine spec bugs. The honest version for the writeup cuts both ways. The specs contained errors, and the specs are also why the errors were findable, since an explicit rule is one that can be checked against the platform. A vibe-coded project would have had the same misconceptions without anything written down to catch them against.
-
-Once you're through the menu, the content model needs three small updates: close the underscore question in favor of the `derived` wrapper, drop rule 0's second clause, and note that schema validation does not run on import. That last one matters beyond Stage 1, since it means your dataset health view is the only place imported data gets checked.
-
-Prmopt 1 end: 2:46 pm
-
-Claude Code Output:
+<details>
+<summary>Prompt 1 output: schemas written (ended 2:46 pm)</summary>
 
 ```text
-After prmopt 1 only, here's the output:
-
-
-```
-
-
 ● PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install prettier --write schemaTypes; npx --no-install tsc --noEmit)
 ⎿  npm notice run cellar@1.0.0 npx
 npm notice run prettier --write schemaTypes
@@ -514,11 +633,10 @@ apply those edits; the rule 0 finding also looks like friction-log material, sin
 ✻ Cogitated for 9m 26s
 ```
 
+</details>
 
-Anything need changing in the 1.5 prompt?
-```
-
-#### Prompt 1.5
+<details>
+<summary>Prompt 1.5: correct the specs</summary>
 
 ```text
 Update the specs to match the decisions made during Stage 1. Documentation
@@ -588,7 +706,10 @@ column and the import sets `accepted` on all seeded assessments.
 When done, summarize each file changed in one or two lines.
 ```
 
-#### Prompt 1.5 Results:
+</details>
+
+<details>
+<summary>Prompt 1.5 output</summary>
 
 ```text
 PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --noEmit; if ($?) { npx --no-install sanity schema validate; npx --no-install prettier --check…)
@@ -622,12 +743,12 @@ PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --n
   Both are small edits. Say the word and I'll make them.
 
 ✻ Churned for 3m 57s
-
 ```
 
-#### Pfrompt 1.75
+</details>
 
-> Yes, please fix.
+<details>
+<summary>Prompt 1.75: "Yes, please fix." (ended 2:59 pm)</summary>
 
 ```text
 PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --noEmit; if ($?) { npx --no-install sanity schema validate; npx --no-install eslint .; npx --…)
@@ -650,10 +771,12 @@ PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --n
 
 ✻ Cooked for 1m 24s
 ```
-End: 2:59 pm
 
-#### Prompt 2
-Start: 3:02 pm
+</details>
+
+<details>
+<summary>Prompt 2: seed transform (3:02 to 3:12 pm)</summary>
+
 ```text
 Write a script that reads sample_data/wines.csv and sample_data/ledger.csv
 and produces NDJSON for `sanity dataset import`. Follow docs/content-model.md,
@@ -678,7 +801,10 @@ command, but do not run the import yourself. Before I run it, report document
 counts by type so I can check them against check.py: 98 wines and 542 bottles.
 ```
 
-Claude Code output:
+</details>
+
+<details>
+<summary>Prompt 2 output</summary>
 
 ```text
 PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install prettier --write scripts | Out-Null; npx --no-install prettier --check scripts schemaTypes; npx --…)
@@ -744,12 +870,10 @@ PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install prettie
 ✻ Sautéed for 6m 14s
 ```
 
+</details>
 
-End: 3:12
-
-#### Prompt 2.5
-
-Start: 3:12
+<details>
+<summary>Prompt 2.5: derivedFrom rule and cleanups (3:12 to 3:18 pm)</summary>
 
 ```text
 Apply these, then rebuild the NDJSON and report counts again. Do not import.
@@ -769,7 +893,10 @@ Apply these, then rebuild the NDJSON and report counts again. Do not import.
    tooling used only to generate and check the seed dataset.
 ```
 
-Output:
+</details>
+
+<details>
+<summary>Prompt 2.5 output</summary>
 
 ```text
 PowerShell(Set-Location 'C:\Users\kenal\Cellar'; git check-ignore -v sample_data/cellar.ndjson; Write-Output "--- git status (short) ---"; git status --short)
@@ -819,4 +946,83 @@ PowerShell(Set-Location 'C:\Users\kenal\Cellar'; git check-ignore -v sample_data
 ✻ Worked for 3m 19s
 ```
 
-End: 3:18 pm
+</details>
+
+<details>
+<summary>Import and verification (from 3:19 pm)</summary>
+
+Commits:
+
+```text
+git add docs/build-plan.md docs/friction-log.md
+git commit -m "Friction log: Stage 1 entries; build plan: shared display name in Stage 2"
+
+git add -A
+git commit -m "Stage 1: seed transform to NDJSON, derivedFrom rule, doc corrections"
+```
+
+First attempt, from the repo root:
+
+```text
+npx sanity dataset import ..\sample_data\cellar.ndjson production
+ »   Warning: Positional dataset argument is deprecated. Use the --dataset flag instead: --dataset <name>
+ »   Error: Error: ENOENT: no such file or directory, open 'C:\Users\kenal\sample_data\cellar.ndjson'
+```
+
+Second attempt, from `studio/`:
+
+```text
+✔ [100%] Reading/validating data file (257ms)
+✔ [100%] Importing documents (6.28s)
+✔ [100%] Strengthening references (1.96s)
+Done! Imported 1645 documents to dataset "production"
+```
+
+Access Vision tool:
+
+`npm run dev`
+
+https://localhost:3333/
+
+Upper Left Hamburger Menu -> Vision -> QUERY
+
+Gate query, in Vision:
+
+```groq
+*[_type == "consumption" && consumedAt >= "2023-01-01" && consumedAt < "2024-01-01"][0]{
+  consumedAt,
+  tastingNote,
+  bottle->{
+    format,
+    wine->{ cuvee, vintageYear, producer->{ name } }
+  }
+}
+```
+
+```text
+consumedAt: 2023-12-27T12:00:00Z
+tastingNote: Silky. Drinking well right now.
+bottle.format: 750ml
+bottle.wine: Brooks Pinot Noir 2018
+```
+
+The derivedFrom chain:
+
+```groq
+*[_type == "assessment" && defined(derivedFrom)]{
+  assessedAt, sourceType, drinkUntil,
+  "fromBottle": derivedFrom->bottle->_id
+} | order(assessedAt asc)[0...3]
+```
+
+```text
+1996-11-10  personal  drinkUntil 2018-12-31  from chateau-mouton-rothschild-grand-vin-1993-a
+1999-03-21  personal  drinkUntil 2012-12-31  from chateau-mouton-rothschild-grand-vin-1993-b
+2017-03-17  personal  drinkUntil 2025-12-31  from california-assorted-cabernet-sauvignon-2012-a
+```
+
+The Mouton's two reassessments resolve to the exact bottles opened the day
+before, thirty years of provenance in one query. The 1999 entry, with its 2012
+window, is the one that currently wins resolution under ADR 0006.
+
+</details>
