@@ -364,3 +364,290 @@ Cursor-only list reads as "Cursor is the supported editor," which is not true.
 
 **Would also have helped:** `mcp configure` saying which config file it wrote
 and at what scope, rather than only that it succeeded.
+
+
+### 21 September 2026
+
+#### Stage 1, Prompt 1
+
+> Read CLAUDE.md, then docs/content-model.md and the ADRs in docs/ADRs.
+
+Create the six document types in studio/schemaTypes: producer, wine, bottle,
+acquisition, consumption, assessment. Follow the field tables in the content
+model exactly, and register them in the Studio config.
+
+Stage 1 only: no projection or derived fields yet, no custom input
+components, no structure customization. Before writing code, list any place
+where the content model and your understanding of the Sanity schema API
+disagree, and ask me rather than resolving it yourself.
+
+Partway through the prompt, CLaude Code asked this:
+
+```text
+Read 1 file, called Sanity 9 times (ctrl+o to expand)
+
+● I read CLAUDE.md, docs/content-model.md, docs/temporal-resolution.md, docs/build-plan.md, docs/seed-data-plan.md, and all eleven ADRs. I also pulled the Sanity schema rule set and the current docs for naming, validation, the date type, and the reference type rather than working from memory, since the
+  Studio here is v6.15 and CLAUDE.md is explicit about not inventing API surface.
+
+  No code written yet. Here is where the content model and the Sanity schema API actually disagree.
+
+  Hard conflicts — the spec can't be implemented as written
+
+  1. Underscore-prefixed projection fields are rejected by the schema validator.
+  content-model.md flags this as unconfirmed. It's now confirmed, against the spec. The naming docs say field names "must not start with underscores (_), which are reserved for system fields." So _bottlesOnHand, _windowFrom, _status et al. are invalid names, and the derived object wrapper named as the
+  fallback is the path. This doesn't block Stage 1 — projections are explicitly out — but the open question in the content model can be closed now.                                                                                                     
+
+  2. Validation rule 0's second clause is not expressible. "An assessment with derivedFrom set was created as proposed." Sanity validation sees current document state on every edit; there is no create-time-only hook. Encoded literally as derivedFrom ⇒ reviewState === 'proposed', accepting an agent-proposed
+  assessment becomes a permanent validation error — which kills the one transition ADR 0011 exists to model. The rule as written is wrong, not just awkward.
+
+  3. producer.name "Unique" has no declarative equivalent. rule.unique() validates array members, not cross-document uniqueness. Cross-document uniqueness needs an async custom() validator firing a GROQ count() on every keystroke. That's the same category as invariants 5–7, which CLAUDE.md routes to dataset
+  health warnings rather than schema validation.
+
+  4. None of this validation runs on the ledger import. The docs state that schema validation is Studio-only; API and client mutations aren't checked. The Stage 1 gate imports ~250 documents via NDJSON, so every rule below is bypassed at import and only appears when a document is opened. Two consequences:
+  initialValue is also a Studio-only mechanism, so the transform must write reviewState explicitly on every assessment — and seed-data-plan.md's ledger column list has no reviewState column. That's a seed-plan gap, not a schema one, but it lands in Stage 1.
+
+  Ambiguities where I'd otherwise be guessing
+
+  5. acquisition.source vs acquisition.sourceType looks like a slip. source is annotated "Merchant, winery, gift, auction" and sourceType "retail, winery, auction, gift, trade" — nearly the same list twice. assessment does this correctly with free-text sourceName beside enum sourceType. I read
+  acquisition.source as intended to be the free-text merchant name and the Notes column as stale.
+
+  6. wine.title is the only identity field not marked Required, while producer and vintageYear both are.
+
+  7. drinkUntil "must be after drinkFrom" — rule.min(rule.valueOfField('drinkFrom')) is inclusive, so a same-day window passes. Strictly-after needs a custom validator. Which is intended?
+
+  8. varietals percentages "sum to 100 when more than one is present" — undefined for a partially-filled blend (two varietals, one percentage entered), and unspecified whether it blocks publishing.
+
+  9. "Must not be in the future" has a day-boundary problem. date fields are timezone-free strings; new Date() is an instant. Comparing in UTC means someone in Pacific time can't record today's acquisition until 5pm local. My default: compare the two date fields against the local calendar date, consumedAt
+  against the actual instant, and compute the bound inside the validator rather than at module load so a Studio tab left open overnight doesn't go stale.
+
+  10. vintageYear required means no non-vintage wines. seed-data-plan.md calls for one Champagne. Fine if it's a vintage Champagne — flagging only.
+
+  One doc nit: CLAUDE.md points at docs/adr/; the directory is docs/ADRs/.
+
+❯ /login                                                                                                                                                                                                                                                                                                            
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+←  ☐ Rule 0  ☐ Enums  ☐ Uniqueness  ☐ Previews  ✔ Submit  →
+
+Validation rule 0 says an assessment with `derivedFrom` set was created as `proposed`. Sanity can only see current state, so enforcing that literally blocks the accept transition. How should I handle it?
+
+❯ 1. Drop the clause, use initialValue (Recommended)
+     Schema enforces only that reviewState is one of the three values. The agent sets `proposed` explicitly when it writes. Records rule 0's second clause as a spec bug found in implementation — writeup material per ADR 0009.
+  2. Enforce as a warning
+     `derivedFrom` set + reviewState `accepted` shows a non-blocking warning. Preserves the intent visibly but nags on every accepted agent assessment, which is the normal end state.
+  3. Keep it, scope to drafts only
+     Enforce on documents with no published version, approximating 'at creation'. Fragile, and it still fires wrongly if an assessment is accepted before first publish.
+  4. Type something.
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  5. Chat about this
+
+Enter to select · Tab/Arrow keys to navigate · Esc to cancel
+```
+
+Pick 1. It's right, and the clause was my error. I wrote a creation-time rule into a system that only validates current state, and it would have broken the exact transition ADR 0011 exists to model.
+
+Quick answers for the other tabs and items, so you can move through the menu:
+
+**Uniqueness.** Do not add an async validator. Route it to dataset health, same as invariants 5 to 7. A GROQ query on every keystroke for a field that nobody will realistically duplicate is not worth it.
+
+**Enums.** Take the spec lists as written.
+
+**Previews.** Make `wine.title` optional and have the preview compose producer, cuvée, and vintage. `wines.csv` has no title column anyway, so a required title would force the import to fabricate one.
+
+**Item 5, acquisition source.** Its reading is correct: `source` is the free-text name. Tell it to map the ledger's `sourceName` into `source`, and infer `sourceType` where obvious (winery club to winery, grocery store to retail, auction lot to auction, gift to gift).
+
+**Item 7, inclusive min.** Inclusive is correct. Windows normalize to January 1 and December 31, so a same-year window still spans a whole year. Several wines in the dataset depend on that.
+
+**Item 8, varietals.** Warning, not blocking, and only when every percentage is filled.
+
+**Item 9, dates.** Accept its default. It's more careful than the spec.
+
+**Item 10.** Leave vintage required. The dataset has no non-vintage wines.
+
+**The path nit.** Also mine. Fix CLAUDE.md to say `docs/ADRs/`.
+
+Now the important part: log this before you continue, because it's the best spec-first data point you'll get all week. The model read every document, pulled current Sanity docs through the MCP server rather than working from memory, wrote no code, and returned ten issues, three of them genuine spec bugs. The honest version for the writeup cuts both ways. The specs contained errors, and the specs are also why the errors were findable, since an explicit rule is one that can be checked against the platform. A vibe-coded project would have had the same misconceptions without anything written down to catch them against.
+
+Once you're through the menu, the content model needs three small updates: close the underscore question in favor of the `derived` wrapper, drop rule 0's second clause, and note that schema validation does not run on import. That last one matters beyond Stage 1, since it means your dataset health view is the only place imported data gets checked.
+
+Prmopt 1 end: 2:46 pm
+
+Claude Code Output:
+
+```text
+After prmopt 1 only, here's the output:
+
+
+```
+
+
+● PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install prettier --write schemaTypes; npx --no-install tsc --noEmit)
+⎿  npm notice run cellar@1.0.0 npx
+npm notice run prettier --write schemaTypes
+schemaTypes/acquisition.ts 169ms (unchanged)
+… +10 lines (ctrl+o to expand)
+⎿  (timeout 5m)
+
+● Done. Schema validates clean.
+
+Files created in studio/schemaTypes/: producer.ts, wine.ts, bottle.ts, acquisition.ts, consumption.ts, assessment.ts, plus varietal.ts and lib/validation.ts. index.ts now exports all seven types; sanity.config.ts already imported schemaTypes, so registration needed no change there.
+
+Verification: tsc --noEmit clean, eslint . clean, prettier --check clean, and sanity schema validate reports 0 errors, 0 warnings.
+
+All eight of your answers are implemented as chosen. Three things I decided without asking, because they're mechanical rather than model decisions:
+
+- varietal lifted to a top-level object type. The content model specifies an anonymous inline object. Studio accepts that, but sanity graphql deploy rejects it — and deploy-graphql is a script in this package. It's a seventh registered type, but an object type, not a document type.
+- @sanity/icons added to package.json at ^5.2.2. It was resolving only by hoisting from sanity; importing an undeclared dependency is a latent break. npm install reported "up to date" — nothing was fetched, only the declaration added.
+- bottle.notes and the rest of the free-text fields got explicit rows values so the textareas aren't the 10-row default.
+
+One invented value set you should check: acquisition.currency is constrained to USD, EUR, GBP. The content model specifies a default of USD but never lists the permitted values, and you asked for options.list on it. Tell me the real set if that's wrong.
+
+Three deferred items are load-bearing later and worth noting now:
+
+- Bottle previews can't show the wine. Preview select reads the document and doesn't follow references, so a bottle reads 750ml · Rack B3, not its wine title. Fixing that needs a custom preview component — Stage 5.
+- The ledger import bypasses every rule here. Validation is Studio-only. Most concretely: initialValue: 'accepted' on reviewState won't apply to imported assessments, and seed-data-plan.md's ledger columns (date | type | wine | bottleRef | sourceType | sourceName | drinkFrom | drinkUntil | note) have no
+  reviewState column. The transform has to supply it, or every imported assessment fails validation the moment it's opened and resolves nothing per ADR 0011.
+- _createdAt tie-breaking works on imported documents only if the import preserves it. ADR 0006 and the edge-case table both lean on it, and a bulk import that lets the Content Lake stamp _createdAt will produce import-order ties, not authored-order ones.
+
+I left the docs untouched. Four of them now have answers they were waiting on — the underscore question in content-model.md is settled, rule 0's second clause is unimplementable, the acquisition.source Notes column is stale, and CLAUDE.md points at docs/adr/ rather than docs/ADRs/. Say the word and I'll
+apply those edits; the rule 0 finding also looks like friction-log material, since it's exactly the case of a spec being wrong in a way only implementation revealed.
+
+✻ Cogitated for 9m 26s
+```
+
+
+Anything need changing in the 1.5 prompt?
+```
+
+#### Prompt 1.5
+
+```text
+Update the specs to match the decisions made during Stage 1. Documentation
+only, no code changes.
+
+In docs/content-model.md:
+
+1. Projection fields. Remove the underscore naming convention. Derived fields
+   live in a `derived` object on wine and bottle. Close the open question.
+2. Validation rule 0. Keep the first clause (reviewState is one of the three
+   values). Drop the second clause about derivedFrom. The agent sets
+   `proposed` explicitly when it writes; the schema does not enforce how a
+   document was created.
+3. producer.name uniqueness moves out of schema validation and into the
+   cross-document checks alongside invariants 5 to 7, surfaced as a dataset
+   health warning.
+4. Add a note under the validation rules: schema validation and initialValue
+   run in Studio only. Imports and API mutations bypass them, so the import
+   must write every required value explicitly, including reviewState
+   `accepted` on every seeded assessment, and dataset health is the only check
+   that sees imported data.
+5. acquisition.source is the free-text source name. acquisition.sourceType is
+   the enum. Record the import mapping from the ledger: sourceName goes to
+   source; sourceType is inferred where obvious (winery club to winery,
+   grocery store to retail, auction lot to auction, gift to gift) and left
+   empty otherwise.
+6. wine.title becomes optional. The Studio preview composes producer, cuvee,
+   and vintage.
+7. drinkUntil must be on or after drinkFrom, inclusive. Note that because
+   windows normalize to January 1 and December 31, a same-year window still
+   spans the full year.
+8. Varietal percentages summing to 100 is a warning, not a blocking error, and
+   only applies when every percentage is filled.
+9. "Not in the future": date fields compare against the local calendar date,
+   consumedAt against the current instant, and the bound is computed at
+   validation time.
+10. vintageYear stays required. Non-vintage wines are out of scope.
+11. The varietal object is a registered top-level object type rather than an
+    anonymous inline object, because `sanity graphql deploy` rejects
+    anonymous objects. Record this in the model.
+12. acquisition.currency is constrained to USD, EUR, GBP. Record the list.
+13. Assessment resolution tie-break: `_createdAt` descending, then `_id`
+    descending. Imported documents share an import-time `_createdAt`, so
+    `_id` makes the order deterministic. Update docs/temporal-resolution.md
+    and note the change in ADR 0006 as an amendment. The seed data currently
+    contains no same-tier, same-day ties.
+14. Before writing anything about bottle previews: verify against the Sanity
+    documentation whether preview `select` can follow references with dot
+    notation, for example `wine.cuvee` or `wine.producer.name`. If it can,
+    update bottle.ts so the preview shows the wine, and record that the
+    earlier claim was incorrect. If it cannot, cite the documentation.
+
+In CLAUDE.md, also add to "How to work in this repo": when a stage in
+docs/build-plan.md completes, update CHANGELOG.md at milestone level only.
+
+Then append a section at the end of content-model.md titled "Changes during
+implementation", with a dated entry listing each change above and why. Mark
+items 2 and 4 as spec errors found in implementation rather than refinements.
+Do not rewrite history elsewhere in the file beyond what the changes require.
+
+In CLAUDE.md: fix the path from docs/adr/ to docs/ADRs/, and replace the
+underscore convention line with the `derived` object convention.
+
+In docs/seed-data-plan.md: add a line noting the ledger has no reviewState
+column and the import sets `accepted` on all seeded assessments.
+
+When done, summarize each file changed in one or two lines.
+```
+
+#### Prompt 1.5 Results:
+
+```text
+PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --noEmit; if ($?) { npx --no-install sanity schema validate; npx --no-install prettier --check…)
+  ⎿  npm notice run cellar@1.0.0 npx
+     npm notice run tsc --noEmit
+     npm notice run cellar@1.0.0 npx
+     … +13 lines (ctrl+o to expand)
+  ⎿  (timeout 7m)
+
+● Item 14 first: I was wrong. Preview select does follow references with dot notation — the list previews docs have a section titled "Preview using fields from referenced documents" demonstrating exactly that. So bottle.ts got the one code change you carved out; everything else is documentation.
+
+  Files changed
+
+  - studio/schemaTypes/bottle.ts — the only code change. Preview now selects wine.title, wine.cuvee, wine.vintageYear and shows the wine, falling back to vintage + cuvee since title is now optional. The comment claiming references can't be followed is replaced. Only single-hop resolution is documented, so
+  nothing depends on wine.producer.name.
+  - docs/content-model.md — items 1–12 applied across the field tables and the validation section: derived object replaces the underscore convention on both wine and bottle, rule 0 loses its second clause, producer.name uniqueness becomes cross-document rule 8, and a new "Validation runs in Studio only"
+  subsection covers the import. Appended a dated "Changes during implementation" section marking items 2 and 4 as spec errors and the rest as refinements.
+  - docs/temporal-resolution.md — resolvedWindow tie-break gains _id descending after _createdAt descending, with the reason; the edge-case table row updated and noted that the seed data contains no such tie.
+  - docs/ADRs/0006-… — status now "Accepted, amended 2026-09-21", with an amendment section explaining why _createdAt alone isn't deterministic against a bulk import.
+  - CLAUDE.md — underscore convention line replaced with the derived object form; producer.name added to the cross-document invariants list; new "How to work in this repo" bullet on updating CHANGELOG.md at stage completion, milestone level only.
+  - docs/seed-data-plan.md — notes the ledger has no reviewState column and the transform sets accepted on all seeded assessments, with the initialValue reason.
+
+  tsc --noEmit, sanity schema validate (0 errors, 0 warnings), and prettier --check all pass.
+
+  Two places the code now contradicts the spec, because you said documentation only and these weren't carved out:
+
+  1. wine.title is still rule.required() in wine.ts, and wine's own preview doesn't yet compose producer + cuvee + vintage. That composition needs producer.name — one hop from wine, so it's the documented case and will work.
+  2. drinkUntil is still strictly after drinkFrom in assessment.ts. Worth flagging that item 7 reverses the Stage 1 decision you made earlier, and your reasoning is right — normalization produces equal-year pairs, so strict comparison would reject the most ordinary window in the ledger. It would have failed
+  on real seed data.
+
+  Both are small edits. Say the word and I'll make them.
+
+✻ Churned for 3m 57s
+
+```
+
+#### Pfrompt 1.75
+
+> Yes, please fix.
+
+```text
+PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --noEmit; if ($?) { npx --no-install sanity schema validate; npx --no-install eslint .; npx --…)
+  ⎿  npm notice run cellar@1.0.0 npx
+     npm notice run tsc --noEmit
+     npm notice run cellar@1.0.0 npx
+     … +15 lines (ctrl+o to expand)
+  ⎿  (timeout 7m)
+
+● Both fixed; code and spec now agree.
+  
+  - studio/schemaTypes/wine.ts — title is no longer required, and its description says what happens when it's left empty. The preview selects producer.name (single hop, the documented case) and composes vintage + producer + cuvee when title is absent, with appellation as the subtitle.
+  - studio/schemaTypes/assessment.ts — drinkUntil is now inclusive. Replaced the custom strictly-after validator with the built-in rule.min(rule.valueOfField('drinkFrom')), which the date type documents as inclusive. Split into an array so required() keeps its own message rather than inheriting the range
+  one, and left a comment explaining why equal dates are legal.
+  
+  tsc --noEmit, sanity schema validate (0 errors, 0 warnings), eslint ., and prettier --check all pass.
+
+  Worth noting for Stage 2: wine.title going optional means the resolution module and any GROQ projection that displays a wine can no longer assume it exists. The Studio composes a fallback in prepare, but that logic lives in the preview and isn't available to the App SDK or to Functions — so either the
+  seed transform always writes a title, or that composition needs to move somewhere both surfaces can import.
+
+✻ Cooked for 1m 24s
+```
+

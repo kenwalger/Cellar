@@ -23,7 +23,7 @@ authoritative and were written deliberately:
   the validation rules and invariants.
 - `docs/temporal-resolution.md` describes the predicates, window resolution,
   the state machine, and the edge cases. This is the core of the project.
-- `docs/adr/` holds the decision records. These are decisions, not
+- `docs/ADRs/` holds the decision records. These are decisions, not
   suggestions. Several record an option that was considered and rejected.
 - `docs/build-plan.md` holds the stage ladder, the cut list, and the gates.
 - `docs/seed-data-plan.md` describes the event ledger and the demo moments the
@@ -71,12 +71,13 @@ project's central feature.
 - Dates: `drinkFrom` given as a year becomes January 1, `drinkUntil` becomes
   December 31. Store dates, display years. Comparisons are date-level except
   `consumedAt`, which keeps its time.
-- Derived fields use a naming convention marking them as projections. Confirm
-  whether Sanity permits leading underscores on custom fields before adopting
-  that form; underscore is reserved for system fields.
+- Derived fields live in a `derived` object on the document that carries them,
+  for example `wine.derived.cellarState`. The object is the convention that
+  marks them as projections. A leading underscore was the original proposal
+  and is not available; Sanity reserves that form for system fields.
 - Cross-document invariants (one acquisition per bottle, at most one
-  consumption, no consumption before acquisition) cannot be enforced by schema
-  validation. They surface as dataset health warnings.
+  consumption, no consumption before acquisition, unique producer name) cannot
+  be enforced by schema validation. They surface as dataset health warnings.
 
 ## How to work in this repo
 
@@ -93,6 +94,9 @@ project's central feature.
 - When something in Sanity is surprising, confusing, poorly documented, or
   delightful, mention it. It goes in `docs/friction-log.md`, which feeds the
   first judging criterion.
+- When a stage in `docs/build-plan.md` completes, update `CHANGELOG.md`.
+  Milestone level only: what the stage delivered and anything that changed the
+  model or the plan. Not a commit list. The git log already has that.
 
 ## About the writeup
 

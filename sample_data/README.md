@@ -162,5 +162,5 @@ consumption per bottle, assessments referencing wines. No dates on `bottle`
 documents. See `docs/content-model.md`.
 
 
-## Disclaimer
+## Disclaimer1
 **About the data.** The cellar is loosely based on a real one. The producers, appellations, and club memberships are real, and some of the history is too. Everything evaluative is not. Drinking windows, scores, critic notes, and most tasting notes are invented for the purpose of the demo, and critic assessments are attributed to publications that do not exist. Nothing here should be read as a factual claim about any wine, and nothing attributed to a named producer reflects anything they have actually said.

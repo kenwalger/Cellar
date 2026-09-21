@@ -26,6 +26,13 @@ Writing it in date order is what forces the data to make sense. You cannot
 accidentally consume a bottle you have not bought yet if you are working
 forward through time.
 
+The ledger has no `reviewState` column, and it does not need one: every
+assessment in it is hand-authored. The transform sets `reviewState: accepted`
+on all seeded assessments. It has to be written explicitly, because
+`initialValue` is a Studio mechanism and does not apply to imported documents,
+and an assessment with no `reviewState` resolves no window at all. Proposed
+assessments enter later, from the Agent Action, not from the ledger.
+
 ## Volume targets
 
 | Thing | Target | Reasoning |

@@ -48,9 +48,16 @@ resolvedWindow(wine, T):
         tierSet = candidates where sourceType == tier
         if tierSet is not empty:
             return most recent by assessedAt,
-                   ties broken by _createdAt descending
+                   ties broken by _createdAt descending,
+                   then by _id descending
     return null
 ```
+
+The `_id` key is what makes the tie-break total. A bulk import stamps every
+document it writes with essentially the same `_createdAt`, so on imported data
+`_createdAt` alone leaves same-tier, same-day assessments in an arbitrary
+order that can differ between queries. `_id` is arbitrary too, but it is
+stable, which is the property the expected-output table needs. See ADR 0006.
 
 Accepted claims only. A proposed assessment sitting in the review queue has
 no effect on any window until a person accepts it, and a rejected one never
@@ -137,7 +144,7 @@ and the correctness is part of the argument.
 | asOf earlier than every event | Empty cellar. Valid, not an error. |
 | Bottle with no acquisition | Excluded from all views. Flagged as a dataset health violation. |
 | Consumption predating acquisition | Flagged. Do not attempt to interpret it. |
-| Two assessments, same tier, same day | Tie-break on `_createdAt` descending. |
+| Two assessments, same tier, same day | Tie-break on `_createdAt` descending, then `_id` descending. The seed data contains no such tie. |
 | Assessment revised by editing rather than adding | Prevented by convention and by an ADR, not by the schema. Worth a note in the Studio UI. |
 | Wine with assessments but no bottles | Valid. It is a wish list entry. Exclude from cellar counts. |
 | Wine whose only assessments are proposed | Resolves to null, so its bottles read `UNASSESSED`. Correct, and a useful nudge toward the review queue. |
