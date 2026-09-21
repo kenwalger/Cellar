@@ -43,6 +43,8 @@ at four asOf dates, written from the ledger before the code existed.
 The module must stay importable by a Sanity App, by a Next.js route, and by
 Functions. ADR 0010's fallback depends on this.
 
+Wine display name composition lives in the shared module alongside resolution, and the Studio preview imports it.
+
 ## Stage 3: the App, days 5 to 8
 
 Built with the App SDK, per ADR 0010. Cellar health, Drink Soon, the asOf

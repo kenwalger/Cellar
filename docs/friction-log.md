@@ -650,4 +650,173 @@ PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install tsc --n
 
 ✻ Cooked for 1m 24s
 ```
+End: 2:59 pm
 
+#### Prompt 2
+Start: 3:02 pm
+```text
+Write a script that reads sample_data/wines.csv and sample_data/ledger.csv
+and produces NDJSON for `sanity dataset import`. Follow docs/content-model.md,
+including the "Changes during implementation" section.
+
+IDs must be deterministic so references resolve: wine_id for wines, the
+bottle handle for bottles, "acq-" and "con-" plus the bottle handle for
+acquisitions and consumptions, a stable hash of the row for assessments.
+Producers come from the distinct producer names in wines.csv.
+
+Validation does not run on import, so write every required value explicitly:
+- reviewState "accepted" on every assessment
+- drinkFrom and drinkUntil normalized from years to January 1 and December 31
+- acquisition.source from the ledger's sourceName; sourceType inferred where
+  obvious (winery club to winery, grocery store to retail, auction lot to
+  auction, gift to gift), otherwise omitted
+
+Leave wine.title empty. Write no derived fields. Bottles carry no dates.
+
+The script must run on Windows under PowerShell. Tell me the exact import
+command, but do not run the import yourself. Before I run it, report document
+counts by type so I can check them against check.py: 98 wines and 542 bottles.
+```
+
+Claude Code output:
+
+```text
+PowerShell(Set-Location 'C:\Users\kenal\Cellar\studio'; npx --no-install prettier --write scripts | Out-Null; npx --no-install prettier --check scripts schemaTypes; npx --…)
+  ⎿  npm notice run cellar@1.0.0 npx
+     npm notice run prettier --write scripts
+     npm notice run cellar@1.0.0 npx
+     … +15 lines (ctrl+o to expand)
+  ⎿  (timeout 5m)
+
+  Called Sanity (ctrl+o to expand)
+
+● Script written and run. The NDJSON is built; I have not imported it.
+
+  Counts
+
+  producer       8
+  wine          98   ✓
+  bottle       542   ✓
+  acquisition  542
+  consumption  294
+  assessment   161
+  total       1645
+
+  Wines and bottles match check.py. The integrity checks the script runs — every ledger wine exists in wines.csv, one acquisition per bottle, at most one consumption per bottle, no consumption without an acquisition, no assessment hash collisions — all passed with zero problems. Output is byte-identical
+  across runs, so the IDs are genuinely stable.
+
+  Import command
+
+  From C:\Users\kenal\Cellar\studio:
+
+  npx sanity dataset import ..\sample_data\cellar.ndjson production
+
+  I checked the target: production is empty, so a plain import is correct. If you re-run after regenerating, add --replace — the deterministic IDs make that idempotent rather than duplicating the cellar.
+
+  Four judgement calls worth your review
+
+  format: "750ml" is written on all 542 bottles. The ledger records no format. The content model documents 750ml as the default, but initialValue doesn't fire on import, so leaving it out means 542 bottles with no format at all. I wrote it. One-line change (DEFAULT_FORMAT) if you'd rather the field be
+  absent.
+
+  consumedAt is noon UTC. The ledger has dates; the field is a datetime. Noon UTC keeps the calendar date intact when rendered anywhere from UTC-11 to UTC+11 — midnight UTC would show the previous day in Pacific time. Consequence: bottles opened the same day share a timestamp, so intra-day ordering is
+  undefined. That's the one thing temporal-resolution.md says consumedAt keeps its time for, and the seed data can't exercise it.
+
+  6 acquisitions have no sourceType. All six are the Mouton, source "retail, delayed release". It isn't one of the four patterns the recorded mapping names, so it's left unset per spec — but it does say "retail" in plain text. Say the word and I'll add the rule.
+
+  No assessment has derivedFrom. The ledger has no column for it. It's clearly intended: personal assessments land the day after a consumption of the same wine — Mouton consumed 1996-11-09, assessed 1996-11-10; consumed 1999-03-20, assessed 1999-03-21. But inferring the link would be fabricating a
+  reference, so I didn't. This means demo moment 4 in seed-data-plan.md, the derivedFrom feedback loop, has no data behind it — and that's the moment the README calls "the best single illustration of why assessments are documents." Fixing it needs either a column in ledger.csv or an explicit rule you
+  approve.
+
+  Also absent because the ledger has no columns for them: price, currency, confidence, occasion, and producer.country.
+
+  Files
+
+  - studio/scripts/build-ndjson.mts (new) — the transform. .mts so Node treats it as an ES module and strips types natively; no build step, no new runtime dependency. Includes its own RFC 4180 CSV reader, since tasting notes carry commas and apostrophes.
+  - studio/tsconfig.json — added **/*.mts to include so the script is typechecked.
+  - studio/package.json — added @types/node as a devDependency, needed for the script to typecheck.
+  - sample_data/cellar.ndjson (generated, 1645 docs) — not covered by either .gitignore; worth adding if you don't want the artifact committed.
+
+  tsc --noEmit, sanity schema validate, eslint ., and prettier --check all pass.
+
+  One stale doc: sample_data/README.md still reports 105 wines and 576 bottles against the actual 98 and 542. Happy to update it — and separately, CLAUDE.md says "No Python anywhere in this project" while sample_data/ contains four .py files. The rule presumably means the application stack rather than the
+  data-generation toolchain, but as written the two disagree.
+
+✻ Sautéed for 6m 14s
+```
+
+
+End: 3:12
+
+#### Prompt 2.5
+
+Start: 3:12
+
+```text
+Apply these, then rebuild the NDJSON and report counts again. Do not import.
+
+1. Approved rule for derivedFrom: a personal assessment dated exactly one day
+   after a consumption of the same wine gets derivedFrom set to that
+   consumption. If more than one consumption of that wine falls on that day,
+   leave it unset and list the case. Report how many assessments were linked.
+   This is an explicit rule, not an inference, and should be documented as
+   one in docs/seed-data-plan.md.
+2. Add "retail, delayed release" to the sourceType mapping as retail.
+3. Add sample_data/cellar.ndjson to .gitignore.
+4. Update sample_data/README.md counts to 98 wines, 542 bottles, and the
+   current state figures from check.py.
+5. In CLAUDE.md, change "No Python anywhere in this project" to say the
+   application stack is TypeScript, and that sample_data/ contains Python
+   tooling used only to generate and check the seed dataset.
+```
+
+Output:
+
+```text
+PowerShell(Set-Location 'C:\Users\kenal\Cellar'; git check-ignore -v sample_data/cellar.ndjson; Write-Output "--- git status (short) ---"; git status --short)
+  ⎿  .gitignore:246:sample_data/cellar.ndjson   sample_data/cellar.ndjson
+     --- git status (short) ---
+      M .gitignore
+     … +9 lines (ctrl+o to expand)
+
+● All five applied, NDJSON rebuilt, nothing imported.
+
+  Counts
+
+  producer       8
+  wine          98
+  bottle       542
+  acquisition  542
+  consumption  294
+  assessment   161
+  total       1645
+
+  Unchanged from before — the new rules add fields, not documents.
+
+  derivedFrom: 38 of 46 personal assessments linked. Zero ambiguous cases — no wine had two bottles opened on a day that a personal assessment followed, so nothing was dropped for that reason. The other 8 are personal assessments with no consumption of that wine on the preceding day: standalone opinions,
+  correctly carrying no link. Demo moment 4 now has data behind it. Spot-checked the Mouton: the 1996-11-10 assessment links to the bottle opened 1996-11-09, and the 1999-03-21 revision links to the blind-tasting bottle from 1999-03-20.
+
+  sourceType: all 542 acquisitions now have one. The 6 Mouton rows map to retail.
+
+  Import command
+
+  Unchanged. From C:\Users\kenal\Cellar\studio:
+
+  npx sanity dataset import ..\sample_data\cellar.ndjson production
+
+  Files
+
+  - studio/scripts/build-ndjson.mts — added the derivedFrom rule with a pre-pass index of consumptions by wine and date, a previousDay helper computed in UTC, retail in the source-type mapping, and reporting for links made plus any ambiguous case declined.
+  - docs/seed-data-plan.md — new "The derivedFrom rule" section stating the rule as a block quote, framed explicitly as a statement about how the ledger was authored rather than a pattern read off the data, with why the distinction matters and what it buys demo moment 4.
+  - CLAUDE.md — Stack section now says the application stack is TypeScript end to end, and that sample_data/ holds Python tooling for generating and checking the seed dataset only, with a note that it isn't a precedent.
+  - sample_data/README.md — count block updated to 98 / 542 / 294 / 248 / 997 and the state figures from check.py (HOLD 45, DRINKING 166, PAST_WINDOW 33, UNASSESSED 4). Also corrected two prose figures in the same section that were stale by the same margin: "roughly 560 acquisitions" → 540, "about 237
+  bottles on hand" → 250.
+  - .gitignore — sample_data/cellar.ndjson ignored; confirmed with git check-ignore.
+
+  tsc --noEmit, eslint ., prettier --check, and sanity schema validate all pass.
+
+  One thing I noticed while checking git status, unrelated to this work: docs/build-plan.md and docs/friction-log.md have uncommitted changes I didn't make. Flagging only so they don't get swept into a commit unintentionally.
+
+✻ Worked for 3m 19s
+```
+
+End: 3:18 pm
