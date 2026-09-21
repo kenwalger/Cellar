@@ -389,7 +389,8 @@ writeup's first criterion is honesty about process.
 
 | Time | Step | Model time |
 | --- | --- | --- |
-| before 2:46 pm | Prompt 1: read specs, report conflicts, then write schemas | 9m 26s after answers |
+| 2:25 | Setup environment, prompt development, CLI login | N/A |
+| 2:46 pm | Prompt 1: read specs, report conflicts, then write schemas | 9m 26s after answers |
 | to 2:59 pm | Prompt 1.5: correct the specs; Prompt 1.75: align code | 3m 57s, 1m 24s |
 | 3:02 to 3:12 pm | Prompt 2: seed transform to NDJSON | 6m 14s |
 | 3:12 to 3:18 pm | Prompt 2.5: derivedFrom rule and cleanups | 3m 19s |
