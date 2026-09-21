@@ -1,0 +1,99 @@
+wine_id,producer,cuvee,vintage,varietal,appellation,region,color
+brooks-pinot-noir-2012,Brooks,Pinot Noir,2012,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2013,Brooks,Riesling,2013,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2013,Brooks,Pinot Noir,2013,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2014,Brooks,Riesling,2014,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2014,Brooks,Pinot Noir,2014,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2015,Brooks,Riesling,2015,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2015,Brooks,Pinot Noir,2015,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2016,Brooks,Riesling,2016,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2016,Brooks,Pinot Noir,2016,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2017,Brooks,Riesling,2017,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2017,Brooks,Pinot Noir,2017,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2018,Brooks,Riesling,2018,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2018,Brooks,Pinot Noir,2018,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2019,Brooks,Riesling,2019,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-pinot-noir-2019,Brooks,Pinot Noir,2019,Pinot Noir,Eola-Amity Hills,Willamette Valley,red
+brooks-riesling-2020,Brooks,Riesling,2020,Riesling,Eola-Amity Hills,Willamette Valley,white
+brooks-riesling-2021,Brooks,Riesling,2021,Riesling,Eola-Amity Hills,Willamette Valley,white
+california-assorted-cabernet-sauvignon-2012,California (assorted),Cabernet Sauvignon,2012,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2013,California (assorted),Cabernet Sauvignon,2013,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2014,California (assorted),Cabernet Sauvignon,2014,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2016,California (assorted),Cabernet Sauvignon,2016,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2018,California (assorted),Cabernet Sauvignon,2018,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2019,California (assorted),Cabernet Sauvignon,2019,Cabernet Sauvignon,,,red
+california-assorted-cabernet-sauvignon-2020,California (assorted),Cabernet Sauvignon,2020,Cabernet Sauvignon,,,red
+chateau-mouton-rothschild-grand-vin-1993,Chateau Mouton Rothschild,Grand Vin,1993,Cabernet Sauvignon,Pauillac,Bordeaux,red
+farm-on-golden-hill-chardonnay-2022,Farm on Golden Hill,Chardonnay,2022,Chardonnay,Willamette Valley,Willamette Valley,white
+farm-on-golden-hill-pinot-noir-2022,Farm on Golden Hill,Pinot Noir,2022,Pinot Noir,Willamette Valley,Willamette Valley,red
+farm-on-golden-hill-rose-2023,Farm on Golden Hill,Rose,2023,Rose,Willamette Valley,Willamette Valley,rose
+farm-on-golden-hill-riesling-2023,Farm on Golden Hill,Riesling,2023,Riesling,Willamette Valley,Willamette Valley,white
+farm-on-golden-hill-pinot-noir-2023,Farm on Golden Hill,Pinot Noir,2023,Pinot Noir,Willamette Valley,Willamette Valley,red
+farm-on-golden-hill-riesling-2024,Farm on Golden Hill,Riesling,2024,Riesling,Willamette Valley,Willamette Valley,white
+farm-on-golden-hill-rose-2024,Farm on Golden Hill,Rose,2024,Rose,Willamette Valley,Willamette Valley,rose
+lodi-assorted-zinfandel-2014,Lodi (assorted),Zinfandel,2014,Zinfandel,,,red
+lodi-assorted-zinfandel-2015,Lodi (assorted),Zinfandel,2015,Zinfandel,,,red
+lodi-assorted-zinfandel-2016,Lodi (assorted),Zinfandel,2016,Zinfandel,,,red
+lodi-assorted-zinfandel-2017,Lodi (assorted),Zinfandel,2017,Zinfandel,,,red
+lodi-assorted-zinfandel-2018,Lodi (assorted),Zinfandel,2018,Zinfandel,,,red
+lodi-assorted-zinfandel-2019,Lodi (assorted),Zinfandel,2019,Zinfandel,,,red
+lodi-assorted-zinfandel-2020,Lodi (assorted),Zinfandel,2020,Zinfandel,,,red
+lodi-assorted-zinfandel-2024,Lodi (assorted),Zinfandel,2024,Zinfandel,,,red
+lodi-assorted-zinfandel-2025,Lodi (assorted),Zinfandel,2025,Zinfandel,,,red
+paradis-vineyards-pinot-noir-2019,Paradis Vineyards,Pinot Noir,2019,Pinot Noir,Willamette Valley,Willamette Valley,red
+paradis-vineyards-marechal-foch-2021,Paradis Vineyards,Marechal Foch,2021,Marechal Foch,Willamette Valley,Willamette Valley,red
+paradis-vineyards-riesling-2021,Paradis Vineyards,Riesling,2021,Riesling,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-gris-2021,Paradis Vineyards,Pinot Gris,2021,Pinot Gris,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-noir-2021,Paradis Vineyards,Pinot Noir,2021,Pinot Noir,Willamette Valley,Willamette Valley,red
+paradis-vineyards-estate-marechal-foch-2021,Paradis Vineyards,Estate Marechal Foch,2021,Marechal Foch,Willamette Valley,Willamette Valley,red
+paradis-vineyards-pinot-gris-2022,Paradis Vineyards,Pinot Gris,2022,Pinot Gris,Willamette Valley,Willamette Valley,white
+paradis-vineyards-marechal-foch-2022,Paradis Vineyards,Marechal Foch,2022,Marechal Foch,Willamette Valley,Willamette Valley,red
+paradis-vineyards-riesling-2022,Paradis Vineyards,Riesling,2022,Riesling,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-noir-2022,Paradis Vineyards,Pinot Noir,2022,Pinot Noir,Willamette Valley,Willamette Valley,red
+paradis-vineyards-pinot-gris-2023,Paradis Vineyards,Pinot Gris,2023,Pinot Gris,Willamette Valley,Willamette Valley,white
+paradis-vineyards-riesling-2023,Paradis Vineyards,Riesling,2023,Riesling,Willamette Valley,Willamette Valley,white
+paradis-vineyards-marechal-foch-2023,Paradis Vineyards,Marechal Foch,2023,Marechal Foch,Willamette Valley,Willamette Valley,red
+paradis-vineyards-pinot-noir-2023,Paradis Vineyards,Pinot Noir,2023,Pinot Noir,Willamette Valley,Willamette Valley,red
+paradis-vineyards-marechal-foch-2024,Paradis Vineyards,Marechal Foch,2024,Marechal Foch,Willamette Valley,Willamette Valley,red
+paradis-vineyards-riesling-2024,Paradis Vineyards,Riesling,2024,Riesling,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-gris-2024,Paradis Vineyards,Pinot Gris,2024,Pinot Gris,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-noir-2024,Paradis Vineyards,Pinot Noir,2024,Pinot Noir,Willamette Valley,Willamette Valley,red
+paradis-vineyards-riesling-2025,Paradis Vineyards,Riesling,2025,Riesling,Willamette Valley,Willamette Valley,white
+paradis-vineyards-pinot-gris-2025,Paradis Vineyards,Pinot Gris,2025,Pinot Gris,Willamette Valley,Willamette Valley,white
+paradis-vineyards-marechal-foch-2025,Paradis Vineyards,Marechal Foch,2025,Marechal Foch,Willamette Valley,Willamette Valley,red
+st-josef-s-pinot-noir-2019,St. Josef's,Pinot Noir,2019,Pinot Noir,Willamette Valley,Willamette Valley,red
+st-josef-s-pinot-noir-2021,St. Josef's,Pinot Noir,2021,Pinot Noir,Willamette Valley,Willamette Valley,red
+st-josef-s-pinot-noir-2022,St. Josef's,Pinot Noir,2022,Pinot Noir,Willamette Valley,Willamette Valley,red
+st-josef-s-pinot-noir-2023,St. Josef's,Pinot Noir,2023,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-chardonnay-2019,Vitis Ridge,Chardonnay,2019,Chardonnay,Willamette Valley,Willamette Valley,white
+vitis-ridge-tannin-s-blend-2019,Vitis Ridge,Tannin's Blend,2019,Tannin's Blend,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-noir-2019,Vitis Ridge,Pinot Noir,2019,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-rose-of-pinot-noir-2019,Vitis Ridge,Rose of Pinot Noir,2019,Rose of Pinot Noir,Willamette Valley,Willamette Valley,rose
+vitis-ridge-fortissimo-2019,Vitis Ridge,Fortissimo,2019,Fortissimo,Willamette Valley,Willamette Valley,red
+vitis-ridge-marechal-foch-2021,Vitis Ridge,Marechal Foch,2021,Marechal Foch,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-gris-2021,Vitis Ridge,Pinot Gris,2021,Pinot Gris,Willamette Valley,Willamette Valley,white
+vitis-ridge-rose-of-pinot-noir-2021,Vitis Ridge,Rose of Pinot Noir,2021,Rose of Pinot Noir,Willamette Valley,Willamette Valley,rose
+vitis-ridge-chardonnay-2021,Vitis Ridge,Chardonnay,2021,Chardonnay,Willamette Valley,Willamette Valley,white
+vitis-ridge-fortissimo-2021,Vitis Ridge,Fortissimo,2021,Fortissimo,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-noir-2021,Vitis Ridge,Pinot Noir,2021,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-riesling-2022,Vitis Ridge,Riesling,2022,Riesling,Willamette Valley,Willamette Valley,white
+vitis-ridge-rose-of-pinot-noir-2022,Vitis Ridge,Rose of Pinot Noir,2022,Rose of Pinot Noir,Willamette Valley,Willamette Valley,rose
+vitis-ridge-marechal-foch-2022,Vitis Ridge,Marechal Foch,2022,Marechal Foch,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-gris-2022,Vitis Ridge,Pinot Gris,2022,Pinot Gris,Willamette Valley,Willamette Valley,white
+vitis-ridge-tannin-s-blend-2022,Vitis Ridge,Tannin's Blend,2022,Tannin's Blend,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-noir-2022,Vitis Ridge,Pinot Noir,2022,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-chardonnay-2022,Vitis Ridge,Chardonnay,2022,Chardonnay,Willamette Valley,Willamette Valley,white
+vitis-ridge-fortissimo-2022,Vitis Ridge,Fortissimo,2022,Fortissimo,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-gris-2023,Vitis Ridge,Pinot Gris,2023,Pinot Gris,Willamette Valley,Willamette Valley,white
+vitis-ridge-pinot-noir-2023,Vitis Ridge,Pinot Noir,2023,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-fortissimo-2023,Vitis Ridge,Fortissimo,2023,Fortissimo,Willamette Valley,Willamette Valley,red
+vitis-ridge-marechal-foch-2024,Vitis Ridge,Marechal Foch,2024,Marechal Foch,Willamette Valley,Willamette Valley,red
+vitis-ridge-riesling-2024,Vitis Ridge,Riesling,2024,Riesling,Willamette Valley,Willamette Valley,white
+vitis-ridge-rose-of-pinot-noir-2024,Vitis Ridge,Rose of Pinot Noir,2024,Rose of Pinot Noir,Willamette Valley,Willamette Valley,rose
+vitis-ridge-pinot-gris-2024,Vitis Ridge,Pinot Gris,2024,Pinot Gris,Willamette Valley,Willamette Valley,white
+vitis-ridge-tannin-s-blend-2024,Vitis Ridge,Tannin's Blend,2024,Tannin's Blend,Willamette Valley,Willamette Valley,red
+vitis-ridge-fortissimo-2024,Vitis Ridge,Fortissimo,2024,Fortissimo,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-noir-2024,Vitis Ridge,Pinot Noir,2024,Pinot Noir,Willamette Valley,Willamette Valley,red
+vitis-ridge-pinot-gris-2025,Vitis Ridge,Pinot Gris,2025,Pinot Gris,Willamette Valley,Willamette Valley,white
+vitis-ridge-marechal-foch-2025,Vitis Ridge,Marechal Foch,2025,Marechal Foch,Willamette Valley,Willamette Valley,red
+vitis-ridge-riesling-2025,Vitis Ridge,Riesling,2025,Riesling,Willamette Valley,Willamette Valley,white

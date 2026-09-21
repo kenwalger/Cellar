@@ -1,0 +1,999 @@
+date,type,wine,bottle,sourceType,sourceName,drinkFrom,drinkUntil,note
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-a,,"retail, delayed release",,,
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-b,,"retail, delayed release",,,
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-c,,"retail, delayed release",,,
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-d,,"retail, delayed release",,,
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-e,,"retail, delayed release",,,
+1996-05-18,acquire,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-f,,"retail, delayed release",,,
+1996-06-03,assess,chateau-mouton-rothschild-grand-vin-1993,,critic,The Vintner's Ledger,1999,2015,"Rain-affected vintage. Approachable early, not a long-haul bottle by Pauillac standards."
+1996-11-09,consume,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-a,,,,,"First one. Very impressed. Cassis, graphite, real length. Young but already giving."
+1996-11-10,assess,chateau-mouton-rothschild-grand-vin-1993,,personal,me,1998,2018,Better than the vintage's reputation suggests.
+1999-03-20,consume,chateau-mouton-rothschild-grand-vin-1993,chateau-mouton-rothschild-grand-vin-1993-b,,,,,"Blind, against several much cheaper bottles. It did not win. Sobering and useful. Price is not quality."
+1999-03-21,assess,chateau-mouton-rothschild-grand-vin-1993,,personal,me,1998,2012,"Revising down after the blind tasting. Good wine, not a great one, and not one to hold for decades."
+2008-09-14,assess,chateau-mouton-rothschild-grand-vin-1993,,critic,Pacific Vintage Quarterly,1999,2020,Retrospective. Well-stored examples still showing.
+2014-01-09,assess,brooks-riesling-2013,,critic,Cascadia Wine Review,2018,2027,"Harvest rain, lighter and earlier drinking."
+2014-03-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-a,,winery club,,,
+2014-03-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-b,,winery club,,,
+2014-03-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-c,,winery club,,,
+2014-03-12,acquire,brooks-riesling-2013,brooks-riesling-2013-a,,winery club,,,
+2014-03-12,acquire,brooks-riesling-2013,brooks-riesling-2013-b,,winery club,,,
+2014-03-12,acquire,brooks-riesling-2013,brooks-riesling-2013-c,,winery club,,,
+2014-03-12,assess,brooks-pinot-noir-2012,,producer,Brooks,2017,2027,Window at purchase.
+2014-03-12,assess,brooks-riesling-2013,,producer,Brooks,2018,2028,Window at purchase.
+2014-06-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-d,,winery club,,,
+2014-06-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-e,,winery club,,,
+2014-06-12,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-f,,winery club,,,
+2014-06-12,acquire,brooks-riesling-2013,brooks-riesling-2013-d,,winery club,,,
+2014-06-12,acquire,brooks-riesling-2013,brooks-riesling-2013-e,,winery club,,,
+2014-06-12,acquire,brooks-riesling-2013,brooks-riesling-2013-f,,winery club,,,
+2014-09-21,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-g,,winery club,,,
+2014-09-21,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-h,,winery club,,,
+2014-09-21,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-i,,winery club,,,
+2014-09-21,acquire,brooks-riesling-2013,brooks-riesling-2013-g,,winery club,,,
+2014-09-21,acquire,brooks-riesling-2013,brooks-riesling-2013-h,,winery club,,,
+2014-09-21,acquire,brooks-riesling-2013,brooks-riesling-2013-i,,winery club,,,
+2014-12-08,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-j,,winery club,,,
+2014-12-08,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-k,,winery club,,,
+2014-12-08,acquire,brooks-pinot-noir-2012,brooks-pinot-noir-2012-l,,winery club,,,
+2014-12-08,acquire,brooks-riesling-2013,brooks-riesling-2013-j,,winery club,,,
+2014-12-08,acquire,brooks-riesling-2013,brooks-riesling-2013-k,,winery club,,,
+2014-12-08,acquire,brooks-riesling-2013,brooks-riesling-2013-l,,winery club,,,
+2015-03-12,assess,brooks-riesling-2014,,producer,Brooks,2019,2029,Release notes. Warm and generous.
+2015-03-21,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-a,,winery club,,,
+2015-03-21,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-b,,winery club,,,
+2015-03-21,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-c,,winery club,,,
+2015-03-21,acquire,brooks-riesling-2014,brooks-riesling-2014-a,,winery club,,,
+2015-03-21,acquire,brooks-riesling-2014,brooks-riesling-2014-b,,winery club,,,
+2015-03-21,acquire,brooks-riesling-2014,brooks-riesling-2014-c,,winery club,,,
+2015-05-01,assess,california-assorted-cabernet-sauvignon-2013,,critic,Northwest Cellar Notes,2016,2024,Drink early. Not a keeper.
+2015-06-12,assess,brooks-pinot-noir-2013,,producer,Brooks,2018,2028,"Release notes. Harvest rain, lighter and earlier drinking."
+2015-06-16,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-d,,winery club,,,
+2015-06-16,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-e,,winery club,,,
+2015-06-16,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-f,,winery club,,,
+2015-06-16,acquire,brooks-riesling-2014,brooks-riesling-2014-d,,winery club,,,
+2015-06-16,acquire,brooks-riesling-2014,brooks-riesling-2014-e,,winery club,,,
+2015-06-16,acquire,brooks-riesling-2014,brooks-riesling-2014-f,,winery club,,,
+2015-09-10,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-g,,winery club,,,
+2015-09-10,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-h,,winery club,,,
+2015-09-10,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-i,,winery club,,,
+2015-09-10,acquire,brooks-riesling-2014,brooks-riesling-2014-g,,winery club,,,
+2015-09-10,acquire,brooks-riesling-2014,brooks-riesling-2014-h,,winery club,,,
+2015-09-10,acquire,brooks-riesling-2014,brooks-riesling-2014-i,,winery club,,,
+2015-10-27,assess,brooks-riesling-2014,,critic,Cascadia Wine Review,2019,2031,Warm and generous.
+2015-12-13,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-j,,winery club,,,
+2015-12-13,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-k,,winery club,,,
+2015-12-13,acquire,brooks-pinot-noir-2013,brooks-pinot-noir-2013-l,,winery club,,,
+2015-12-13,acquire,brooks-riesling-2014,brooks-riesling-2014-j,,winery club,,,
+2015-12-13,acquire,brooks-riesling-2014,brooks-riesling-2014-k,,winery club,,,
+2015-12-13,acquire,brooks-riesling-2014,brooks-riesling-2014-l,,winery club,,,
+2016-03-12,assess,brooks-pinot-noir-2014,,producer,Brooks,2019,2029,Release notes. Warm and generous.
+2016-03-16,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-a,,winery club,,,
+2016-03-16,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-b,,winery club,,,
+2016-03-16,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-c,,winery club,,,
+2016-03-16,acquire,brooks-riesling-2015,brooks-riesling-2015-a,,winery club,,,
+2016-03-16,acquire,brooks-riesling-2015,brooks-riesling-2015-b,,winery club,,,
+2016-03-16,acquire,brooks-riesling-2015,brooks-riesling-2015-c,,winery club,,,
+2016-04-07,acquire,california-assorted-cabernet-sauvignon-2012,california-assorted-cabernet-sauvignon-2012-a,,gift,,,
+2016-04-07,acquire,california-assorted-cabernet-sauvignon-2012,california-assorted-cabernet-sauvignon-2012-b,,grocery store,,,
+2016-04-07,consume,brooks-riesling-2013,brooks-riesling-2013-g,,,,,
+2016-05-15,consume,california-assorted-cabernet-sauvignon-2012,california-assorted-cabernet-sauvignon-2012-b,,,,,Grocery store cab doing grocery store cab things.
+2016-06-10,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-d,,winery club,,,
+2016-06-10,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-e,,winery club,,,
+2016-06-10,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-f,,winery club,,,
+2016-06-10,acquire,brooks-riesling-2015,brooks-riesling-2015-d,,winery club,,,
+2016-06-10,acquire,brooks-riesling-2015,brooks-riesling-2015-e,,winery club,,,
+2016-06-10,acquire,brooks-riesling-2015,brooks-riesling-2015-f,,winery club,,,
+2016-06-12,assess,brooks-riesling-2015,,producer,Brooks,2020,2030,"Release notes. Hot and early, forward fruit."
+2016-07-08,acquire,lodi-assorted-zinfandel-2015,lodi-assorted-zinfandel-2015-a,,grocery store,,,
+2016-09-21,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-g,,winery club,,,
+2016-09-21,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-h,,winery club,,,
+2016-09-21,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-i,,winery club,,,
+2016-09-21,acquire,brooks-riesling-2015,brooks-riesling-2015-g,,winery club,,,
+2016-09-21,acquire,brooks-riesling-2015,brooks-riesling-2015-h,,winery club,,,
+2016-09-21,acquire,brooks-riesling-2015,brooks-riesling-2015-i,,winery club,,,
+2016-10-18,acquire,california-assorted-cabernet-sauvignon-2014,california-assorted-cabernet-sauvignon-2014-a,,gift,,,
+2016-11-03,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-d,,,,,Structured. Could have waited another two years.
+2016-12-20,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-j,,winery club,,,
+2016-12-20,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-k,,winery club,,,
+2016-12-20,acquire,brooks-pinot-noir-2014,brooks-pinot-noir-2014-l,,winery club,,,
+2016-12-20,acquire,brooks-riesling-2015,brooks-riesling-2015-j,,winery club,,,
+2016-12-20,acquire,brooks-riesling-2015,brooks-riesling-2015-k,,winery club,,,
+2016-12-20,acquire,brooks-riesling-2015,brooks-riesling-2015-l,,winery club,,,
+2017-03-12,assess,brooks-pinot-noir-2015,,producer,Brooks,2020,2030,"Release notes. Hot and early, forward fruit."
+2017-03-16,consume,california-assorted-cabernet-sauvignon-2012,california-assorted-cabernet-sauvignon-2012-a,,,,,
+2017-03-17,assess,california-assorted-cabernet-sauvignon-2012,,personal,me,2016,2025,Reassessed after opening one.
+2017-03-20,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-a,,winery club,,,
+2017-03-20,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-b,,winery club,,,
+2017-03-20,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-c,,winery club,,,
+2017-03-20,acquire,brooks-riesling-2016,brooks-riesling-2016-a,,winery club,,,
+2017-03-20,acquire,brooks-riesling-2016,brooks-riesling-2016-b,,winery club,,,
+2017-03-20,acquire,brooks-riesling-2016,brooks-riesling-2016-c,,winery club,,,
+2017-05-01,assess,lodi-assorted-zinfandel-2015,,critic,Pacific Vintage Quarterly,2017,2025,Drink early. Not a keeper.
+2017-06-13,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-d,,winery club,,,
+2017-06-13,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-e,,winery club,,,
+2017-06-13,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-f,,winery club,,,
+2017-06-13,acquire,brooks-riesling-2016,brooks-riesling-2016-d,,winery club,,,
+2017-06-13,acquire,brooks-riesling-2016,brooks-riesling-2016-e,,winery club,,,
+2017-06-13,acquire,brooks-riesling-2016,brooks-riesling-2016-f,,winery club,,,
+2017-07-12,assess,brooks-riesling-2016,,producer,Brooks,2021,2031,Release notes. Warm and early.
+2017-08-05,consume,brooks-riesling-2015,brooks-riesling-2015-b,,,,,Great acid. Held up better than expected.
+2017-08-23,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-b,,,,,Fruit starting to dry out at the edges.
+2017-09-14,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-g,,winery club,,,
+2017-09-14,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-h,,winery club,,,
+2017-09-14,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-i,,winery club,,,
+2017-09-14,acquire,brooks-riesling-2016,brooks-riesling-2016-g,,winery club,,,
+2017-09-14,acquire,brooks-riesling-2016,brooks-riesling-2016-h,,winery club,,,
+2017-09-14,acquire,brooks-riesling-2016,brooks-riesling-2016-i,,winery club,,,
+2017-11-24,acquire,lodi-assorted-zinfandel-2016,lodi-assorted-zinfandel-2016-a,,gift,,,
+2017-12-07,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-d,,,,,Structured. Could have waited another two years.
+2017-12-12,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-j,,winery club,,,
+2017-12-12,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-k,,winery club,,,
+2017-12-12,acquire,brooks-pinot-noir-2015,brooks-pinot-noir-2015-l,,winery club,,,
+2017-12-12,acquire,brooks-riesling-2016,brooks-riesling-2016-j,,winery club,,,
+2017-12-12,acquire,brooks-riesling-2016,brooks-riesling-2016-k,,winery club,,,
+2017-12-12,acquire,brooks-riesling-2016,brooks-riesling-2016-l,,winery club,,,
+2017-12-14,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-f,,,,,Structured. Could have waited another two years.
+2017-12-18,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-e,,,,,Silky. Drinking well right now.
+2017-12-23,acquire,california-assorted-cabernet-sauvignon-2014,california-assorted-cabernet-sauvignon-2014-b,,gift,,,
+2018-02-04,acquire,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-a,,gift,,,
+2018-02-14,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-b,,,,,Structured. Could have waited another two years.
+2018-03-17,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-a,,winery club,,,
+2018-03-17,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-b,,winery club,,,
+2018-03-17,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-c,,winery club,,,
+2018-03-17,acquire,brooks-riesling-2017,brooks-riesling-2017-a,,winery club,,,
+2018-03-17,acquire,brooks-riesling-2017,brooks-riesling-2017-b,,winery club,,,
+2018-03-17,acquire,brooks-riesling-2017,brooks-riesling-2017-c,,winery club,,,
+2018-05-15,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-c,,,,,Fruit starting to dry out at the edges.
+2018-06-20,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-h,,,,,
+2018-06-21,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-d,,winery club,,,
+2018-06-21,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-e,,winery club,,,
+2018-06-21,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-f,,winery club,,,
+2018-06-21,acquire,brooks-riesling-2017,brooks-riesling-2017-d,,winery club,,,
+2018-06-21,acquire,brooks-riesling-2017,brooks-riesling-2017-e,,winery club,,,
+2018-06-21,acquire,brooks-riesling-2017,brooks-riesling-2017-f,,winery club,,,
+2018-07-02,consume,brooks-riesling-2013,brooks-riesling-2013-e,,,,,Great acid. Held up better than expected.
+2018-07-03,assess,brooks-riesling-2013,,personal,me,2018,2026,Reassessed after opening.
+2018-07-03,assess,brooks-riesling-2013,,personal,me,2018,2024,Reassessed after opening one.
+2018-07-12,assess,brooks-riesling-2017,,producer,Brooks,2022,2032,"Release notes. Cooler and classic, elegant structure."
+2018-07-18,acquire,lodi-assorted-zinfandel-2014,lodi-assorted-zinfandel-2014-a,,gift,,,
+2018-07-19,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-a,,,,,Fruit starting to dry out at the edges.
+2018-08-04,consume,brooks-riesling-2016,brooks-riesling-2016-e,,,,,Still tastes young. Years left in this.
+2018-09-12,assess,brooks-pinot-noir-2016,,producer,Brooks,2021,2031,Release notes. Warm and early.
+2018-09-18,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-g,,winery club,,,
+2018-09-18,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-h,,winery club,,,
+2018-09-18,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-i,,winery club,,,
+2018-09-18,acquire,brooks-riesling-2017,brooks-riesling-2017-g,,winery club,,,
+2018-09-18,acquire,brooks-riesling-2017,brooks-riesling-2017-h,,winery club,,,
+2018-09-18,acquire,brooks-riesling-2017,brooks-riesling-2017-i,,winery club,,,
+2018-10-23,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-i,,,,,Impatient. Worth it anyway.
+2018-11-12,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-j,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2018-11-13,assess,brooks-pinot-noir-2013,,personal,me,2018,2026,Reassessed after opening one.
+2018-11-17,consume,brooks-riesling-2013,brooks-riesling-2013-j,,,,,Still tastes young. Years left in this.
+2018-11-22,consume,brooks-riesling-2013,brooks-riesling-2013-l,,,,,Still tastes young. Years left in this.
+2018-11-23,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-g,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2018-11-24,assess,brooks-pinot-noir-2012,,personal,me,2019,2031,Reassessed after opening one.
+2018-12-10,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-j,,winery club,,,
+2018-12-10,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-k,,winery club,,,
+2018-12-10,acquire,brooks-pinot-noir-2016,brooks-pinot-noir-2016-l,,winery club,,,
+2018-12-10,acquire,brooks-riesling-2017,brooks-riesling-2017-j,,winery club,,,
+2018-12-10,acquire,brooks-riesling-2017,brooks-riesling-2017-k,,winery club,,,
+2018-12-10,acquire,brooks-riesling-2017,brooks-riesling-2017-l,,winery club,,,
+2018-12-25,assess,brooks-riesling-2017,,critic,Northwest Cellar Notes,2022,2032,"Cooler and classic, elegant structure."
+2019-02-05,consume,brooks-riesling-2013,brooks-riesling-2013-f,,,,,
+2019-02-11,assess,chateau-mouton-rothschild-grand-vin-1993,,critic,Cascadia Wine Review,1999,2022,Late look. Tertiary but sound from good provenance.
+2019-03-01,consume,brooks-riesling-2013,brooks-riesling-2013-i,,,,,"Off-dry, lime and petrol. Excellent."
+2019-03-03,acquire,lodi-assorted-zinfandel-2018,lodi-assorted-zinfandel-2018-a,,gift,,,
+2019-03-21,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-a,,winery club,,,
+2019-03-21,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-b,,winery club,,,
+2019-03-21,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-c,,winery club,,,
+2019-03-21,acquire,brooks-riesling-2018,brooks-riesling-2018-a,,winery club,,,
+2019-03-21,acquire,brooks-riesling-2018,brooks-riesling-2018-b,,winery club,,,
+2019-03-21,acquire,brooks-riesling-2018,brooks-riesling-2018-c,,winery club,,,
+2019-03-26,acquire,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-b,,gift,,,
+2019-04-12,assess,brooks-riesling-2018,,producer,Brooks,2023,2033,Release notes. Warm with real structure.
+2019-04-21,consume,lodi-assorted-zinfandel-2014,lodi-assorted-zinfandel-2014-a,,,,,
+2019-05-14,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-j,,,,,Silky. Drinking well right now.
+2019-06-08,consume,lodi-assorted-zinfandel-2015,lodi-assorted-zinfandel-2015-a,,,,,Brambly and warm. Good on a cold night.
+2019-06-09,assess,lodi-assorted-zinfandel-2015,,personal,me,2017,2024,Reassessed after opening one.
+2019-06-15,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-d,,winery club,,,
+2019-06-15,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-e,,winery club,,,
+2019-06-15,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-f,,winery club,,,
+2019-06-15,acquire,brooks-riesling-2018,brooks-riesling-2018-d,,winery club,,,
+2019-06-15,acquire,brooks-riesling-2018,brooks-riesling-2018-e,,winery club,,,
+2019-06-15,acquire,brooks-riesling-2018,brooks-riesling-2018-f,,winery club,,,
+2019-06-19,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-a,,,,,Structured. Could have waited another two years.
+2019-07-12,assess,brooks-pinot-noir-2017,,producer,Brooks,2022,2032,"Release notes. Cooler and classic, elegant structure."
+2019-07-25,consume,brooks-riesling-2017,brooks-riesling-2017-i,,,,,Great acid. Held up better than expected.
+2019-08-02,consume,lodi-assorted-zinfandel-2016,lodi-assorted-zinfandel-2016-a,,,,,
+2019-08-19,assess,brooks-riesling-2016,,critic,Pacific Vintage Quarterly,2021,2032,Warm and early.
+2019-09-14,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-g,,winery club,,,
+2019-09-14,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-h,,winery club,,,
+2019-09-14,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-i,,winery club,,,
+2019-09-14,acquire,brooks-riesling-2018,brooks-riesling-2018-g,,winery club,,,
+2019-09-14,acquire,brooks-riesling-2018,brooks-riesling-2018-h,,winery club,,,
+2019-09-14,acquire,brooks-riesling-2018,brooks-riesling-2018-i,,winery club,,,
+2019-10-08,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-f,,,,,"Bright acid, light on its feet."
+2019-10-23,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-e,,,,,"Opened too young. Fruit is there, structure is not resolved."
+2019-11-11,consume,california-assorted-cabernet-sauvignon-2014,california-assorted-cabernet-sauvignon-2014-a,,,,,Grocery store cab doing grocery store cab things.
+2019-11-15,consume,california-assorted-cabernet-sauvignon-2014,california-assorted-cabernet-sauvignon-2014-b,,,,,Surprisingly good for what it cost.
+2019-11-16,acquire,california-assorted-cabernet-sauvignon-2018,california-assorted-cabernet-sauvignon-2018-a,,gift,,,
+2019-11-25,consume,brooks-riesling-2013,brooks-riesling-2013-a,,,,,
+2019-12-03,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-l,,,,,Fruit starting to dry out at the edges.
+2019-12-04,assess,brooks-pinot-noir-2014,,personal,me,2019,2028,Reassessed after opening one.
+2019-12-18,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-g,,,,,"Bright acid, light on its feet."
+2019-12-19,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-j,,winery club,,,
+2019-12-19,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-k,,winery club,,,
+2019-12-19,acquire,brooks-pinot-noir-2017,brooks-pinot-noir-2017-l,,winery club,,,
+2019-12-19,acquire,brooks-riesling-2018,brooks-riesling-2018-j,,winery club,,,
+2019-12-19,acquire,brooks-riesling-2018,brooks-riesling-2018-k,,winery club,,,
+2019-12-19,acquire,brooks-riesling-2018,brooks-riesling-2018-l,,winery club,,,
+2020-01-27,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-e,,,,,"Bright acid, light on its feet."
+2020-03-17,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-g,,,,,Silky. Drinking well right now.
+2020-03-18,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-a,,winery club,,,
+2020-03-18,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-b,,winery club,,,
+2020-03-18,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-c,,winery club,,,
+2020-03-18,acquire,brooks-riesling-2019,brooks-riesling-2019-a,,winery club,,,
+2020-03-18,acquire,brooks-riesling-2019,brooks-riesling-2019-b,,winery club,,,
+2020-03-18,acquire,brooks-riesling-2019,brooks-riesling-2019-c,,winery club,,,
+2020-03-18,acquire,california-assorted-cabernet-sauvignon-2019,california-assorted-cabernet-sauvignon-2019-a,,gift,,,
+2020-03-28,consume,brooks-riesling-2018,brooks-riesling-2018-h,,,,,Honeyed now. Turning the corner but lovely.
+2020-04-12,assess,vitis-ridge-rose-of-pinot-noir-2019,,producer,Vitis Ridge,2020,2021,"Release notes. Cool and wet, producer-dependent."
+2020-05-03,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-c,,,,,
+2020-05-15,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-l,,,,,Opened up after an hour. Cranberry and dried herb.
+2020-06-12,assess,brooks-pinot-noir-2018,,producer,Brooks,2023,2033,Release notes. Warm with real structure.
+2020-06-19,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-d,,winery club,,,
+2020-06-19,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-e,,winery club,,,
+2020-06-19,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-f,,winery club,,,
+2020-06-19,acquire,brooks-riesling-2019,brooks-riesling-2019-d,,winery club,,,
+2020-06-19,acquire,brooks-riesling-2019,brooks-riesling-2019-e,,winery club,,,
+2020-06-19,acquire,brooks-riesling-2019,brooks-riesling-2019-f,,winery club,,,
+2020-06-22,acquire,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-c,,gift,,,
+2020-06-22,acquire,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-d,,grocery store,,,
+2020-07-02,consume,brooks-riesling-2015,brooks-riesling-2015-e,,,,,
+2020-07-14,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-i,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2020-07-20,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-d,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2020-07-25,consume,brooks-riesling-2019,brooks-riesling-2019-b,,,,,Still tastes young. Years left in this.
+2020-08-10,consume,brooks-riesling-2013,brooks-riesling-2013-d,,,,,Honeyed now. Turning the corner but lovely.
+2020-08-12,assess,brooks-riesling-2019,,producer,Brooks,2024,2034,"Release notes. Cool and wet, producer-dependent."
+2020-08-16,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-j,,,,,Fruit starting to dry out at the edges.
+2020-08-27,assess,brooks-riesling-2017,,critic,The Vintner's Ledger,2022,2036,Retrospective tasting. More life left than earlier notes suggested.
+2020-09-11,consume,brooks-riesling-2014,brooks-riesling-2014-g,,,,,Great acid. Held up better than expected.
+2020-09-12,assess,brooks-riesling-2014,,personal,me,2019,2026,Reassessed after opening one.
+2020-09-13,consume,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-a,,,,,Grocery store cab doing grocery store cab things.
+2020-09-14,assess,california-assorted-cabernet-sauvignon-2016,,personal,me,2019,2029,Reassessed after opening one.
+2020-09-16,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-g,,winery club,,,
+2020-09-16,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-h,,winery club,,,
+2020-09-16,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-i,,winery club,,,
+2020-09-16,acquire,brooks-riesling-2019,brooks-riesling-2019-g,,winery club,,,
+2020-09-16,acquire,brooks-riesling-2019,brooks-riesling-2019-h,,winery club,,,
+2020-09-16,acquire,brooks-riesling-2019,brooks-riesling-2019-i,,winery club,,,
+2020-10-09,acquire,lodi-assorted-zinfandel-2017,lodi-assorted-zinfandel-2017-a,,grocery store,,,
+2020-10-09,acquire,lodi-assorted-zinfandel-2017,lodi-assorted-zinfandel-2017-b,,grocery store,,,
+2020-10-10,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-a,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2020-10-23,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-k,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2020-10-26,consume,brooks-riesling-2015,brooks-riesling-2015-l,,,,,
+2020-11-12,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-c,,,,,Silky. Drinking well right now.
+2020-11-12,consume,brooks-riesling-2014,brooks-riesling-2014-e,,,,,"Off-dry, lime and petrol. Excellent."
+2020-11-16,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-b,,,,,Fruit starting to dry out at the edges.
+2020-11-18,consume,brooks-riesling-2015,brooks-riesling-2015-k,,,,,Still tastes young. Years left in this.
+2020-12-05,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-h,,,,,Structured. Could have waited another two years.
+2020-12-12,consume,brooks-riesling-2014,brooks-riesling-2014-k,,,,,"Off-dry, lime and petrol. Excellent."
+2020-12-13,consume,brooks-pinot-noir-2014,brooks-pinot-noir-2014-k,,,,,Structured. Could have waited another two years.
+2020-12-20,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-j,,winery club,,,
+2020-12-20,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-k,,winery club,,,
+2020-12-20,acquire,brooks-pinot-noir-2018,brooks-pinot-noir-2018-l,,winery club,,,
+2020-12-20,acquire,brooks-riesling-2019,brooks-riesling-2019-j,,winery club,,,
+2020-12-20,acquire,brooks-riesling-2019,brooks-riesling-2019-k,,winery club,,,
+2020-12-20,acquire,brooks-riesling-2019,brooks-riesling-2019-l,,winery club,,,
+2020-12-21,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-j,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2020-12-27,consume,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-c,,,,,Dried out. Held it too long.
+2021-02-08,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-b,,,,,"Bright acid, light on its feet."
+2021-03-12,assess,vitis-ridge-chardonnay-2019,,producer,Vitis Ridge,2021,2027,"Release notes. Cool and wet, producer-dependent."
+2021-03-12,assess,vitis-ridge-fortissimo-2019,,producer,Vitis Ridge,2022,2034,"Release notes. Cool and wet, producer-dependent."
+2021-03-12,assess,vitis-ridge-pinot-noir-2019,,producer,Vitis Ridge,2021,2024,"Release notes. Cool and wet, producer-dependent."
+2021-03-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-a,,winery club,,,
+2021-03-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-b,,winery club,,,
+2021-03-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-c,,winery club,,,
+2021-03-15,acquire,brooks-riesling-2020,brooks-riesling-2020-a,,winery club,,,
+2021-03-15,acquire,brooks-riesling-2020,brooks-riesling-2020-b,,winery club,,,
+2021-03-15,acquire,brooks-riesling-2020,brooks-riesling-2020-c,,winery club,,,
+2021-03-18,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-a,,winery club,,,
+2021-03-18,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-b,,winery club,,,
+2021-03-22,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-a,,winery club,,,
+2021-03-22,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-b,,winery club,,,
+2021-03-22,acquire,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-a,,winery club,,,
+2021-03-22,acquire,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-b,,winery club,,,
+2021-04-12,assess,st-josef-s-pinot-noir-2019,,producer,St. Josef's,2021,2024,"Release notes. Cool and wet, producer-dependent."
+2021-05-08,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-e,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2021-05-12,assess,vitis-ridge-tannin-s-blend-2019,,producer,Vitis Ridge,2021,2027,"Release notes. Cool and wet, producer-dependent."
+2021-05-23,consume,brooks-riesling-2016,brooks-riesling-2016-i,,,,,Still tastes young. Years left in this.
+2021-06-04,consume,brooks-riesling-2015,brooks-riesling-2015-c,,,,,"Off-dry, lime and petrol. Excellent."
+2021-06-10,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-d,,winery club,,,
+2021-06-10,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-e,,winery club,,,
+2021-06-10,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-f,,winery club,,,
+2021-06-10,acquire,brooks-riesling-2020,brooks-riesling-2020-d,,winery club,,,
+2021-06-10,acquire,brooks-riesling-2020,brooks-riesling-2020-e,,winery club,,,
+2021-06-10,acquire,brooks-riesling-2020,brooks-riesling-2020-f,,winery club,,,
+2021-06-11,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-c,,winery club,,,
+2021-06-11,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-d,,winery club,,,
+2021-06-12,assess,brooks-pinot-noir-2019,,producer,Brooks,2024,2034,"Release notes. Cool and wet, producer-dependent."
+2021-06-13,consume,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-b,,,,,Cassis and cedar. Solid.
+2021-06-17,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-c,,winery club,,,
+2021-06-17,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-d,,winery club,,,
+2021-06-17,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-a,,winery club,,,
+2021-06-17,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-b,,winery club,,,
+2021-07-10,consume,brooks-riesling-2013,brooks-riesling-2013-k,,,,,"Off-dry, lime and petrol. Excellent."
+2021-07-12,assess,brooks-riesling-2020,,producer,Brooks,2025,2035,"Release notes. Wildfire smoke, most pinot declassified or not bottled."
+2021-07-25,consume,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-b,,,,,
+2021-07-26,assess,vitis-ridge-tannin-s-blend-2019,,personal,me,2021,2029,Reassessed after opening one.
+2021-07-28,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-c,,,,,"Bright acid, light on its feet."
+2021-08-05,consume,lodi-assorted-zinfandel-2017,lodi-assorted-zinfandel-2017-a,,,,,
+2021-08-23,consume,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-c,,,,,
+2021-08-27,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-f,,,,,Silky. Drinking well right now.
+2021-08-27,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-h,,,,,Silky. Drinking well right now.
+2021-09-09,consume,brooks-riesling-2013,brooks-riesling-2013-b,,,,,"Off-dry, lime and petrol. Excellent."
+2021-09-12,assess,paradis-vineyards-pinot-noir-2019,,producer,Paradis Vineyards,2021,2024,"Release notes. Cool and wet, producer-dependent."
+2021-09-13,acquire,vitis-ridge-fortissimo-2019,vitis-ridge-fortissimo-2019-a,,winery club,,,
+2021-09-13,acquire,vitis-ridge-fortissimo-2019,vitis-ridge-fortissimo-2019-b,,winery club,,,
+2021-09-13,acquire,vitis-ridge-rose-of-pinot-noir-2019,vitis-ridge-rose-of-pinot-noir-2019-a,,winery club,,,
+2021-09-13,acquire,vitis-ridge-rose-of-pinot-noir-2019,vitis-ridge-rose-of-pinot-noir-2019-b,,winery club,,,
+2021-09-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-g,,winery club,,,
+2021-09-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-h,,winery club,,,
+2021-09-15,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-i,,winery club,,,
+2021-09-15,acquire,brooks-riesling-2020,brooks-riesling-2020-g,,winery club,,,
+2021-09-15,acquire,brooks-riesling-2020,brooks-riesling-2020-h,,winery club,,,
+2021-09-15,acquire,brooks-riesling-2020,brooks-riesling-2020-i,,winery club,,,
+2021-10-15,consume,brooks-riesling-2015,brooks-riesling-2015-j,,,,,Great acid. Held up better than expected.
+2021-11-05,consume,brooks-riesling-2016,brooks-riesling-2016-a,,,,,Great acid. Held up better than expected.
+2021-11-17,consume,brooks-riesling-2014,brooks-riesling-2014-b,,,,,Great acid. Held up better than expected.
+2021-11-18,consume,brooks-riesling-2013,brooks-riesling-2013-h,,,,,Still tastes young. Years left in this.
+2021-11-21,acquire,california-assorted-cabernet-sauvignon-2018,california-assorted-cabernet-sauvignon-2018-b,,gift,,,
+2021-12-01,consume,lodi-assorted-zinfandel-2017,lodi-assorted-zinfandel-2017-b,,,,,"Jammy, high alcohol, exactly what it says."
+2021-12-02,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-i,,,,,Opened up after an hour. Cranberry and dried herb.
+2021-12-04,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-d,,,,,Structured. Could have waited another two years.
+2021-12-09,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-e,,winery club,,,
+2021-12-09,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-f,,winery club,,,
+2021-12-13,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-j,,winery club,,,
+2021-12-13,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-k,,winery club,,,
+2021-12-13,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-l,,winery club,,,
+2021-12-13,acquire,brooks-riesling-2020,brooks-riesling-2020-j,,winery club,,,
+2021-12-13,acquire,brooks-riesling-2020,brooks-riesling-2020-k,,winery club,,,
+2021-12-13,acquire,brooks-riesling-2020,brooks-riesling-2020-l,,winery club,,,
+2021-12-13,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-e,,winery club,,,
+2021-12-13,acquire,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-f,,winery club,,,
+2021-12-13,acquire,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-c,,winery club,,,
+2021-12-13,acquire,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-d,,winery club,,,
+2021-12-26,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-g,,,,,
+2022-01-16,consume,brooks-riesling-2017,brooks-riesling-2017-f,,,,,Great acid. Held up better than expected.
+2022-01-22,consume,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-a,,,,,"Nutty, rounding out."
+2022-01-23,assess,vitis-ridge-chardonnay-2019,,personal,me,2021,2024,Reassessed after opening one.
+2022-03-05,consume,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-c,,,,,Big and chewy. Needs food.
+2022-03-13,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-a,,winery club,,,
+2022-03-13,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-b,,winery club,,,
+2022-03-13,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-c,,winery club,,,
+2022-03-13,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-d,,winery club,,,
+2022-03-13,assess,vitis-ridge-marechal-foch-2021,,producer,Vitis Ridge,2022,2025,Window at purchase.
+2022-03-15,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-a,,winery club,,,
+2022-03-15,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-b,,winery club,,,
+2022-03-15,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-a,,winery club,,,
+2022-03-15,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-b,,winery club,,,
+2022-03-15,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-a,,winery club,,,
+2022-03-15,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-b,,winery club,,,
+2022-03-15,assess,paradis-vineyards-marechal-foch-2021,,producer,Paradis Vineyards,2022,2025,Window at purchase.
+2022-03-17,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-m,,winery club,,,
+2022-03-17,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-n,,winery club,,,
+2022-03-17,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-o,,winery club,,,
+2022-03-17,acquire,brooks-riesling-2021,brooks-riesling-2021-a,,winery club,,,
+2022-03-17,acquire,brooks-riesling-2021,brooks-riesling-2021-b,,winery club,,,
+2022-03-17,acquire,brooks-riesling-2021,brooks-riesling-2021-c,,winery club,,,
+2022-03-20,consume,brooks-riesling-2014,brooks-riesling-2014-j,,,,,Great acid. Held up better than expected.
+2022-04-08,assess,paradis-vineyards-estate-marechal-foch-2021,,producer,Paradis Vineyards,2023,2027,Estate block. Built to hold longer than the regular bottling.
+2022-04-12,assess,vitis-ridge-pinot-gris-2021,,producer,Vitis Ridge,2022,2026,"Release notes. June heat dome, concentrated."
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-a,,winery club,,,
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-b,,winery club,,,
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-c,,winery club,,,
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-d,,winery club,,,
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-e,,winery club,,,
+2022-04-20,acquire,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-f,,winery club,,,
+2022-05-04,consume,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-d,,,,,"Nutty, rounding out."
+2022-05-18,consume,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-a,,,,,"Losing its edge, a bit flabby."
+2022-05-23,consume,brooks-riesling-2017,brooks-riesling-2017-k,,,,,"Off-dry, lime and petrol. Excellent."
+2022-06-11,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-c,,winery club,,,
+2022-06-11,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-d,,winery club,,,
+2022-06-11,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-c,,winery club,,,
+2022-06-11,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-d,,winery club,,,
+2022-06-11,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-g,,winery club,,,
+2022-06-11,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-h,,winery club,,,
+2022-06-11,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-c,,winery club,,,
+2022-06-11,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-d,,winery club,,,
+2022-06-11,acquire,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-a,,winery club,,,
+2022-06-11,acquire,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-b,,winery club,,,
+2022-06-11,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-e,,winery club,,,
+2022-06-11,acquire,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-f,,winery club,,,
+2022-06-11,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-k,,,,,Opened up after an hour. Cranberry and dried herb.
+2022-06-12,assess,paradis-vineyards-pinot-gris-2021,,producer,Paradis Vineyards,2022,2026,"Release notes. June heat dome, concentrated."
+2022-06-12,assess,paradis-vineyards-riesling-2021,,producer,Paradis Vineyards,2026,2036,"Release notes. June heat dome, concentrated."
+2022-06-12,assess,vitis-ridge-rose-of-pinot-noir-2021,,producer,Vitis Ridge,2022,2025,"Release notes. June heat dome, concentrated."
+2022-06-19,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-p,,winery club,,,
+2022-06-19,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-q,,winery club,,,
+2022-06-19,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-r,,winery club,,,
+2022-06-19,acquire,brooks-riesling-2021,brooks-riesling-2021-d,,winery club,,,
+2022-06-19,acquire,brooks-riesling-2021,brooks-riesling-2021-e,,winery club,,,
+2022-06-19,acquire,brooks-riesling-2021,brooks-riesling-2021-f,,winery club,,,
+2022-06-22,consume,brooks-riesling-2014,brooks-riesling-2014-h,,,,,Honeyed now. Turning the corner but lovely.
+2022-07-02,consume,california-assorted-cabernet-sauvignon-2016,california-assorted-cabernet-sauvignon-2016-d,,,,,Grocery store cab doing grocery store cab things.
+2022-07-07,consume,brooks-riesling-2016,brooks-riesling-2016-d,,,,,"Off-dry, lime and petrol. Excellent."
+2022-07-19,consume,brooks-riesling-2021,brooks-riesling-2021-e,,,,,"Off-dry, lime and petrol. Excellent."
+2022-07-20,acquire,lodi-assorted-zinfandel-2018,lodi-assorted-zinfandel-2018-b,,gift,,,
+2022-07-20,assess,brooks-riesling-2021,,personal,me,2026,2038,Reassessed after opening one.
+2022-07-30,consume,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-a,,,,,"Opened on the deck before it was ready. Grapey, a little raw."
+2022-08-03,consume,brooks-riesling-2015,brooks-riesling-2015-d,,,,,
+2022-08-06,consume,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-c,,,,,Pear and citrus. Crisp.
+2022-08-08,consume,brooks-riesling-2016,brooks-riesling-2016-g,,,,,Still tastes young. Years left in this.
+2022-08-12,assess,brooks-riesling-2021,,producer,Brooks,2026,2036,"Release notes. June heat dome, concentrated."
+2022-08-12,consume,vitis-ridge-rose-of-pinot-noir-2019,vitis-ridge-rose-of-pinot-noir-2019-a,,,,,
+2022-08-16,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-f,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2022-08-17,assess,paradis-vineyards-pinot-noir-2019,,personal,me,2021,2025,Reassessed after opening one.
+2022-08-22,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-d,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2022-09-18,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-e,,winery club,,,
+2022-09-18,acquire,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-f,,winery club,,,
+2022-09-20,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-s,,winery club,,,
+2022-09-20,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-t,,winery club,,,
+2022-09-20,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-u,,winery club,,,
+2022-09-20,acquire,brooks-riesling-2021,brooks-riesling-2021-g,,winery club,,,
+2022-09-20,acquire,brooks-riesling-2021,brooks-riesling-2021-h,,winery club,,,
+2022-09-20,acquire,brooks-riesling-2021,brooks-riesling-2021-i,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-e,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-f,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-i,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-j,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-c,,winery club,,,
+2022-09-22,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-d,,winery club,,,
+2022-10-04,consume,brooks-riesling-2016,brooks-riesling-2016-c,,,,,"Off-dry, lime and petrol. Excellent."
+2022-10-07,consume,vitis-ridge-chardonnay-2019,vitis-ridge-chardonnay-2019-e,,,,,"Nutty, rounding out."
+2022-10-17,acquire,st-josef-s-pinot-noir-2019,st-josef-s-pinot-noir-2019-a,,winery club,,,
+2022-10-17,acquire,st-josef-s-pinot-noir-2019,st-josef-s-pinot-noir-2019-b,,winery club,,,
+2022-10-28,consume,lodi-assorted-zinfandel-2018,lodi-assorted-zinfandel-2018-b,,,,,Brambly and warm. Good on a cold night.
+2022-11-14,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-d,,,,,Opened up after an hour. Cranberry and dried herb.
+2022-11-18,consume,brooks-riesling-2017,brooks-riesling-2017-d,,,,,
+2022-11-19,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-h,,,,,Structured. Could have waited another two years.
+2022-11-21,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-h,,,,,Structured. Could have waited another two years.
+2022-12-04,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-f,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2022-12-06,consume,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-d,,,,,Structured. Could have waited another two years.
+2022-12-15,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-a,,,,,Silky. Drinking well right now.
+2022-12-16,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-a,,,,,
+2022-12-16,consume,brooks-riesling-2016,brooks-riesling-2016-k,,,,,"Off-dry, lime and petrol. Excellent."
+2022-12-17,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-g,,winery club,,,
+2022-12-17,acquire,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-h,,winery club,,,
+2022-12-17,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-e,,winery club,,,
+2022-12-17,acquire,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-f,,winery club,,,
+2022-12-17,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-e,,winery club,,,
+2022-12-17,acquire,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-f,,winery club,,,
+2022-12-17,consume,lodi-assorted-zinfandel-2018,lodi-assorted-zinfandel-2018-a,,,,,Brambly and warm. Good on a cold night.
+2022-12-18,acquire,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-c,,winery club,,,
+2022-12-18,acquire,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-d,,winery club,,,
+2022-12-18,acquire,vitis-ridge-rose-of-pinot-noir-2021,vitis-ridge-rose-of-pinot-noir-2021-a,,winery club,,,
+2022-12-18,acquire,vitis-ridge-rose-of-pinot-noir-2021,vitis-ridge-rose-of-pinot-noir-2021-b,,winery club,,,
+2022-12-18,consume,vitis-ridge-tannin-s-blend-2019,vitis-ridge-tannin-s-blend-2019-d,,,,,Big and chewy. Needs food.
+2022-12-20,consume,brooks-riesling-2018,brooks-riesling-2018-k,,,,,"Off-dry, lime and petrol. Excellent."
+2022-12-21,assess,brooks-riesling-2018,,personal,me,2023,2035,Reassessed after opening one.
+2022-12-22,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-v,,winery club,,,
+2022-12-22,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-w,,winery club,,,
+2022-12-22,acquire,brooks-pinot-noir-2019,brooks-pinot-noir-2019-x,,winery club,,,
+2022-12-22,acquire,brooks-riesling-2021,brooks-riesling-2021-j,,winery club,,,
+2022-12-22,acquire,brooks-riesling-2021,brooks-riesling-2021-k,,winery club,,,
+2022-12-22,acquire,brooks-riesling-2021,brooks-riesling-2021-l,,winery club,,,
+2023-01-23,assess,brooks-riesling-2020,,critic,Northwest Cellar Notes,2025,2034,"Wildfire smoke, most pinot declassified or not bottled."
+2023-02-19,assess,paradis-vineyards-pinot-noir-2019,,critic,Northwest Cellar Notes,2021,2027,Retrospective tasting. More life left than earlier notes suggested.
+2023-03-04,consume,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-b,,,,,Pear and citrus. Crisp.
+2023-03-10,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-a,,winery club,,,
+2023-03-10,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-b,,winery club,,,
+2023-03-10,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-a,,winery club,,,
+2023-03-10,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-b,,winery club,,,
+2023-03-10,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-a,,winery club,,,
+2023-03-10,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-b,,winery club,,,
+2023-03-10,assess,paradis-vineyards-marechal-foch-2022,,producer,Paradis Vineyards,2023,2026,Window at purchase.
+2023-03-16,acquire,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-a,,winery club,,,
+2023-03-16,acquire,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-b,,winery club,,,
+2023-03-16,acquire,vitis-ridge-riesling-2022,vitis-ridge-riesling-2022-a,,winery club,,,
+2023-03-16,acquire,vitis-ridge-riesling-2022,vitis-ridge-riesling-2022-b,,winery club,,,
+2023-03-16,acquire,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-a,,winery club,,,
+2023-03-16,acquire,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-b,,winery club,,,
+2023-04-12,assess,paradis-vineyards-riesling-2022,,producer,Paradis Vineyards,2027,2037,"Release notes. April frost, small crop, high quality."
+2023-04-12,assess,vitis-ridge-marechal-foch-2022,,producer,Vitis Ridge,2023,2026,"Release notes. April frost, small crop, high quality."
+2023-04-22,assess,st-josef-s-pinot-noir-2021,,critic,Cascadia Wine Review,2023,2025,"June heat dome, concentrated."
+2023-05-12,assess,vitis-ridge-chardonnay-2021,,producer,Vitis Ridge,2023,2031,"Release notes. June heat dome, concentrated."
+2023-05-12,assess,vitis-ridge-pinot-noir-2021,,producer,Vitis Ridge,2023,2026,"Release notes. June heat dome, concentrated."
+2023-05-12,assess,vitis-ridge-rose-of-pinot-noir-2022,,producer,Vitis Ridge,2023,2026,"Release notes. April frost, small crop, high quality."
+2023-06-03,consume,brooks-riesling-2017,brooks-riesling-2017-b,,,,,Still tastes young. Years left in this.
+2023-06-12,assess,st-josef-s-pinot-noir-2021,,producer,St. Josef's,2023,2026,"Release notes. June heat dome, concentrated."
+2023-06-12,assess,vitis-ridge-fortissimo-2021,,producer,Vitis Ridge,2024,2038,"Release notes. June heat dome, concentrated."
+2023-06-15,acquire,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-c,,winery club,,,
+2023-06-15,acquire,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-d,,winery club,,,
+2023-06-15,acquire,vitis-ridge-fortissimo-2021,vitis-ridge-fortissimo-2021-a,,winery club,,,
+2023-06-15,acquire,vitis-ridge-fortissimo-2021,vitis-ridge-fortissimo-2021-b,,winery club,,,
+2023-06-15,acquire,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-a,,winery club,,,
+2023-06-15,acquire,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-b,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-c,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-d,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-c,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-d,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-c,,winery club,,,
+2023-06-17,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-d,,winery club,,,
+2023-07-12,assess,paradis-vineyards-pinot-gris-2022,,producer,Paradis Vineyards,2023,2027,"Release notes. April frost, small crop, high quality."
+2023-07-12,assess,paradis-vineyards-pinot-noir-2021,,producer,Paradis Vineyards,2023,2026,"Release notes. June heat dome, concentrated."
+2023-07-12,assess,vitis-ridge-pinot-gris-2022,,producer,Vitis Ridge,2023,2027,"Release notes. April frost, small crop, high quality."
+2023-08-20,consume,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-e,,,,,
+2023-08-21,assess,vitis-ridge-pinot-noir-2019,,personal,me,2021,2023,Reassessed after opening one.
+2023-08-22,consume,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-b,,,,,"Dark and grapey. Not subtle, not trying to be."
+2023-08-28,consume,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-g,,,,,
+2023-08-29,assess,paradis-vineyards-marechal-foch-2021,,personal,me,2022,2024,Reassessed after opening one.
+2023-09-11,acquire,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-c,,winery club,,,
+2023-09-11,acquire,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-d,,winery club,,,
+2023-09-11,acquire,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-a,,winery club,,,
+2023-09-11,acquire,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-b,,winery club,,,
+2023-09-11,acquire,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-c,,winery club,,,
+2023-09-11,acquire,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-d,,winery club,,,
+2023-09-12,assess,vitis-ridge-riesling-2022,,producer,Vitis Ridge,2027,2037,"Release notes. April frost, small crop, high quality."
+2023-09-13,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-e,,winery club,,,
+2023-09-13,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-f,,winery club,,,
+2023-09-13,acquire,paradis-vineyards-pinot-noir-2021,paradis-vineyards-pinot-noir-2021-a,,winery club,,,
+2023-09-13,acquire,paradis-vineyards-pinot-noir-2021,paradis-vineyards-pinot-noir-2021-b,,winery club,,,
+2023-09-13,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-e,,winery club,,,
+2023-09-13,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-f,,winery club,,,
+2023-09-13,consume,brooks-riesling-2018,brooks-riesling-2018-g,,,,,Honeyed now. Turning the corner but lovely.
+2023-09-23,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-l,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2023-09-24,assess,brooks-pinot-noir-2018,,personal,me,2023,2032,Reassessed after opening one.
+2023-10-14,acquire,st-josef-s-pinot-noir-2021,st-josef-s-pinot-noir-2021-a,,winery club,,,
+2023-10-14,acquire,st-josef-s-pinot-noir-2021,st-josef-s-pinot-noir-2021-b,,winery club,,,
+2023-10-27,acquire,lodi-assorted-zinfandel-2019,lodi-assorted-zinfandel-2019-a,,gift,,,
+2023-10-27,acquire,lodi-assorted-zinfandel-2019,lodi-assorted-zinfandel-2019-b,,grocery store,,,
+2023-11-02,consume,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-c,,,,,
+2023-11-04,consume,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-f,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2023-11-06,consume,brooks-riesling-2013,brooks-riesling-2013-c,,,,,Honeyed now. Turning the corner but lovely.
+2023-11-06,consume,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-f,,,,,
+2023-11-07,assess,brooks-riesling-2013,,personal,me,2018,2023,Reassessed after opening.
+2023-11-09,consume,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-b,,,,,Structured. Could have waited another two years.
+2023-11-10,consume,brooks-riesling-2014,brooks-riesling-2014-f,,,,,Still tastes young. Years left in this.
+2023-11-22,consume,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-c,,,,,
+2023-12-03,consume,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-b,,,,,"Losing its edge, a bit flabby."
+2023-12-03,consume,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-a,,,,,
+2023-12-05,consume,st-josef-s-pinot-noir-2019,st-josef-s-pinot-noir-2019-a,,,,,Silky. Drinking well right now.
+2023-12-10,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-e,,winery club,,,
+2023-12-10,acquire,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-f,,winery club,,,
+2023-12-10,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-g,,winery club,,,
+2023-12-10,acquire,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-h,,winery club,,,
+2023-12-10,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-g,,winery club,,,
+2023-12-10,acquire,paradis-vineyards-riesling-2022,paradis-vineyards-riesling-2022-h,,winery club,,,
+2023-12-13,consume,brooks-riesling-2017,brooks-riesling-2017-e,,,,,Still tastes young. Years left in this.
+2023-12-14,assess,vitis-ridge-pinot-noir-2021,,critic,Pacific Vintage Quarterly,2023,2026,"June heat dome, concentrated."
+2023-12-17,acquire,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-c,,winery club,,,
+2023-12-17,acquire,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-d,,winery club,,,
+2023-12-17,acquire,vitis-ridge-pinot-noir-2021,vitis-ridge-pinot-noir-2021-a,,winery club,,,
+2023-12-17,acquire,vitis-ridge-pinot-noir-2021,vitis-ridge-pinot-noir-2021-b,,winery club,,,
+2023-12-17,acquire,vitis-ridge-riesling-2022,vitis-ridge-riesling-2022-c,,winery club,,,
+2023-12-17,acquire,vitis-ridge-riesling-2022,vitis-ridge-riesling-2022-d,,winery club,,,
+2023-12-23,consume,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-c,,,,,"Blackberry, a little smoke. Good burger wine."
+2023-12-23,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-i,,,,,Opened up after an hour. Cranberry and dried herb.
+2023-12-25,acquire,lodi-assorted-zinfandel-2020,lodi-assorted-zinfandel-2020-a,,gift,,,
+2023-12-25,acquire,lodi-assorted-zinfandel-2020,lodi-assorted-zinfandel-2020-b,,gift,,,
+2023-12-27,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-b,,,,,Silky. Drinking well right now.
+2024-01-12,assess,farm-on-golden-hill-riesling-2023,,critic,Cascadia Wine Review,2028,2038,"Warm, large crop, approachable."
+2024-01-20,consume,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-a,,,,,
+2024-01-21,consume,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-b,,,,,More oak than I want these days.
+2024-01-24,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-a,,,,,Opened up after an hour. Cranberry and dried herb.
+2024-02-02,assess,brooks-riesling-2021,,critic,Pacific Vintage Quarterly,2026,2039,Retrospective tasting. More life left than earlier notes suggested.
+2024-02-20,consume,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-b,,,,,"Much better. Blackberry, soft tannin. This is the peak."
+2024-02-21,assess,paradis-vineyards-estate-marechal-foch-2021,,personal,me,2023,2024,"Lovely now, but the fruit is already receding. This is not a 2027 wine whatever the estate says. Drink through 2024."
+2024-03-03,consume,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-e,,,,,Pear and citrus. Crisp.
+2024-03-04,assess,paradis-vineyards-pinot-gris-2021,,personal,me,2022,2025,Reassessed after opening one.
+2024-03-08,consume,paradis-vineyards-pinot-noir-2021,paradis-vineyards-pinot-noir-2021-b,,,,,Structured. Could have waited another two years.
+2024-03-12,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-a,,winery club,,,
+2024-03-12,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-b,,winery club,,,
+2024-03-12,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-a,,winery club,,,
+2024-03-12,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-b,,winery club,,,
+2024-03-12,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-a,,winery club,,,
+2024-03-12,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-b,,winery club,,,
+2024-03-12,assess,vitis-ridge-pinot-gris-2023,,producer,Vitis Ridge,2024,2027,"Release notes. Warm, large crop, approachable."
+2024-03-13,acquire,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-a,,winery club,,,
+2024-03-13,acquire,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-b,,winery club,,,
+2024-03-13,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-a,,winery club,,,
+2024-03-13,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-b,,winery club,,,
+2024-03-13,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-a,,winery club,,,
+2024-03-13,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-b,,winery club,,,
+2024-03-23,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-f,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-03-25,consume,brooks-riesling-2019,brooks-riesling-2019-f,,,,,Great acid. Held up better than expected.
+2024-04-06,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-i,,,,,Structured. Could have waited another two years.
+2024-04-12,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-a,,winery club,,,
+2024-04-12,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-b,,winery club,,,
+2024-04-12,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-a,,winery club,,,
+2024-04-12,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-b,,winery club,,,
+2024-04-12,acquire,farm-on-golden-hill-rose-2023,farm-on-golden-hill-rose-2023-a,,winery club,,,
+2024-04-12,acquire,farm-on-golden-hill-rose-2023,farm-on-golden-hill-rose-2023-b,,winery club,,,
+2024-04-12,assess,farm-on-golden-hill-rose-2023,,producer,Farm on Golden Hill,2024,2026,"Release notes. Warm, large crop, approachable."
+2024-04-12,assess,paradis-vineyards-pinot-noir-2022,,producer,Paradis Vineyards,2024,2027,"Release notes. April frost, small crop, high quality."
+2024-04-12,assess,vitis-ridge-chardonnay-2022,,producer,Vitis Ridge,2024,2032,"Release notes. April frost, small crop, high quality."
+2024-04-12,assess,vitis-ridge-fortissimo-2022,,producer,Vitis Ridge,2025,2039,"Release notes. April frost, small crop, high quality."
+2024-04-18,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-b,,,,,"Bright acid, light on its feet."
+2024-04-23,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-j,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-05-11,consume,brooks-riesling-2016,brooks-riesling-2016-h,,,,,
+2024-05-12,assess,farm-on-golden-hill-chardonnay-2022,,producer,Farm on Golden Hill,2024,2032,"Release notes. April frost, small crop, high quality."
+2024-05-12,assess,farm-on-golden-hill-pinot-noir-2022,,producer,Farm on Golden Hill,2024,2027,"Release notes. April frost, small crop, high quality."
+2024-05-12,assess,paradis-vineyards-pinot-gris-2023,,producer,Paradis Vineyards,2024,2027,"Release notes. Warm, large crop, approachable."
+2024-05-12,consume,lodi-assorted-zinfandel-2020,lodi-assorted-zinfandel-2020-b,,,,,
+2024-06-02,consume,paradis-vineyards-pinot-gris-2021,paradis-vineyards-pinot-gris-2021-d,,,,,Fine on the porch. Nothing to think about.
+2024-06-05,consume,brooks-riesling-2018,brooks-riesling-2018-l,,,,,"Off-dry, lime and petrol. Excellent."
+2024-06-05,consume,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-f,,,,,"Dark and grapey. Not subtle, not trying to be."
+2024-06-06,assess,paradis-vineyards-marechal-foch-2022,,personal,me,2023,2027,Reassessed after opening one.
+2024-06-09,consume,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-e,,,,,"Dark and grapey. Not subtle, not trying to be."
+2024-06-12,assess,st-josef-s-pinot-noir-2022,,producer,St. Josef's,2024,2027,"Release notes. April frost, small crop, high quality."
+2024-06-12,assess,vitis-ridge-tannin-s-blend-2022,,producer,Vitis Ridge,2024,2032,"Release notes. April frost, small crop, high quality."
+2024-06-12,consume,brooks-riesling-2015,brooks-riesling-2015-g,,,,,Still tastes young. Years left in this.
+2024-06-13,assess,vitis-ridge-chardonnay-2022,,critic,Pacific Vintage Quarterly,2024,2031,"April frost, small crop, high quality."
+2024-06-14,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-a,,winery club,,,
+2024-06-14,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-b,,winery club,,,
+2024-06-14,acquire,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-c,,winery club,,,
+2024-06-14,acquire,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-d,,winery club,,,
+2024-06-14,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-c,,winery club,,,
+2024-06-14,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-d,,winery club,,,
+2024-06-14,assess,paradis-vineyards-marechal-foch-2023,,producer,Paradis Vineyards,2024,2027,Window at purchase.
+2024-06-18,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-u,,,,,
+2024-06-22,acquire,vitis-ridge-chardonnay-2022,vitis-ridge-chardonnay-2022-a,,winery club,,,
+2024-06-22,acquire,vitis-ridge-chardonnay-2022,vitis-ridge-chardonnay-2022-b,,winery club,,,
+2024-06-22,acquire,vitis-ridge-fortissimo-2022,vitis-ridge-fortissimo-2022-a,,winery club,,,
+2024-06-22,acquire,vitis-ridge-fortissimo-2022,vitis-ridge-fortissimo-2022-b,,winery club,,,
+2024-06-22,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-c,,winery club,,,
+2024-06-22,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-d,,winery club,,,
+2024-06-26,consume,vitis-ridge-pinot-gris-2021,vitis-ridge-pinot-gris-2021-d,,,,,"Losing its edge, a bit flabby."
+2024-07-08,consume,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-d,,,,,"Nutty, rounding out."
+2024-07-12,assess,vitis-ridge-pinot-noir-2022,,producer,Vitis Ridge,2024,2027,"Release notes. April frost, small crop, high quality."
+2024-07-14,consume,st-josef-s-pinot-noir-2021,st-josef-s-pinot-noir-2021-b,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-07-15,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-x,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-07-22,consume,california-assorted-cabernet-sauvignon-2018,california-assorted-cabernet-sauvignon-2018-a,,,,,Grocery store cab doing grocery store cab things.
+2024-07-23,acquire,california-assorted-cabernet-sauvignon-2020,california-assorted-cabernet-sauvignon-2020-a,,grocery store,,,
+2024-08-06,consume,brooks-pinot-noir-2012,brooks-pinot-noir-2012-j,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-08-07,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-v,,,,,
+2024-08-08,consume,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-a,,,,,
+2024-08-10,assess,vitis-ridge-rose-of-pinot-noir-2022,,critic,Cascadia Wine Review,2023,2027,"April frost, small crop, high quality."
+2024-08-11,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-c,,winery club,,,
+2024-08-11,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-d,,winery club,,,
+2024-08-11,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-c,,winery club,,,
+2024-08-11,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-d,,winery club,,,
+2024-08-11,acquire,farm-on-golden-hill-riesling-2023,farm-on-golden-hill-riesling-2023-a,,winery club,,,
+2024-08-11,acquire,farm-on-golden-hill-riesling-2023,farm-on-golden-hill-riesling-2023-b,,winery club,,,
+2024-08-12,consume,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-c,,,,,"Opened too young. Fruit is there, structure is not resolved."
+2024-08-16,consume,brooks-riesling-2018,brooks-riesling-2018-b,,,,,Great acid. Held up better than expected.
+2024-08-16,consume,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-b,,,,,
+2024-08-17,acquire,california-assorted-cabernet-sauvignon-2013,california-assorted-cabernet-sauvignon-2013-a,,grocery store,,,
+2024-08-19,consume,brooks-riesling-2017,brooks-riesling-2017-l,,,,,Great acid. Held up better than expected.
+2024-08-23,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-g,,,,,Opened up after an hour. Cranberry and dried herb.
+2024-08-25,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-n,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2024-09-01,consume,brooks-riesling-2017,brooks-riesling-2017-j,,,,,Honeyed now. Turning the corner but lovely.
+2024-09-07,consume,vitis-ridge-pinot-noir-2019,vitis-ridge-pinot-noir-2019-c,,,,,Fruit starting to dry out at the edges.
+2024-09-11,acquire,vitis-ridge-fortissimo-2022,vitis-ridge-fortissimo-2022-c,,winery club,,,
+2024-09-11,acquire,vitis-ridge-fortissimo-2022,vitis-ridge-fortissimo-2022-d,,winery club,,,
+2024-09-11,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-c,,winery club,,,
+2024-09-11,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-d,,winery club,,,
+2024-09-11,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-c,,winery club,,,
+2024-09-11,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-d,,winery club,,,
+2024-09-12,assess,farm-on-golden-hill-riesling-2023,,producer,Farm on Golden Hill,2028,2038,"Release notes. Warm, large crop, approachable."
+2024-09-12,assess,paradis-vineyards-marechal-foch-2021,,critic,Cascadia Wine Review,2022,2029,"June heat dome, concentrated."
+2024-09-12,assess,paradis-vineyards-riesling-2023,,producer,Paradis Vineyards,2028,2038,"Release notes. Warm, large crop, approachable."
+2024-09-12,consume,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-a,,,,,"Blackberry, a little smoke. Good burger wine."
+2024-09-17,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-c,,winery club,,,
+2024-09-17,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-d,,winery club,,,
+2024-09-17,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-e,,winery club,,,
+2024-09-17,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-f,,winery club,,,
+2024-09-17,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-c,,winery club,,,
+2024-09-17,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-d,,winery club,,,
+2024-09-18,consume,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-c,,,,,"Dark and grapey. Not subtle, not trying to be."
+2024-09-20,consume,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-a,,,,,Fine on the porch. Nothing to think about.
+2024-09-27,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-q,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2024-10-02,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-e,,,,,Structured. Could have waited another two years.
+2024-10-06,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-c,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-10-09,acquire,st-josef-s-pinot-noir-2022,st-josef-s-pinot-noir-2022-a,,winery club,,,
+2024-10-09,acquire,st-josef-s-pinot-noir-2022,st-josef-s-pinot-noir-2022-b,,winery club,,,
+2024-10-17,acquire,california-assorted-cabernet-sauvignon-2020,california-assorted-cabernet-sauvignon-2020-b,,grocery store,,,
+2024-10-18,consume,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-e,,,,,"Blackberry, a little smoke. Good burger wine."
+2024-10-19,assess,vitis-ridge-marechal-foch-2021,,personal,me,2022,2024,Reassessed after opening one.
+2024-10-22,consume,brooks-riesling-2018,brooks-riesling-2018-j,,,,,"Off-dry, lime and petrol. Excellent."
+2024-11-04,consume,vitis-ridge-fortissimo-2021,vitis-ridge-fortissimo-2021-a,,,,,A small glass is plenty. Lovely.
+2024-11-05,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-c,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2024-11-05,consume,paradis-vineyards-pinot-noir-2019,paradis-vineyards-pinot-noir-2019-h,,,,,Opened up after an hour. Cranberry and dried herb.
+2024-11-06,consume,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-c,,,,,"Strawberry, dry finish. Summer wine, drink young."
+2024-11-07,consume,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-d,,,,,
+2024-11-08,consume,vitis-ridge-chardonnay-2022,vitis-ridge-chardonnay-2022-a,,,,,More oak than I want these days.
+2024-11-16,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-f,,,,,Fruit starting to dry out at the edges.
+2024-11-18,assess,paradis-vineyards-riesling-2021,,critic,Cascadia Wine Review,2026,2039,Retrospective tasting. More life left than earlier notes suggested.
+2024-11-20,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-g,,,,,"Bright acid, light on its feet."
+2024-11-21,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-g,,,,,Silky. Drinking well right now.
+2024-11-21,consume,brooks-riesling-2019,brooks-riesling-2019-l,,,,,"Off-dry, lime and petrol. Excellent."
+2024-11-21,consume,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-b,,,,,"Losing its edge, a bit flabby."
+2024-11-21,consume,vitis-ridge-chardonnay-2021,vitis-ridge-chardonnay-2021-a,,,,,
+2024-11-26,consume,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-h,,,,,Fading. Drink the rest soon.
+2024-11-27,consume,brooks-riesling-2019,brooks-riesling-2019-e,,,,,"Off-dry, lime and petrol. Excellent."
+2024-12-01,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-a,,,,,"Bright acid, light on its feet."
+2024-12-01,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-d,,,,,
+2024-12-02,consume,paradis-vineyards-pinot-gris-2022,paradis-vineyards-pinot-gris-2022-g,,,,,Fine on the porch. Nothing to think about.
+2024-12-03,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-j,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2024-12-05,consume,brooks-riesling-2018,brooks-riesling-2018-i,,,,,Still tastes young. Years left in this.
+2024-12-06,consume,brooks-riesling-2015,brooks-riesling-2015-a,,,,,
+2024-12-09,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-e,,winery club,,,
+2024-12-09,acquire,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-f,,winery club,,,
+2024-12-09,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-e,,winery club,,,
+2024-12-09,acquire,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-f,,winery club,,,
+2024-12-09,acquire,farm-on-golden-hill-riesling-2023,farm-on-golden-hill-riesling-2023-c,,winery club,,,
+2024-12-09,acquire,farm-on-golden-hill-riesling-2023,farm-on-golden-hill-riesling-2023-d,,winery club,,,
+2024-12-11,consume,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-a,,,,,"Opened too young. Fruit is there, structure is not resolved."
+2024-12-11,consume,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-d,,,,,"Strawberry, dry finish. Summer wine, drink young."
+2024-12-14,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-k,,,,,Fruit starting to dry out at the edges.
+2024-12-14,consume,brooks-riesling-2019,brooks-riesling-2019-i,,,,,"Off-dry, lime and petrol. Excellent."
+2024-12-15,assess,vitis-ridge-fortissimo-2021,,critic,Northwest Cellar Notes,2024,2038,"June heat dome, concentrated."
+2024-12-15,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-l,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2024-12-16,consume,paradis-vineyards-marechal-foch-2021,paradis-vineyards-marechal-foch-2021-e,,,,,"Dark and grapey. Not subtle, not trying to be."
+2024-12-17,consume,vitis-ridge-rose-of-pinot-noir-2022,vitis-ridge-rose-of-pinot-noir-2022-a,,,,,"Strawberry, dry finish. Summer wine, drink young."
+2024-12-20,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-e,,winery club,,,
+2024-12-20,acquire,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-f,,winery club,,,
+2024-12-20,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-g,,winery club,,,
+2024-12-20,acquire,paradis-vineyards-pinot-noir-2022,paradis-vineyards-pinot-noir-2022-h,,winery club,,,
+2024-12-20,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-e,,winery club,,,
+2024-12-20,acquire,paradis-vineyards-riesling-2023,paradis-vineyards-riesling-2023-f,,winery club,,,
+2024-12-22,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-e,,winery club,,,
+2024-12-22,acquire,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-f,,winery club,,,
+2024-12-22,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-e,,winery club,,,
+2024-12-22,acquire,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-f,,winery club,,,
+2024-12-22,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-e,,winery club,,,
+2024-12-22,acquire,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-f,,winery club,,,
+2024-12-23,consume,brooks-riesling-2016,brooks-riesling-2016-b,,,,,"Off-dry, lime and petrol. Excellent."
+2024-12-24,consume,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-c,,,,,Fine on the porch. Nothing to think about.
+2025-01-02,assess,paradis-vineyards-riesling-2023,,critic,Pacific Vintage Quarterly,2028,2038,"Warm, large crop, approachable."
+2025-01-02,consume,brooks-riesling-2017,brooks-riesling-2017-g,,,,,Still tastes young. Years left in this.
+2025-01-18,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-s,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2025-02-27,assess,farm-on-golden-hill-chardonnay-2022,,critic,Northwest Cellar Notes,2024,2034,"April frost, small crop, high quality."
+2025-02-28,consume,brooks-riesling-2016,brooks-riesling-2016-f,,,,,"Off-dry, lime and petrol. Excellent."
+2025-03-04,consume,lodi-assorted-zinfandel-2019,lodi-assorted-zinfandel-2019-b,,,,,"Jammy, high alcohol, exactly what it says."
+2025-03-05,assess,lodi-assorted-zinfandel-2019,,personal,me,2021,2026,Reassessed after opening one.
+2025-03-05,consume,brooks-riesling-2018,brooks-riesling-2018-c,,,,,"Off-dry, lime and petrol. Excellent."
+2025-03-10,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-a,,winery club,,,
+2025-03-10,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-b,,winery club,,,
+2025-03-10,acquire,vitis-ridge-marechal-foch-2024,vitis-ridge-marechal-foch-2024-a,,winery club,,,
+2025-03-10,acquire,vitis-ridge-marechal-foch-2024,vitis-ridge-marechal-foch-2024-b,,winery club,,,
+2025-03-10,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-a,,winery club,,,
+2025-03-10,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-b,,winery club,,,
+2025-03-12,assess,vitis-ridge-pinot-noir-2023,,producer,Vitis Ridge,2025,2028,"Release notes. Warm, large crop, approachable."
+2025-03-12,assess,vitis-ridge-rose-of-pinot-noir-2024,,producer,Vitis Ridge,2025,2028,"Release notes. Even season, balanced."
+2025-03-17,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-e,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2025-03-18,assess,brooks-pinot-noir-2015,,personal,me,2020,2029,Reassessed after opening one.
+2025-03-19,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-a,,winery club,,,
+2025-03-19,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-b,,winery club,,,
+2025-03-19,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-a,,winery club,,,
+2025-03-19,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-b,,winery club,,,
+2025-03-19,acquire,paradis-vineyards-riesling-2024,paradis-vineyards-riesling-2024-a,,winery club,,,
+2025-03-19,acquire,paradis-vineyards-riesling-2024,paradis-vineyards-riesling-2024-b,,winery club,,,
+2025-03-22,acquire,lodi-assorted-zinfandel-2015,lodi-assorted-zinfandel-2015-b,,grocery store,,,
+2025-04-05,assess,farm-on-golden-hill-rose-2024,,personal,me,2025,2026,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-04-06,consume,brooks-riesling-2014,brooks-riesling-2014-i,,,,,
+2025-04-12,assess,paradis-vineyards-pinot-noir-2023,,producer,Paradis Vineyards,2025,2028,"Release notes. Warm, large crop, approachable."
+2025-04-15,consume,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-b,,,,,"Nutty, rounding out."
+2025-04-18,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-a,,winery club,,,
+2025-04-18,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-b,,winery club,,,
+2025-04-18,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-a,,winery club,,,
+2025-04-18,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-b,,winery club,,,
+2025-04-18,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-a,,winery club,,,
+2025-04-18,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-b,,winery club,,,
+2025-04-18,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-j,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2025-04-25,consume,paradis-vineyards-marechal-foch-2022,paradis-vineyards-marechal-foch-2022-b,,,,,
+2025-04-26,assess,farm-on-golden-hill-chardonnay-2022,,personal,me,2024,2025,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-05-02,consume,brooks-riesling-2018,brooks-riesling-2018-d,,,,,Great acid. Held up better than expected.
+2025-05-02,consume,vitis-ridge-riesling-2022,vitis-ridge-riesling-2022-d,,,,,Honeyed now. Turning the corner but lovely.
+2025-05-05,assess,farm-on-golden-hill-pinot-noir-2022,,personal,me,2024,2024,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-05-12,assess,vitis-ridge-pinot-gris-2024,,producer,Vitis Ridge,2025,2029,"Release notes. Even season, balanced."
+2025-05-15,assess,paradis-vineyards-pinot-gris-2021,,critic,The Vintner's Ledger,2022,2029,Retrospective tasting. More life left than earlier notes suggested.
+2025-05-19,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-m,,,,,Silky. Drinking well right now.
+2025-05-19,consume,brooks-riesling-2015,brooks-riesling-2015-f,,,,,Honeyed now. Turning the corner but lovely.
+2025-05-26,consume,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-b,,,,,Pear and citrus. Crisp.
+2025-05-27,assess,paradis-vineyards-pinot-gris-2023,,personal,me,2024,2028,Reassessed after opening one.
+2025-05-28,consume,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-a,,,,,Big and chewy. Needs food.
+2025-05-29,assess,vitis-ridge-tannin-s-blend-2022,,personal,me,2024,2030,Reassessed after opening one.
+2025-06-01,consume,california-assorted-cabernet-sauvignon-2020,california-assorted-cabernet-sauvignon-2020-a,,,,,
+2025-06-01,consume,vitis-ridge-pinot-gris-2022,vitis-ridge-pinot-gris-2022-b,,,,,"Losing its edge, a bit flabby."
+2025-06-02,assess,california-assorted-cabernet-sauvignon-2020,,personal,me,2023,2029,Reassessed after opening one.
+2025-06-02,assess,vitis-ridge-pinot-gris-2022,,personal,me,2023,2026,Reassessed after opening one.
+2025-06-06,consume,vitis-ridge-marechal-foch-2022,vitis-ridge-marechal-foch-2022-d,,,,,"Blackberry, a little smoke. Good burger wine."
+2025-06-09,consume,paradis-vineyards-pinot-gris-2023,paradis-vineyards-pinot-gris-2023-c,,,,,
+2025-06-11,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-c,,winery club,,,
+2025-06-11,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-d,,winery club,,,
+2025-06-11,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-a,,winery club,,,
+2025-06-11,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-b,,winery club,,,
+2025-06-11,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-c,,winery club,,,
+2025-06-11,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-d,,winery club,,,
+2025-06-12,assess,farm-on-golden-hill-pinot-noir-2023,,producer,Farm on Golden Hill,2025,2028,"Release notes. Warm, large crop, approachable."
+2025-06-12,assess,farm-on-golden-hill-riesling-2024,,producer,Farm on Golden Hill,2029,2039,"Release notes. Even season, balanced."
+2025-06-12,assess,farm-on-golden-hill-rose-2024,,producer,Farm on Golden Hill,2025,2028,"Release notes. Even season, balanced."
+2025-06-12,assess,st-josef-s-pinot-noir-2023,,producer,St. Josef's,2025,2028,"Release notes. Warm, large crop, approachable."
+2025-06-12,assess,vitis-ridge-fortissimo-2023,,producer,Vitis Ridge,2026,2039,"Release notes. Warm, large crop, approachable."
+2025-06-20,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-c,,winery club,,,
+2025-06-20,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-d,,winery club,,,
+2025-06-20,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-c,,winery club,,,
+2025-06-20,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-d,,winery club,,,
+2025-06-20,acquire,vitis-ridge-riesling-2024,vitis-ridge-riesling-2024-a,,winery club,,,
+2025-06-20,acquire,vitis-ridge-riesling-2024,vitis-ridge-riesling-2024-b,,winery club,,,
+2025-06-20,consume,brooks-riesling-2019,brooks-riesling-2019-c,,,,,Honeyed now. Turning the corner but lovely.
+2025-06-21,consume,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-b,,,,,Fading. Drink the rest soon.
+2025-06-22,assess,farm-on-golden-hill-pinot-noir-2023,,personal,me,2025,2025,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-07-01,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-e,,,,,
+2025-07-03,consume,brooks-riesling-2019,brooks-riesling-2019-d,,,,,"Off-dry, lime and petrol. Excellent."
+2025-07-07,consume,brooks-riesling-2020,brooks-riesling-2020-l,,,,,Great acid. Held up better than expected.
+2025-07-07,consume,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-b,,,,,Flat. Too old for a rose.
+2025-07-08,consume,vitis-ridge-tannin-s-blend-2022,vitis-ridge-tannin-s-blend-2022-e,,,,,Settling down nicely.
+2025-07-12,assess,vitis-ridge-riesling-2024,,producer,Vitis Ridge,2029,2039,"Release notes. Even season, balanced."
+2025-07-13,assess,farm-on-golden-hill-riesling-2023,,personal,me,2028,2028,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-07-13,consume,brooks-riesling-2017,brooks-riesling-2017-a,,,,,"Off-dry, lime and petrol. Excellent."
+2025-08-11,assess,farm-on-golden-hill-riesling-2024,,personal,me,2029,2029,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-08-12,assess,paradis-vineyards-riesling-2024,,producer,Paradis Vineyards,2029,2039,"Release notes. Even season, balanced."
+2025-08-20,acquire,lodi-assorted-zinfandel-2024,lodi-assorted-zinfandel-2024-a,,grocery store,,,
+2025-08-22,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-c,,winery club,,,
+2025-08-22,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-d,,winery club,,,
+2025-08-22,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-c,,winery club,,,
+2025-08-22,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-d,,winery club,,,
+2025-08-22,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-c,,winery club,,,
+2025-08-22,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-d,,winery club,,,
+2025-09-06,consume,paradis-vineyards-estate-marechal-foch-2021,paradis-vineyards-estate-marechal-foch-2021-c,,,,,Should have listened to myself. Thin and drying. Three left.
+2025-09-08,consume,brooks-riesling-2019,brooks-riesling-2019-h,,,,,Still tastes young. Years left in this.
+2025-09-09,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-e,,winery club,,,
+2025-09-09,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-f,,winery club,,,
+2025-09-09,acquire,vitis-ridge-pinot-gris-2024,vitis-ridge-pinot-gris-2024-a,,winery club,,,
+2025-09-09,acquire,vitis-ridge-pinot-gris-2024,vitis-ridge-pinot-gris-2024-b,,winery club,,,
+2025-09-09,acquire,vitis-ridge-rose-of-pinot-noir-2024,vitis-ridge-rose-of-pinot-noir-2024-a,,winery club,,,
+2025-09-09,acquire,vitis-ridge-rose-of-pinot-noir-2024,vitis-ridge-rose-of-pinot-noir-2024-b,,winery club,,,
+2025-09-09,assess,farm-on-golden-hill-rose-2023,,personal,me,2024,2025,"Same peanut note as the others. Roasted, oily, sits on the finish. Not going to improve with time. Drink or pour out."
+2025-09-10,consume,vitis-ridge-marechal-foch-2021,vitis-ridge-marechal-foch-2021-f,,,,,"Blackberry, a little smoke. Good burger wine."
+2025-09-12,assess,paradis-vineyards-marechal-foch-2024,,producer,Paradis Vineyards,2025,2028,"Release notes. Even season, balanced."
+2025-09-12,assess,paradis-vineyards-pinot-gris-2024,,producer,Paradis Vineyards,2025,2029,"Release notes. Even season, balanced."
+2025-09-12,assess,vitis-ridge-marechal-foch-2024,,producer,Vitis Ridge,2025,2028,"Release notes. Even season, balanced."
+2025-09-14,assess,farm-on-golden-hill-chardonnay-2022,,personal,me,2024,2024,"Cancelled the club today. Lovely place to sit, wine I do not reach for."
+2025-09-19,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-c,,winery club,,,
+2025-09-19,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-d,,winery club,,,
+2025-09-19,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-e,,winery club,,,
+2025-09-19,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-f,,winery club,,,
+2025-09-19,acquire,paradis-vineyards-riesling-2024,paradis-vineyards-riesling-2024-c,,winery club,,,
+2025-09-19,acquire,paradis-vineyards-riesling-2024,paradis-vineyards-riesling-2024-d,,winery club,,,
+2025-09-27,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-f,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2025-10-22,acquire,st-josef-s-pinot-noir-2023,st-josef-s-pinot-noir-2023-a,,winery club,,,
+2025-10-22,acquire,st-josef-s-pinot-noir-2023,st-josef-s-pinot-noir-2023-b,,winery club,,,
+2025-11-04,consume,california-assorted-cabernet-sauvignon-2020,california-assorted-cabernet-sauvignon-2020-b,,,,,Cassis and cedar. Solid.
+2025-11-05,consume,st-josef-s-pinot-noir-2023,st-josef-s-pinot-noir-2023-a,,,,,"Opened too young. Fruit is there, structure is not resolved."
+2025-11-17,assess,st-josef-s-pinot-noir-2022,,critic,The Vintner's Ledger,2024,2027,"April frost, small crop, high quality."
+2025-11-18,consume,brooks-pinot-noir-2017,brooks-pinot-noir-2017-i,,,,,
+2025-11-18,consume,brooks-pinot-noir-2019,brooks-pinot-noir-2019-i,,,,,Silky. Drinking well right now.
+2025-11-19,assess,brooks-pinot-noir-2019,,personal,me,2024,2032,Reassessed after opening one.
+2025-11-22,consume,brooks-riesling-2014,brooks-riesling-2014-c,,,,,Great acid. Held up better than expected.
+2025-11-24,consume,farm-on-golden-hill-rose-2023,farm-on-golden-hill-rose-2023-a,,,,,
+2025-11-25,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-i,,,,,Opened up after an hour. Cranberry and dried herb.
+2025-12-04,consume,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-d,,,,,Fading. Drink the rest soon.
+2025-12-05,assess,paradis-vineyards-marechal-foch-2024,,personal,me,2025,2026,Reassessed after opening one.
+2025-12-05,consume,brooks-riesling-2019,brooks-riesling-2019-j,,,,,Still tastes young. Years left in this.
+2025-12-06,assess,brooks-riesling-2019,,personal,me,2024,2032,Reassessed after opening one.
+2025-12-06,consume,lodi-assorted-zinfandel-2020,lodi-assorted-zinfandel-2020-a,,,,,"Jammy, high alcohol, exactly what it says."
+2025-12-07,assess,vitis-ridge-marechal-foch-2024,,critic,Cascadia Wine Review,2025,2029,"Even season, balanced."
+2025-12-07,consume,brooks-riesling-2016,brooks-riesling-2016-l,,,,,Still tastes young. Years left in this.
+2025-12-08,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-h,,,,,Earthier than I remembered. Good with the mushroom pasta.
+2025-12-11,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-e,,winery club,,,
+2025-12-11,acquire,paradis-vineyards-marechal-foch-2024,paradis-vineyards-marechal-foch-2024-f,,winery club,,,
+2025-12-11,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-e,,winery club,,,
+2025-12-11,acquire,paradis-vineyards-pinot-gris-2024,paradis-vineyards-pinot-gris-2024-f,,winery club,,,
+2025-12-11,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-g,,winery club,,,
+2025-12-11,acquire,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-h,,winery club,,,
+2025-12-11,assess,vitis-ridge-rose-of-pinot-noir-2024,,critic,The Vintner's Ledger,2025,2027,"Even season, balanced."
+2025-12-12,consume,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-c,,,,,
+2025-12-13,assess,vitis-ridge-pinot-gris-2024,,critic,Northwest Cellar Notes,2025,2031,"Even season, balanced."
+2025-12-13,consume,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-f,,,,,
+2025-12-14,assess,farm-on-golden-hill-chardonnay-2022,,personal,me,2024,2031,Reassessed after opening one.
+2025-12-16,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-e,,winery club,,,
+2025-12-16,acquire,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-f,,winery club,,,
+2025-12-16,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-e,,winery club,,,
+2025-12-16,acquire,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-f,,winery club,,,
+2025-12-16,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-e,,winery club,,,
+2025-12-16,acquire,farm-on-golden-hill-rose-2024,farm-on-golden-hill-rose-2024-f,,winery club,,,
+2025-12-22,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-g,,winery club,,,
+2025-12-22,acquire,vitis-ridge-fortissimo-2023,vitis-ridge-fortissimo-2023-h,,winery club,,,
+2025-12-22,acquire,vitis-ridge-marechal-foch-2024,vitis-ridge-marechal-foch-2024-c,,winery club,,,
+2025-12-22,acquire,vitis-ridge-marechal-foch-2024,vitis-ridge-marechal-foch-2024-d,,winery club,,,
+2025-12-22,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-e,,winery club,,,
+2025-12-22,acquire,vitis-ridge-pinot-noir-2023,vitis-ridge-pinot-noir-2023-f,,winery club,,,
+2025-12-22,consume,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-c,,,,,
+2025-12-26,assess,vitis-ridge-marechal-foch-2021,,critic,Northwest Cellar Notes,2022,2031,Retrospective tasting. More life left than earlier notes suggested.
+2025-12-28,consume,paradis-vineyards-marechal-foch-2023,paradis-vineyards-marechal-foch-2023-b,,,,,"Blackberry, a little smoke. Good burger wine."
+2026-01-01,consume,brooks-riesling-2020,brooks-riesling-2020-h,,,,,Still tastes young. Years left in this.
+2026-01-02,assess,brooks-riesling-2020,,personal,me,2025,2036,Reassessed after opening one.
+2026-01-19,consume,brooks-riesling-2021,brooks-riesling-2021-l,,,,,Honeyed now. Turning the corner but lovely.
+2026-02-02,consume,vitis-ridge-pinot-gris-2023,vitis-ridge-pinot-gris-2023-f,,,,,Pear and citrus. Crisp.
+2026-02-13,consume,paradis-vineyards-pinot-noir-2023,paradis-vineyards-pinot-noir-2023-d,,,,,
+2026-03-11,consume,brooks-pinot-noir-2015,brooks-pinot-noir-2015-c,,,,,"Bright acid, light on its feet."
+2026-03-12,acquire,paradis-vineyards-marechal-foch-2025,paradis-vineyards-marechal-foch-2025-a,,winery club,,,
+2026-03-12,acquire,paradis-vineyards-marechal-foch-2025,paradis-vineyards-marechal-foch-2025-b,,winery club,,,
+2026-03-12,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-a,,winery club,,,
+2026-03-12,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-b,,winery club,,,
+2026-03-12,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-a,,winery club,,,
+2026-03-12,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-b,,winery club,,,
+2026-03-12,assess,paradis-vineyards-riesling-2025,,producer,Paradis Vineyards,2030,2040,"Release notes. Early picks, fruit forward."
+2026-03-12,assess,vitis-ridge-pinot-gris-2025,,producer,Vitis Ridge,2026,2029,"Release notes. Early picks, fruit forward."
+2026-03-12,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-f,,,,,"Off-dry, lime and petrol. Excellent."
+2026-03-12,consume,vitis-ridge-pinot-noir-2022,vitis-ridge-pinot-noir-2022-f,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2026-03-16,acquire,lodi-assorted-zinfandel-2025,lodi-assorted-zinfandel-2025-a,,grocery store,,,
+2026-03-19,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-a,,winery club,,,
+2026-03-19,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-b,,winery club,,,
+2026-03-19,acquire,vitis-ridge-pinot-gris-2025,vitis-ridge-pinot-gris-2025-a,,winery club,,,
+2026-03-19,acquire,vitis-ridge-pinot-gris-2025,vitis-ridge-pinot-gris-2025-b,,winery club,,,
+2026-03-19,acquire,vitis-ridge-tannin-s-blend-2024,vitis-ridge-tannin-s-blend-2024-a,,winery club,,,
+2026-03-19,acquire,vitis-ridge-tannin-s-blend-2024,vitis-ridge-tannin-s-blend-2024-b,,winery club,,,
+2026-03-29,assess,lodi-assorted-zinfandel-2019,,critic,Pacific Vintage Quarterly,2021,2030,Retrospective tasting. More life left than earlier notes suggested.
+2026-04-12,assess,paradis-vineyards-marechal-foch-2025,,producer,Paradis Vineyards,2026,2029,"Release notes. Early picks, fruit forward."
+2026-04-12,assess,vitis-ridge-marechal-foch-2025,,producer,Vitis Ridge,2026,2029,"Release notes. Early picks, fruit forward."
+2026-04-12,assess,vitis-ridge-pinot-noir-2024,,producer,Vitis Ridge,2026,2029,"Release notes. Even season, balanced."
+2026-05-06,assess,paradis-vineyards-marechal-foch-2023,,critic,Cascadia Wine Review,2024,2030,"Warm, large crop, approachable."
+2026-05-12,assess,paradis-vineyards-pinot-gris-2025,,producer,Paradis Vineyards,2026,2029,"Release notes. Early picks, fruit forward."
+2026-05-13,assess,vitis-ridge-pinot-noir-2023,,critic,Cascadia Wine Review,2025,2028,"Warm, large crop, approachable."
+2026-06-02,consume,farm-on-golden-hill-pinot-noir-2022,farm-on-golden-hill-pinot-noir-2022-e,,,,,
+2026-06-14,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-d,,,,,Still tastes young. Years left in this.
+2026-06-16,acquire,paradis-vineyards-marechal-foch-2025,paradis-vineyards-marechal-foch-2025-c,,winery club,,,
+2026-06-16,acquire,paradis-vineyards-marechal-foch-2025,paradis-vineyards-marechal-foch-2025-d,,winery club,,,
+2026-06-16,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-c,,winery club,,,
+2026-06-16,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-d,,winery club,,,
+2026-06-16,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-c,,winery club,,,
+2026-06-16,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-d,,winery club,,,
+2026-06-18,consume,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-b,,,,,Needed a bottle for dinner and this was in front.
+2026-06-19,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-c,,winery club,,,
+2026-06-19,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-d,,winery club,,,
+2026-06-19,acquire,vitis-ridge-marechal-foch-2025,vitis-ridge-marechal-foch-2025-a,,winery club,,,
+2026-06-19,acquire,vitis-ridge-marechal-foch-2025,vitis-ridge-marechal-foch-2025-b,,winery club,,,
+2026-06-19,acquire,vitis-ridge-pinot-noir-2024,vitis-ridge-pinot-noir-2024-a,,winery club,,,
+2026-06-19,acquire,vitis-ridge-pinot-noir-2024,vitis-ridge-pinot-noir-2024-b,,winery club,,,
+2026-06-21,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-e,,,,,Still tastes young. Years left in this.
+2026-06-22,assess,vitis-ridge-marechal-foch-2025,,critic,Pacific Vintage Quarterly,2026,2030,"Early picks, fruit forward."
+2026-06-26,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-c,,,,,Still tastes young. Years left in this.
+2026-06-26,consume,vitis-ridge-fortissimo-2021,vitis-ridge-fortissimo-2021-b,,,,,
+2026-06-27,assess,vitis-ridge-fortissimo-2021,,personal,me,2024,2037,Reassessed after opening one.
+2026-07-02,assess,paradis-vineyards-pinot-noir-2023,,critic,The Vintner's Ledger,2025,2027,"Warm, large crop, approachable."
+2026-07-05,consume,brooks-riesling-2017,brooks-riesling-2017-h,,,,,Great acid. Held up better than expected.
+2026-07-06,assess,brooks-riesling-2017,,personal,me,2022,2030,Reassessed after opening one.
+2026-07-08,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-b,,,,,"Off-dry, lime and petrol. Excellent."
+2026-07-09,assess,paradis-vineyards-riesling-2021,,personal,me,2026,2034,Reassessed after opening one.
+2026-07-09,consume,brooks-riesling-2020,brooks-riesling-2020-g,,,,,"Off-dry, lime and petrol. Excellent."
+2026-07-10,consume,farm-on-golden-hill-pinot-noir-2023,farm-on-golden-hill-pinot-noir-2023-d,,,,,"Red cherry, forest floor, fine tannin. Still tight."
+2026-07-12,assess,paradis-vineyards-pinot-noir-2024,,producer,Paradis Vineyards,2026,2029,"Release notes. Even season, balanced."
+2026-07-12,assess,vitis-ridge-tannin-s-blend-2024,,producer,Vitis Ridge,2026,2034,"Release notes. Even season, balanced."
+2026-07-13,consume,brooks-riesling-2021,brooks-riesling-2021-h,,,,,Honeyed now. Turning the corner but lovely.
+2026-07-14,consume,brooks-riesling-2020,brooks-riesling-2020-j,,,,,Honeyed now. Turning the corner but lovely.
+2026-07-18,consume,brooks-riesling-2021,brooks-riesling-2021-g,,,,,
+2026-07-22,consume,brooks-pinot-noir-2018,brooks-pinot-noir-2018-d,,,,,
+2026-08-05,consume,st-josef-s-pinot-noir-2022,st-josef-s-pinot-noir-2022-b,,,,,Structured. Could have waited another two years.
+2026-08-07,consume,farm-on-golden-hill-riesling-2024,farm-on-golden-hill-riesling-2024-d,,,,,
+2026-08-08,consume,vitis-ridge-marechal-foch-2024,vitis-ridge-marechal-foch-2024-a,,,,,Fading. Drink the rest soon.
+2026-08-09,assess,vitis-ridge-marechal-foch-2024,,personal,me,2025,2029,Reassessed after opening one.
+2026-08-11,consume,brooks-pinot-noir-2013,brooks-pinot-noir-2013-e,,,,,Silky. Drinking well right now.
+2026-08-12,consume,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-e,,,,,"Nutty, rounding out."
+2026-08-13,consume,brooks-riesling-2020,brooks-riesling-2020-c,,,,,Honeyed now. Turning the corner but lovely.
+2026-08-15,consume,brooks-riesling-2021,brooks-riesling-2021-c,,,,,
+2026-08-17,consume,brooks-riesling-2017,brooks-riesling-2017-c,,,,,"Off-dry, lime and petrol. Excellent."
+2026-08-24,consume,brooks-riesling-2021,brooks-riesling-2021-b,,,,,Honeyed now. Turning the corner but lovely.
+2026-09-03,consume,paradis-vineyards-riesling-2021,paradis-vineyards-riesling-2021-a,,,,,
+2026-09-05,consume,brooks-riesling-2019,brooks-riesling-2019-k,,,,,"Off-dry, lime and petrol. Excellent."
+2026-09-10,consume,brooks-riesling-2018,brooks-riesling-2018-a,,,,,Honeyed now. Turning the corner but lovely.
+2026-09-12,assess,vitis-ridge-fortissimo-2024,,producer,Vitis Ridge,2027,2041,"Release notes. Even season, balanced."
+2026-09-12,assess,vitis-ridge-riesling-2025,,producer,Vitis Ridge,2030,2040,"Release notes. Early picks, fruit forward."
+2026-09-13,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-e,,winery club,,,
+2026-09-13,acquire,paradis-vineyards-pinot-gris-2025,paradis-vineyards-pinot-gris-2025-f,,winery club,,,
+2026-09-13,acquire,paradis-vineyards-pinot-noir-2024,paradis-vineyards-pinot-noir-2024-a,,winery club,,,
+2026-09-13,acquire,paradis-vineyards-pinot-noir-2024,paradis-vineyards-pinot-noir-2024-b,,winery club,,,
+2026-09-13,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-e,,winery club,,,
+2026-09-13,acquire,paradis-vineyards-riesling-2025,paradis-vineyards-riesling-2025-f,,winery club,,,
+2026-09-13,consume,brooks-riesling-2020,brooks-riesling-2020-d,,,,,
+2026-09-14,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-e,,winery club,,,
+2026-09-14,acquire,vitis-ridge-fortissimo-2024,vitis-ridge-fortissimo-2024-f,,winery club,,,
+2026-09-14,acquire,vitis-ridge-riesling-2025,vitis-ridge-riesling-2025-a,,winery club,,,
+2026-09-14,acquire,vitis-ridge-riesling-2025,vitis-ridge-riesling-2025-b,,winery club,,,
+2026-09-14,acquire,vitis-ridge-tannin-s-blend-2024,vitis-ridge-tannin-s-blend-2024-c,,winery club,,,
+2026-09-14,acquire,vitis-ridge-tannin-s-blend-2024,vitis-ridge-tannin-s-blend-2024-d,,winery club,,,
+2026-09-17,consume,brooks-pinot-noir-2016,brooks-pinot-noir-2016-l,,,,,Structured. Could have waited another two years.
+2026-09-17,consume,farm-on-golden-hill-chardonnay-2022,farm-on-golden-hill-chardonnay-2022-d,,,,,"Nutty, rounding out."
