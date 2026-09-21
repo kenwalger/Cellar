@@ -14,15 +14,15 @@ A scaffolded cellar history to be edited against reality, not used as-is.
 ## Current shape
 
 ```
-wines            105
-bottles          576
-consumed         332
-in cellar        244
-ledger rows     1084
+wines             98
+bottles          542
+consumed         294
+in cellar        248
+ledger rows      997
 
-HOLD               9
-DRINKING         195
-PAST_WINDOW       36
+HOLD              45
+DRINKING         166
+PAST_WINDOW       33
 UNASSESSED         4
 ```
 
@@ -35,8 +35,8 @@ any edit to confirm they still do.
 The cellar is larger than the seed plan's original 100 to 130 bottle target.
 That is a consequence of the real buying cadence: two clubs at six bottles a
 quarter for five years, plus Brooks quarterly from 2014 to 2022, produces
-roughly 560 acquisitions across the decade. Consumption is modelled to leave
-about 237 bottles on hand, which is what a cellar looks like when acquisition
+roughly 540 acquisitions across the decade. Consumption is modelled to leave
+about 250 bottles on hand, which is what a cellar looks like when acquisition
 outpaces drinking. That is also the premise of the application, so the size is
 arguably a feature.
 

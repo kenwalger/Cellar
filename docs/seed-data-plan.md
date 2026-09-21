@@ -33,6 +33,35 @@ on all seeded assessments. It has to be written explicitly, because
 and an assessment with no `reviewState` resolves no window at all. Proposed
 assessments enter later, from the Agent Action, not from the ledger.
 
+## The derivedFrom rule
+
+The ledger has no `derivedFrom` column either, and unlike `reviewState` that
+one cannot be filled with a constant. The link it represents is nonetheless
+real and present in the data, because of how the ledger is authored: a bottle
+is opened and the tasting note is written that day, and the assessment the
+note produces is dated the following day.
+
+So the transform applies this rule:
+
+> A `personal` assessment dated exactly one day after a consumption of the
+> same wine records that consumption as its `derivedFrom`. If more than one
+> bottle of that wine was opened on that day, the note cannot be attributed to
+> a particular bottle, and `derivedFrom` is left unset.
+
+This is a stated rule about how the ledger was written, not a pattern inferred
+from the data, and that distinction matters. Anything the transform cannot
+justify by the rule is left empty rather than guessed. A personal assessment
+that does not follow a consumption is a standalone opinion and correctly
+carries no link.
+
+The rule is what gives demo moment 4 its data. Without it no seeded assessment
+has `derivedFrom` set, the feedback loop has nothing to display, and the best
+argument in the model for assessments being documents goes unillustrated.
+
+The transform reports how many assessments it linked and lists every case it
+declined to link, so the rule's reach stays visible rather than being taken on
+trust.
+
 ## Volume targets
 
 | Thing | Target | Reasoning |

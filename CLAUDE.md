@@ -7,8 +7,12 @@ October 4, 2026.
 
 ## Stack
 
-TypeScript throughout. Sanity Studio, the Sanity App SDK, Sanity Functions,
-GROQ. Node. No Python anywhere in this project.
+The application stack is TypeScript end to end. Sanity Studio, the Sanity App
+SDK, Sanity Functions, GROQ. Node.
+
+`sample_data/` contains Python tooling used only to generate and check the
+seed dataset. Nothing in the application depends on it, and it is not a
+precedent for adding Python anywhere else.
 
 Development is on Windows with PowerShell. Sanity's quickstarts often assume a
 Unix shell, so adapt commands rather than pasting them, and flag it when a
