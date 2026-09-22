@@ -1,0 +1,50 @@
+kind,bottle,date,expected,windowFrom,windowUntil,windowSource,check
+state,chateau-mouton-rothschild-grand-vin-1993-b,1999-06-01,CONSUMED,,,,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-b,2023-03-15,CONSUMED,,,,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-b,2025-06-01,CONSUMED,,,,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-b,2026-09-18,CONSUMED,,,,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-d,1999-06-01,DRINKING,1998-01-01,2012-12-31,personal 1999-03-21,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-d,2023-03-15,PAST_WINDOW,1998-01-01,2012-12-31,personal 1999-03-21,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-d,2025-06-01,PAST_WINDOW,1998-01-01,2012-12-31,personal 1999-03-21,by hand
+state,chateau-mouton-rothschild-grand-vin-1993-d,2026-09-18,PAST_WINDOW,1998-01-01,2012-12-31,personal 1999-03-21,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-a,1999-06-01,NOT_YET_OWNED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-a,2023-03-15,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-a,2025-06-01,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-a,2026-09-18,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-b,1999-06-01,NOT_YET_OWNED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-b,2023-03-15,DRINKING,2023-01-01,2027-12-31,producer 2022-04-08,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-b,2025-06-01,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-b,2026-09-18,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-c,1999-06-01,NOT_YET_OWNED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-c,2023-03-15,DRINKING,2023-01-01,2027-12-31,producer 2022-04-08,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-c,2025-06-01,PAST_WINDOW,2023-01-01,2024-12-31,personal 2024-02-21,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-c,2026-09-18,CONSUMED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-d,1999-06-01,NOT_YET_OWNED,,,,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-d,2023-03-15,DRINKING,2023-01-01,2027-12-31,producer 2022-04-08,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-d,2025-06-01,PAST_WINDOW,2023-01-01,2024-12-31,personal 2024-02-21,by hand
+state,paradis-vineyards-estate-marechal-foch-2021-d,2026-09-18,PAST_WINDOW,2023-01-01,2024-12-31,personal 2024-02-21,by hand
+state,farm-on-golden-hill-pinot-noir-2022-b,1999-06-01,NOT_YET_OWNED,,,,check.py
+state,farm-on-golden-hill-pinot-noir-2022-b,2023-03-15,NOT_YET_OWNED,,,,check.py
+state,farm-on-golden-hill-pinot-noir-2022-b,2025-06-01,PAST_WINDOW,2024-01-01,2024-12-31,personal 2025-05-05,check.py
+state,farm-on-golden-hill-pinot-noir-2022-b,2026-09-18,PAST_WINDOW,2024-01-01,2024-12-31,personal 2025-05-05,check.py
+state,california-assorted-cabernet-sauvignon-2018-b,1999-06-01,NOT_YET_OWNED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-b,2023-03-15,UNASSESSED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-b,2025-06-01,UNASSESSED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-b,2026-09-18,UNASSESSED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-a,1999-06-01,NOT_YET_OWNED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-a,2023-03-15,UNASSESSED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-a,2025-06-01,CONSUMED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2018-a,2026-09-18,CONSUMED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2013-a,1999-06-01,NOT_YET_OWNED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2013-a,2023-03-15,NOT_YET_OWNED,,,,check.py
+state,california-assorted-cabernet-sauvignon-2013-a,2025-06-01,PAST_WINDOW,2016-01-01,2024-12-31,critic 2015-05-01,check.py
+state,california-assorted-cabernet-sauvignon-2013-a,2026-09-18,PAST_WINDOW,2016-01-01,2024-12-31,critic 2015-05-01,check.py
+state,brooks-pinot-noir-2019-b,1999-06-01,NOT_YET_OWNED,,,,check.py
+state,brooks-pinot-noir-2019-b,2023-03-15,HOLD,2024-01-01,2034-12-31,producer 2021-06-12,check.py
+state,brooks-pinot-noir-2019-b,2025-06-01,DRINKING,2024-01-01,2034-12-31,producer 2021-06-12,check.py
+state,brooks-pinot-noir-2019-b,2026-09-18,DRINKING,2024-01-01,2032-12-31,personal 2025-11-19,check.py
+verdict,chateau-mouton-rothschild-grand-vin-1993-b,1999-03-20,IN_WINDOW,1998-01-01,2018-12-31,personal 1996-11-10,by hand
+verdict,paradis-vineyards-estate-marechal-foch-2021-a,2022-07-30,EARLY,2023-01-01,2027-12-31,producer 2022-04-08,by hand
+verdict,paradis-vineyards-estate-marechal-foch-2021-b,2024-02-20,IN_WINDOW,2023-01-01,2027-12-31,producer 2022-04-08,by hand
+verdict,paradis-vineyards-estate-marechal-foch-2021-c,2025-09-06,LATE,2023-01-01,2024-12-31,personal 2024-02-21,by hand
+verdict,california-assorted-cabernet-sauvignon-2018-a,2024-07-22,UNKNOWN,,,,check.py

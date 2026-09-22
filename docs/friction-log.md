@@ -1027,3 +1027,418 @@ before, thirty years of provenance in one query. The 1999 entry, with its 2012
 window, is the one that currently wins resolution under ADR 0006.
 
 </details>
+
+### Stage 2
+#### 22 September 2026
+#### Start Time: 
+
+Prompt 1:
+
+```text
+Stage 2: the temporal resolution module.
+
+Read CLAUDE.md, docs/temporal-resolution.md including its amendments, ADRs
+0001, 0005, 0006, 0010, and 0011, and the Stage 2 section of
+docs/build-plan.md.
+
+Do not write code yet.
+
+First, identify any conflicts between these documents, the current repo
+structure, and the Sanity capabilities this stage depends on. Verify current
+Sanity behavior through the MCP server where necessary rather than relying
+on training data. Do not resolve conflicts or uncertainties silently.
+
+Then propose the following and stop for my approval:
+
+1. Shared module location
+
+   Propose where the shared temporal module lives. It must be importable by:
+
+   - Studio, including wineDisplayName in previews
+   - a Sanity App built with the App SDK
+   - Sanity Functions
+
+   The repo currently has studio/ and web/.
+
+   Explain how each consumer would import the module. Verify that the proposed
+   package/module structure is compatible with the App SDK and Functions.
+   Flag anything you cannot verify rather than assuming support.
+
+2. Public API
+
+   Propose the module's public API and TypeScript types for:
+
+   - acquired
+   - consumed
+   - inCellar
+   - resolvedWindow
+   - state
+   - verdict
+   - missed opportunities
+   - wineDisplayName
+
+   Keep the temporal module pure. It must contain domain logic only and must
+   not import a Sanity client, execute GROQ, or fetch data itself.
+
+3. Data boundary
+
+   Propose the input shape the temporal module consumes.
+
+   Separately propose the GROQ query or queries that a Sanity-facing adapter
+   would use to fetch and project Content Lake documents into that shape.
+
+   Keep fetching and temporal resolution as separate concerns.
+
+4. Missed opportunities
+
+   Explain how missed opportunities will be computed before proposing code.
+   Follow docs/temporal-resolution.md exactly: evaluate the state-change
+   boundaries required for an exact result. Do not substitute periodic or
+   monthly sampling.
+
+5. Test setup
+
+   Tests read sample_data/expected-states.csv as the independent oracle.
+
+   It contains one row per check:
+
+   - kind: state or verdict
+   - bottle
+   - date
+   - expected
+   - resolved window and source fields for debugging
+
+   Propose the test runner and how the CSV becomes test inputs. Prefer no new
+   dependencies if Node's built-in test runner is sufficient.
+
+Rules the module must implement exactly:
+
+- Only accepted assessments participate in resolution.
+- Assessment authority is resolved by tier first.
+- Within a tier: assessedAt descending, then _createdAt descending, then _id
+  descending.
+- Verdict resolves the drinking window as of consumedAt, not as of now.
+- Temporal window comparisons operate on dates.
+- Human drinking-window years normalize to drinkFrom January 1 and drinkUntil
+  December 31.
+- Missed-opportunity calculations use exact state-change boundaries, not
+  periodic sampling.
+- All asOf comparisons are calendar-date comparisons. consumedAt is truncated
+  to its UTC calendar date before comparing. An event dated on day T counts
+  as having happened as of T, inclusive. This matches how
+  expected-states.csv was generated. consumedAt keeps its time only for
+  ordering multiple openings on the same day.
+
+The expected-output table was generated independently and checked by hand
+before any temporal-module code existed.
+
+Treat it as an oracle, not output to be repaired.
+
+Do not modify expected-states.csv to make tests pass. If implementation and
+the oracle disagree, report the failing rows, explain what the implementation
+produced and why, and stop for my decision.
+
+Do not write code until I approve the proposal.
+```
+
+Response:
+
+```text
+
+● PowerShell($d = Join-Path $env:TEMP ('nodetest-' + [guid]::NewGuid().ToString('N'))
+            New-Item -ItemType Directory -Path $d | Out-Null…)
+  ⎿  ✔ adds (0.4711ms)
+     ℹ tests 1
+     ℹ suites 0
+     … +7 lines (ctrl+o to expand)
+
+● I've read all of it and verified the Sanity-side questions against the docs and the live dataset. No code written.
+
+  Three things I verified empirically, because they change the proposal:
+
+  - The seed import has run. 1645 documents, 0 drafts. All 161 assessments share exactly one _createdAt (2026-09-21T22:26:40Z) — ADR 0006's amendment predicted this precisely, and on this data _createdAt is dead weight; _id descending is the operative tie-break.
+  - There are no same-tier, same-day assessment ties. I pulled all 161 accepted assessments and checked wine|sourceType|assessedAt — 161 distinct keys. ADR 0006's claim holds.                                                                         
+  - node --test runs .mts directly on Node 26.3.0 with native type stripping, importing sibling .mts modules. Ran a scratch test outside the repo: 1 pass, exit 0. No test dependency needed.
+
+  ---
+  Conflicts and uncertainties
+
+  Spec-vs-spec
+
+  1. CLAUDE.md design rule 3 is stale. It still reads "Ties break on _createdAt descending" — missing the _id key added to temporal-resolution.md and ADR 0006 on 2026-09-21. CLAUDE.md is listed as authoritative, so it currently contradicts the amended spec and your brief. I'll follow the amended rule. Needs
+  a one-line fix.
+
+  2. temporal-resolution.md "Where this code lives" is stale. It says the logic "is written once, in the frontend" — superseded by ADR 0010, which replaced the separate frontend with a Sanity App. This section is precisely what item 1 asks me to propose, so it needs rewriting either way.
+
+  3. The missed-opportunities boundary list in the spec is incomplete. This is a real bug, not a wording nit. The spec names "period start, period end, each drinkFrom and drinkUntil from assessments visible in the period, and each acquisition date." It omits assessedAt. A new assessment becoming visible
+  swaps which window resolves, flipping state with no drinkFrom/drinkUntil boundary crossed. Your own seed data does this: paradis-vineyards-estate-marechal-foch-2021 reads DRINKING under the producer window 2023–2027 until 2024-02-21, when the personal assessment replaces it with 2023–2024. A scan without
+  assessedAt boundaries misses the transition entirely. Details in §4.
+
+  4. consumedAt comparison semantics read two ways. temporal-resolution.md and CLAUDE.md both say comparisons are date-level "except consumedAt, which keeps its time," and the verdict pseudocode compares a datetime directly against dates. Your brief resolves this — truncate to UTC calendar date, keep time
+  only for same-day ordering — and I'll implement your version. Worth knowing why it matters: the import wrote every consumedAt as T12:00:00Z, so UTC truncation recovers the ledger date exactly. But a consumption authored in Studio at 21:00 Pacific is 04:00Z the next day, and UTC truncation shifts it a day
+  forward. The rule is right for the seed data and will surprise someone later.
+
+  Oracle coverage gaps
+
+  5. The oracle does not cover missed opportunities. expected-states.csv has kind values state and verdict only, and Stage 2's success test names only those. missedOpportunities would ship with no independent verification. I can write synthetic tests, but those are my own reasoning, not an oracle — they'd
+  prove consistency, not correctness.
+
+  6. The oracle cannot exercise two of the rules you listed. All 161 assessments are accepted, so "only accepted assessments participate" has zero coverage. And with no same-tier same-day ties, the tie-break chain has zero coverage. Both are load-bearing. I propose synthetic unit tests for them, kept in a
+  separate file and clearly labelled as not the oracle.
+
+  7. The oracle's "now" is 2026-09-18, matching check.py's hardcoded TODAY. The module must never read the clock internally or these tests rot the moment the date passes. now is a required parameter everywhere in my proposed API.
+
+  Repo structure vs Sanity requirements
+
+  8. There is no root package.json or lockfile. studio/ and web/ each have their own. The Blueprints doc is explicit: sanity.blueprint.ts and the lockfile must be co-located, and putting the manifest inside studio/ is named as an anti-pattern. Stage 4 needs Functions, so a root manifest and lockfile are
+  coming. That makes the workspace question a Stage 2 decision, not a Stage 4 one.
+
+  9. The one thing I could not verify: whether the Functions bundler packages an npm-workspace-linked local package. The docs state two cases and this repo falls in neither:
+
+  ▎ "For TypeScript Functions in a pnpm workspace, the CLI bundles inline using Vite."
+  ▎
+  ▎ "For npm or yarn projects that doesn't use TypeScript, the CLI externalizes dependencies and ships them as a node_modules folder alongside the source."
+
+  This repo is npm and TypeScript. Which path it takes is unstated, and whether a symlinked workspace package survives the externalize path is documented nowhere. I can't settle it without deploying a Function. Mitigation in §1.
+
+  10. Unverified: Studio autoUpdates: true with a workspace-linked local package. Auto-updates swap the sanity package at runtime; your own code is still bundled by sanity build. I expect this is fine, but I haven't confirmed it and won't claim it. Cheap to settle: one sanity build after wiring the import.
+
+  11. wineDisplayName has no authoritative definition. build-plan.md:46 adds it to the shared module; content-model.md only says the preview "composes producer, cuvee, and vintage." The actual order lives in studio/schemaTypes/wine.ts where I wrote [vintageYear, producerName, cuvee]. Moving it to the shared
+  module makes that the canonical definition — confirm it's the one you want. Also: it isn't temporal, which affects the package name.
+
+  ---
+  1. Shared module location
+
+  Proposal: packages/cellar-core/, published as @cellar/core, with the repo root becoming an npm workspace root.
+
+  Cellar/
+  ├─ package.json            NEW — private workspace root
+  ├─ package-lock.json       NEW — at root, where the blueprint will need it
+  ├─ packages/
+  │  └─ cellar-core/
+  │     ├─ package.json      "@cellar/core"
+  │     ├─ src/*.ts
+  │     ├─ dist/             built ESM + .d.ts  (gitignored)
+  │     └─ test/*.test.mts
+  ├─ studio/                 workspace member
+  ├─ web/                    workspace member
+  ├─ app/                    Stage 3, App SDK
+  └─ functions/              Stage 4
+
+  This is the layout the Blueprints doc calls "Multi-application project (recommended for monorepos)" and marks "fully supported" — including a packages/shared-utilities sibling, which is exactly this case. Cost: a root package.json and lockfile, one reinstall, and node_modules hoisting for studio/ and
+  web/. That's real disruption two days before the ADR 0010 gate, which is why I'm flagging it rather than just doing it.
+
+  The package ships compiled ESM + .d.ts, not raw TypeScript. Vite, Next 16, and Node 24 all consume built ESM without per-consumer transpile config; raw .ts in a dependency is something Vite and Next both resist by default. The cost is a tsc build step in a repo that currently has none.
+
+  How each consumer imports:
+
+  ┌──────────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────────────────────────┐
+  │               Consumer               │                                                Import                                                 │                                   Confidence                                   │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+  │ Studio (schemaTypes/wine.ts preview) │ import {wineDisplayName} from '@cellar/core'                                                          │ High — Vite resolves workspace symlinks. Unverified against autoUpdates (#10). │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+  │ App SDK app                          │ import {bottleState, resolvedWindow} from '@cellar/core'                                              │ High mechanically; the app doesn't exist yet, so untested.                     │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+  │ Next.js fallback (web/)              │ same                                                                                                  │ High, given built ESM. Next 16.3.5 caveat per ADR 0010.                        │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+  │ Functions                            │ import {bottleState} from '@cellar/core', declared in the package.json the CLI uses for that function │ Unverified — see #9.                                                           │
+  └──────────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────┘
+
+  Mitigation for the Functions risk, in order of preference:
+
+  1. Deploy one trivial Function importing @cellar/core early in Stage 4 and find out. Cheapest real answer.
+  2. If the bundler won't follow the symlink: transpile: false with src: './functions/<name>/dist', building the function and its copy of the module ahead of deploy. The doc names this escape hatch explicitly.
+  3. Switch the workspace to pnpm, which is the combination the docs explicitly certify. Largest change, highest certainty.
+
+  I'd rather not pre-emptively switch to pnpm on a deadline for a risk that one test deploy resolves.
+
+  Name: @cellar/core, not @cellar/temporal, because wineDisplayName is display logic and would be misfiled in a package named "temporal." Single entry point, named exports.
+
+  ---
+  2. Public API
+
+  Pure. No client import, no GROQ execution, no fetch, and no clock read — asOf and now are always parameters.
+
+  export type IsoDate = string      // 'YYYY-MM-DD'
+  export type IsoDateTime = string  // full ISO 8601
+
+  export type SourceTier = 'personal' | 'producer' | 'critic' | 'merchant' | 'other'
+  export const AUTHORITY_ORDER: readonly SourceTier[]  // tier order, exported so the UI can sort
+
+  export type ReviewState = 'proposed' | 'accepted' | 'rejected'
+  export type BottleState = 'NOT_YET_OWNED' | 'CONSUMED' | 'UNASSESSED' | 'HOLD' | 'DRINKING' | 'PAST_WINDOW'
+  export type Verdict = 'EARLY' | 'IN_WINDOW' | 'LATE' | 'UNKNOWN'
+
+  export interface ResolvedWindow {
+    drinkFrom: IsoDate
+    drinkUntil: IsoDate
+    sourceType: SourceTier
+    sourceName: string
+    assessedAt: IsoDate
+    assessmentId: string
+    visibleCount: number   // accepted assessments visible as of the resolution date
+  }
+
+  export interface BottleStateResult {
+    state: BottleState
+    window: ResolvedWindow | null
+  }
+
+  export interface VerdictResult {
+    verdict: Verdict
+    consumedOn: IsoDate                        // consumedAt truncated to UTC date
+    windowAtConsumption: ResolvedWindow | null
+  }
+
+  // Predicates
+  export function acquired(cellar: Cellar, bottleId: string, asOf: IsoDate): boolean
+  export function consumed(cellar: Cellar, bottleId: string, asOf: IsoDate): boolean
+  export function inCellar(cellar: Cellar, bottleId: string, asOf: IsoDate): boolean
+
+  // Resolution
+  export function resolvedWindow(cellar: Cellar, wineId: string, asOf: IsoDate): ResolvedWindow | null
+  export function bottleState(cellar: Cellar, bottleId: string, asOf: IsoDate): BottleStateResult
+  export function consumptionVerdict(cellar: Cellar, bottleId: string): VerdictResult | null
+
+  // Display bucket, deliberately outside the state machine
+  export function isDrinkSoon(result: BottleStateResult, asOf: IsoDate, withinMonths?: number): boolean
+
+  // Missed opportunities — see §4
+  export function missedOpportunities(cellar: Cellar, period: Period, now: IsoDate): MissedOpportunity[]
+
+  // Display
+  export function wineDisplayName(wine: WineDisplayInput): string
+
+  visibleCount is what lets the UI say "window based on 3 assessments, most recent personal, May 2026" without a second query, as the spec requires.
+
+  Two naming notes. The spec calls these state() and verdict(); I've proposed bottleState / consumptionVerdict because bare state and verdict are miserable to import into React components. Say the word and I'll use the spec names. And consumptionVerdict takes a bottleId rather than a consumption, since a
+  bottle has at most one consumption and callers hold bottle IDs — it returns null for an unconsumed bottle.
+
+  One optional addition, which is the sentence ADR 0005 says the UI should display: verdictDrift(cellar, bottleId, now), returning the verdict at the time alongside what today's window would say. Falls out for free. Tell me if you want it in Stage 2 or deferred.
+
+  ---
+  3. Data boundary
+
+  Input shape — flat, id-keyed, no references left to resolve:
+
+  export interface WineInput {
+    id: string; title?: string; cuvee?: string
+    vintageYear?: number; producerName?: string; appellation?: string
+  }
+  export interface BottleInput { id: string; wineId: string; format?: string; location?: string }
+  export interface AcquisitionInput { id: string; bottleId: string; acquiredAt: IsoDate }
+  export interface ConsumptionInput { id: string; bottleId: string; consumedAt: IsoDateTime }
+  export interface AssessmentInput {
+    id: string; wineId: string
+    sourceType: SourceTier; sourceName: string
+    assessedAt: IsoDate; drinkFrom: IsoDate; drinkUntil: IsoDate
+    reviewState: ReviewState
+    createdAt: IsoDateTime   // from _createdAt
+  }
+
+  export interface CellarSnapshot { wines; bottles; acquisitions; consumptions; assessments }
+  export function buildCellar(snapshot: CellarSnapshot): Cellar
+
+  Cellar is an opaque pre-indexed structure — acquisitions and consumptions keyed by bottle, accepted assessments grouped by wine and pre-sorted by the full comparator. Missed opportunities evaluates hundreds of bottles at a dozen boundary dates each, and rescanning 161 assessments per call would be silly.
+
+  One judgement call to confirm: invariant 5 says one acquisition per bottle, but the schema can't enforce it and the module shouldn't assume it. I propose earliest acquiredAt wins, earliest consumedAt wins, and the module exposes violations rather than throwing. Flagging because "earliest" is a choice.
+
+  The adapter's GROQ — shipped as strings, not executed. The module exports CELLAR_QUERY and toCellarSnapshot(raw); each consumer runs it with its own client or hook. A string constant is not a client dependency, so the purity rule holds.
+
+  groq
+  {
+    "wines": *[_type == "wine"]{
+      "id": _id, title, cuvee, vintageYear, appellation,
+      "producerName": producer->name
+    },
+    "bottles": *[_type == "bottle"]{"id": _id, "wineId": wine._ref, format, location},
+    "acquisitions": *[_type == "acquisition" && defined(bottle._ref) && defined(acquiredAt)]{
+      "id": _id, "bottleId": bottle._ref, acquiredAt
+    },
+    "consumptions": *[_type == "consumption" && defined(bottle._ref) && defined(consumedAt)]{
+      "id": _id, "bottleId": bottle._ref, consumedAt
+    },
+    "assessments": *[_type == "assessment" && defined(wine._ref)]{
+      "id": _id, "wineId": wine._ref, sourceType, sourceName,
+      assessedAt, drinkFrom, drinkUntil, reviewState, "createdAt": _createdAt
+    }
+  }
+
+  Deliberately not filtering reviewState == "accepted" in GROQ. The module owns that rule, and the review queue needs the proposed ones anyway. 161 assessment documents is nothing to over-fetch, and one query with one owner of the rules is a simpler thing to reason about than a filter split across two
+  layers.
+
+  A second, scoped query for Functions (WINE_SCOPED_QUERY with $wineId), since a Function recomputing projections on publish shouldn't pull the whole cellar.
+
+  Perspective: these must run against published. There are 0 drafts today, but the moment you edit in Studio, a draft assessment would otherwise leak into resolution. Worth a decision now rather than a bug later.
+
+  ---
+  4. Missed opportunities — the algorithm
+
+  regret(period) = peaked(period) − opened(period), restricted to state(b, now) == PAST_WINDOW
+  peaked(b)      = ∃ T ∈ [start, end] : state(b, T) == DRINKING
+
+  state(b, ·) is a step function. It changes only where one of its inputs changes, so the exact discontinuity set for bottle b is:
+
+  D(b) = { acquiredAt(b) }                                    NOT_YET_OWNED → something
+       ∪ { consumedDate(b) }                                  → CONSUMED
+       ∪ { a.assessedAt  : a ∈ acceptedAssessments(wine(b)) }  resolved window swaps  ← missing from the spec
+       ∪ { a.drinkFrom   : a ∈ acceptedAssessments(wine(b)) }  HOLD → DRINKING
+       ∪ { dayAfter(a.drinkUntil) : a ∈ ... }                  DRINKING → PAST_WINDOW
+
+  The evaluation set is then:
+
+  C(b) = { start } ∪ { d ∈ D(b) : start < d ≤ end }
+  peaked(b) = ∃ T ∈ C(b) : bottleState(b, T).state == 'DRINKING'
+
+  Why that is exact, in one sentence: every constant segment of state(b, ·) that intersects [start, end] either begins at a discontinuity inside the period or already contains start, so evaluating at start plus every in-period discontinuity visits every segment — no sampling, no interval can be skipped
+  however brief.
+
+  Note dayAfter(drinkUntil) rather than drinkUntil: the bottle is DRINKING through drinkUntil inclusive, so the transition lands the following day. Ranging windows over every accepted assessment's own drinkFrom/drinkUntil is safe because the resolved window is always one of them.
+
+  Cost: ~542 bottles × a handful of boundaries. Trivial.
+
+  export interface Period { start: IsoDate; end: IsoDate }
+  export interface MissedOpportunity {
+    bottleId: string
+    wineId: string
+    peakIntervals: {from: IsoDate; until: IsoDate}[]  // beyond spec — falls out of the scan
+    windowNow: ResolvedWindow | null
+  }
+
+  peakIntervals is free from the segment scan and makes the UI considerably better than a boolean. Flagging it as beyond spec; drop it if you'd rather keep the surface minimal.
+
+  ---
+  5. Test setup
+
+  Runner: node --test. No new dependencies — verified working with .mts on this machine.
+
+  packages/cellar-core/test/
+  ├─ oracle.test.mts     drives expected-states.csv — the oracle
+  ├─ rules.test.mts      synthetic fixtures — NOT the oracle, clearly labelled
+  └─ helpers/csv.mts     CSV reader
+
+  oracle.test.mts reads sample_data/expected-states.csv, emits one test() per row (49 tests) so a failure names the exact row, and asserts:
+
+  - the expected value against bottleState(...).state or consumptionVerdict(...).verdict
+  - and, where the row fills them, windowFrom / windowUntil / windowSource against the resolved window's drinkFrom, drinkUntil, and `${sourceType} ${assessedAt}`
+
+  Twenty rows carry those columns. Checking them turns the oracle into a test of provenance, not just of the final label — which is where a resolution bug would actually hide. On failure the assertion message carries expected vs actual plus the full resolved window, which is what those columns are there
+  for.
+
+  now is passed explicitly as 2026-09-18 to match how the oracle was generated (#7).
+
+  Fixture source: sample_data/cellar.ndjson, read from disk. No network. It's the exact document shape that was imported, so the test exercises toCellarSnapshot rather than a parallel reimplementation of the transform. One wrinkle needing your call: cellar.ndjson is gitignored, so a fresh clone has no
+  fixture. Either add a pretest that runs build-ndjson, or un-ignore the file. I lean toward pretest — the generator is deterministic and byte-stable, so regenerating costs nothing.
+
+  rules.test.mts covers what the oracle structurally cannot (#6), on hand-built fixtures of three or four documents: proposed and rejected assessments being ignored, tier order beating recency, the assessedAt → _createdAt → _id tie-break chain, year normalization, and the missed-opportunities boundary scan
+  — including the assessedAt-transition case from #3, which is the one a monthly sampler would get wrong. These prove the implementation matches my reading of the spec. They are not independent verification, and I'll keep them in a separate file so nobody mistakes them for the oracle.
+
+  If the implementation and the oracle disagree, I'll report the failing rows with what the module produced and the window it resolved, and stop. I won't touch the CSV.
+
+  ---
+  Nothing is written yet. The decisions I need from you: the workspace root in §1 (#8, and how you want to handle the Functions risk in #9), the API names in §2, the GROQ perspective and the over-fetch call in §3, peakIntervals in §4, and the gitignore-vs-pretest question in §5. Plus whether you want the
+  four stale-spec items (#1, #2, #3, #11) fixed as part of this stage or recorded separately.
+
+✻ Churned for 5m 35s
+```
+
