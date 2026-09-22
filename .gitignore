@@ -247,3 +247,8 @@ sample_data/cellar.ndjson
 
 # Compiled output of the shared packages
 packages/*/dist
+
+# Sanity Functions
+functions/**/.env*
+functions/**/.build/
+functions/**/node_modules/

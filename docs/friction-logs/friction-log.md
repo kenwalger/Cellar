@@ -303,6 +303,115 @@ entirely. Both the bug and the debounce would have been plausible-looking
 code. Worth remembering that "measure rather than guess" in the prompt is what
 produced both the fix and the decision not to add the wrong one.
 
+### 22 September 2026, Stage 4 — npm plus TypeScript is a third bundling case, and it works
+
+Category:   gap, closed by testing
+Surface:    Functions, Blueprints, docs
+Elapsed:    ~25 minutes from manifest to answer, including teardown
+
+This closes the open entry from Session 2 below, which recorded that Functions
+bundling for an npm workspace was undocumented and deferred it to a test
+deploy. The deploy is done. The answer is that it works, and the reason it
+works is more interesting than the fact.
+
+Expected:
+One of two documented outcomes. Either the CLI treats this as the pnpm
+TypeScript case and bundles inline with Vite, or it treats it as the npm case
+and externalises dependencies into a shipped `node_modules` — in which case a
+workspace-linked private package, which cannot be installed from any registry,
+looked likely to break.
+
+Happened:
+Both, at once, split by package. `@cellar/core` was inlined and tree-shaken
+into the uploaded asset — `buildCellar`, `resolvedWindow` and the state machine
+landed in three separate numbered chunks, and no `@cellar/core` directory
+exists anywhere in the bundle. `@sanity/functions` was externalised into a real
+`node_modules` folder shipped alongside, with its `@aws-lite` and `aws4`
+transitives. The generated install manifest requests `@sanity/functions` and
+nothing else, so the private package is never looked up in a registry and never
+gets the chance to 404.
+
+That split is exactly why the case works, and it is the thing neither
+documented sentence predicts. A local workspace package never has to be
+*installable*, only *resolvable at build time*. On Windows npm links workspace
+members as junctions rather than POSIX symlinks, and the bundler followed the
+junction without complaint.
+
+Resolution:
+Nothing to resolve — it deployed, invoked, and returned the predicted domain
+result on the first attempt, with no `transpile: false`, no prebuilt directory,
+no bundler alias, and no package manager change. Recorded in ADR 0010.
+
+One trap found on the way out: the `package.json` copied into the built asset
+still lists `"@cellar/core": "*"` as a dependency, though nothing installs it
+there and nothing imports it at runtime. Reading that file would suggest the
+module is a shipped dependency. It isn't; it's compiled in. Anyone debugging a
+Functions bundle by inspecting the manifest will be misled.
+
+Would have helped:
+The support matrix asked for in the Session 2 entry — all four combinations of
+package manager and language — and one sentence saying that inlining and
+externalising are decided per dependency rather than per project. The current
+docs read as though a project picks one strategy. It doesn't.
+
+### 22 September 2026, Stage 4 — a deployed Function gets an editor token nobody asked for
+
+Category:   surprise
+Surface:    Functions, Blueprints
+Elapsed:    noticed during teardown, ~2 minutes
+
+Expected:
+A Function that never constructs a client, never reads `context.clientOptions`,
+and performs no mutations should need no credentials.
+
+Happened:
+Deploying it created a project API token labelled
+`Function: cellar-core-probe Resource ID: aos9nze5 Resource Type: project`,
+holding the **editor** role, with no expiry. The probe handler is a pure
+computation over a hardcoded snapshot and could not have used it.
+
+Resolution:
+`blueprints destroy` removed it cleanly; `sanity tokens list` afterwards
+reported none. The mechanism is presumably that `context.clientOptions.token`
+is populated for every deployed Function whether or not the handler reads it.
+
+Would have helped:
+A line in the Functions docs saying that each deployed Function is provisioned
+a project token with the editor role, and where to see it. The `robotToken`
+option is documented as a way to supply a *custom* token, which reads as though
+the default is no token. Worth knowing before a project accumulates one
+never-expiring editor credential per Function, and worth an audit note for
+Stage 4, which will deploy several.
+
+### 22 September 2026, Stage 4 — the CLI knows the project ID and asks for it anyway
+
+Category:   friction
+Surface:    CLI
+Elapsed:    one failed command
+
+Expected:
+After `blueprints init` wrote `.sanity/blueprint.config.json` containing
+`"projectId": "aos9nze5"`, commands run from that same directory would use it.
+
+Happened:
+`npx sanity datasets create probe --visibility private` failed with
+`ProjectRootNotFoundError: Unable to determine project ID`, suggesting either
+a `--project-id` flag, running "from within a Sanity project directory", or an
+interactive prompt — which is unavailable under a non-interactive PowerShell
+invocation. `blueprints` and `functions` commands read the blueprint config
+happily; `datasets`, `tokens` and the rest look for a Studio's `sanity.cli.ts`
+instead and do not fall back to it.
+
+Resolution:
+Pass `--project-id aos9nze5` explicitly to every non-blueprint command. Minor,
+but it means a monorepo root that is unambiguously configured still can't run
+half the CLI without repeating what is already on disk two directories down.
+
+Would have helped:
+Having project-scoped commands fall back to `.sanity/blueprint.config.json`
+when no Studio config is in scope, or naming that file in the error's "try
+this" list so the fix is obvious rather than inferred.
+
 ## Standing questions
 
 Revisit at the end of each build day rather than once at the end. Answers
@@ -1349,6 +1458,9 @@ a test deploy early in Stage 4.
 
 - *Would have helped:* a support matrix for Functions bundling covering all
   four combinations of package manager and language.
+- *Settled 2026-09-22 by test deploy.* It works, and the undocumented case
+  turns out to be a hybrid of the two documented ones. See the Stage 4 entry
+  above and ADR 0010.
 
 **The Blueprints manifest drives repo layout early.** The manifest and lockfile
 must sit together at the repo root; putting them inside `../../studio` is named as

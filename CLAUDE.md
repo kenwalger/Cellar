@@ -104,6 +104,11 @@ project's central feature.
   Milestone level only: what the stage delivered and anything that changed the
   model or the plan. Not a commit list. The git log already has that.
 - Make no attributions in the code comments or commit messages.
+- Do not run git commands that change the repository: no `git add`,
+  `git commit`, `git rm`, `git checkout`, `git restore`, `git reset`, or
+  `git push`. Read-only inspection (`git status`, `git log`, `git diff`,
+  `git check-ignore`) is fine. When work is ready to commit, write the
+  commit message and tell me what should be staged. I run the commands.
 
 ## About the writeup
 

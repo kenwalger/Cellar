@@ -1,0 +1,11 @@
+{
+  "name": "cellar-core-probe",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@cellar/core": "*",
+    "@sanity/functions": "^1.8.0"
+  }
+}

@@ -79,3 +79,80 @@ version behind current, and `perspective` is documented in three places with
 three different answers. None of that was fatal and all of it was findable by
 reading the installed types. It is recorded in `docs/friction-logs/friction-log.md`,
 where it is worth more than it cost.
+
+## Functions bundling, settled 2026-09-22
+
+The second half of the consequence above — importable by Functions — was the
+last unverified technical risk in the project. It is now closed by test deploy.
+
+**Outcome: the native workspace import works.** No escape hatch, no build step,
+no package manager change. A probe Function deployed from this repository
+exactly as it stands imported `@cellar/core`, ran `buildCellar` and
+`bottleState` against a hardcoded snapshot, and returned the value predicted
+before deployment:
+
+```
+CELLAR_PROBE {"state":"DRINKING","sourceType":"personal","assessmentId":"assess-personal","drinkFrom":"2024-01-01","drinkUntil":"2027-12-31","visibleCount":2}
+```
+
+The snapshot was built so that resolving by recency before authority, or
+counting a `proposed` assessment, each produce `HOLD` rather than `DRINKING`.
+A stale or shimmed module could not have produced that line.
+
+### The configuration that worked
+
+- **Package.** `@cellar/core` unchanged: private, `"type": "module"`, `main`
+  and `exports` pointing at built ESM in `dist/`, no `sanity` dependency.
+  It was consumed as the compiled `dist/`, not as raw TypeScript.
+- **Workspace.** `functions/*` added to the root `workspaces` array. npm links
+  the package as a **junction** at `node_modules/@cellar/core` on Windows, and
+  the bundler follows it. Everything hoists to the root `node_modules`; the
+  function directory gets none of its own.
+- **Function-level dependencies.** `functions/<name>/package.json` declaring
+  `"@cellar/core": "*"` — the same form `studio/` and `app/` already use —
+  alongside `"@sanity/functions": "^1.8.0"`. Because the function directory
+  carries its own manifest, the root `package.json` is invisible to it, which
+  is the documented rule and is the behaviour observed.
+- **Blueprint.** Manifest at the repo root beside `package-lock.json`, with
+  `src: './functions/<name>'`. No `transpile` or `autoResolveDeps` override.
+
+### What the CLI actually does, which is neither documented case
+
+The docs describe two bundling paths: inline via Vite for TypeScript in a pnpm
+workspace, and externalised `node_modules` for npm or yarn without TypeScript.
+npm with TypeScript gets **both at once**, split by package:
+
+- `@cellar/core` is **inlined and tree-shaken** into the uploaded asset. The
+  built output is `index.js` plus five numbered chunks; `buildCellar` lands in
+  `index3.js`, `resolvedWindow` in `index5.js`, the state machine in
+  `index6.js`. No `@cellar/core` directory exists anywhere in the bundle.
+- `@sanity/functions` is **externalised** into a real `node_modules` folder
+  shipped alongside, together with its `@aws-lite` and `aws4` transitives.
+
+This split is why the workspace link is not a problem: the local package never
+has to be installable, only resolvable at build time. The CLI's generated
+install manifest requests `@sanity/functions` only. `@cellar/core` is never
+fetched from a registry, and a registry lookup would have 404'd if it were.
+
+One latent trap worth knowing: the `package.json` copied into the built asset
+still lists `"@cellar/core": "*"` as a dependency, even though nothing installs
+it and nothing imports it at runtime. The declaration is inert in the shipped
+artifact. Do not read its presence as evidence the module is installed there.
+
+### Consequences for Stage 4
+
+- Functions may import the resolution module directly. Projections recomputed
+  on publish of `consumption`, `acquisition`, and assessment acceptance run the
+  same code as the App SDK app and the test suite, with no second
+  implementation and no duplicated artifact to keep in sync.
+- Design rule 6 is now load-bearing in a second place. `@cellar/core` must stay
+  free of Sanity client, environment, network, and clock dependencies, because
+  the Function inlines whatever it imports.
+- Tree-shaking means a Function's bundle contains only the module surface it
+  actually calls, so importing the module is cheap even where a Function needs
+  one predicate.
+- Deployed Functions are auto-provisioned a project API token labelled
+  `Function: <name>`, with the **editor** role and no expiry. The probe's
+  handler never constructed a client and one was created anyway. It was removed
+  when the stack was destroyed, verified by `sanity tokens list` returning none.
+  Stage 4 should expect one such token per Function and audit them.
