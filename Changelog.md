@@ -36,6 +36,11 @@ Stages refer to `docs/build-plan.md`.
   stated assumption when the date is in the future. `NOT_YET_OWNED` is
   relabelled "Not yet acquired" in the view only — the state value in
   `@cellar/core` is untouched, and the oracle CSVs still match
+- `app/` gains a test suite on Node's test runner, matching `@cellar/core`:
+  18 tests over the control's date arithmetic, including every one of the
+  slider's 17,167 positions and the calendar-delta anchor identity across
+  5,568 date pairs. Written after a borrow bug reached a working component and
+  survived every date the view is normally driven to
 - A performance bug from the gate build, found by measuring rather than
   reading: one `useMemo` keyed `[data, asOf]` ran `buildCellar` on every date
   change. Indexing costs ~6 ms, re-tallying 542 bottles costs ~0.07 ms, so the

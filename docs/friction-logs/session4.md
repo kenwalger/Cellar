@@ -388,9 +388,32 @@ change, found by measurement.
 Response:
 
 ```text
+Committed as 1c422e9 on main, 13 files, +1058/−52.
+  
+  Two things you should know:
 
+  I included docs/screen_shots/ — three PNGs (~91 KB) timestamped during your verification. They read as the evidence for this commit and Stage 6 will want them, but I made that call without asking. If they weren't meant to be tracked, git rm --cached docs/screen_shots -r and amend.
+  
+  A fourth screenshot appeared after staging and is still untracked:                                                                                                                                                                                                                              
+
+  ?? docs/screen_shots/future-date.png
+
+  That one's from after the commit was built, so it's not in it. Say the word and I'll amend it in or leave it for the next commit.
+
+  Nothing was pushed. git push when you're ready.
 ```
 
-End:
+End: 11:32 AM
 
 Findings:
+
+
+Prompt 
+
+Start: 11:36 AM
+
+```text
+Yes to node --test in app/. Commit the checks you already wrote, including                                                                                                                                                                                                                                        
+  the 17,167-position round trip and the calendarDelta cases that caught the                                                                                                                                                                                                                                        
+  borrow bug. Add the fourth screenshot in that commit.                  
+```

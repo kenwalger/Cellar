@@ -103,6 +103,7 @@ project's central feature.
 - When a stage in `docs/build-plan.md` completes, update `CHANGELOG.md`.
   Milestone level only: what the stage delivered and anything that changed the
   model or the plan. Not a commit list. The git log already has that.
+- Make no attributions in the code comments or commit messages.
 
 ## About the writeup
 

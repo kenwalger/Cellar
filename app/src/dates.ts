@@ -88,7 +88,7 @@ export function formatLongDate(date: IsoDate): string {
   return LONG_DATE.format(new Date(`${date}T00:00:00Z`))
 }
 
-interface CalendarDelta {
+export interface CalendarDelta {
   years: number
   months: number
   days: number
@@ -104,8 +104,12 @@ interface CalendarDelta {
  * drops the remainder. `addMonths` already clamps to the end of the target
  * month, so walking whole months forward and measuring what is left gives
  * "1 month, 1 day" and cannot produce a negative day count.
+ *
+ * Exported for its tests. The defining property is the anchor identity:
+ * `addMonths(from, totalMonths) <= to < addMonths(from, totalMonths + 1)`,
+ * with `days` the remainder measured from that anchor.
  */
-function calendarDelta(from: IsoDate, to: IsoDate): CalendarDelta {
+export function calendarDelta(from: IsoDate, to: IsoDate): CalendarDelta {
   const [fromYear, fromMonth] = from.split('-').map(Number) as [number, number, number]
   const [toYear, toMonth] = to.split('-').map(Number) as [number, number, number]
 
