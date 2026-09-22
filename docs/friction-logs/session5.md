@@ -1,12 +1,149 @@
 ### 22 September 2026, Session 5
 
+#### Stage 4, first step: the Functions bundling probe
 
+IDE / tool: WebStorm + Claude Code v2.1.229, Opus 5 (1M context), Windows /
+PowerShell. Sanity MCP server connected.
+What I was trying to answer: whether a Sanity Function can import
+`@cellar/core`, a workspace-linked local package, in an npm plus TypeScript
+monorepo. The documentation covers pnpm plus TypeScript and npm without
+TypeScript, and says nothing about this combination. Open since Stage 2.
+Outcome: Outcome A. Native workspace import works, first attempt, no escape
+hatch. The deployed Function returned the predetermined result exactly.
+Elapsed: 3:29 to about 3:51 pm, roughly 22 minutes.
 
----
+The last unverified technical risk in the project, closed on contest day 5.
 
-## Prompt 1
+#### Timeline
 
-Start: 3:29 PM
+| Time | Step | Model time |
+| --- | --- | --- |
+| 3:29 to 3:37 pm | Prompt 1: verify the docs, design the probe, state the expected result, stop | 5m 10s |
+| 3:38 to 3:59 pm | Prompt 2: approved with three conditions; deploy, invoke, tear down | 12m 4s |
+
+#### The result
+
+```
+expected  CELLAR_PROBE {"state":"DRINKING","sourceType":"personal","assessmentId":"assess-personal","drinkFrom":"2024-01-01","drinkUntil":"2027-12-31","visibleCount":2}
+actual    CELLAR_PROBE {"state":"DRINKING","sourceType":"personal","assessmentId":"assess-personal","drinkFrom":"2024-01-01","drinkUntil":"2027-12-31","visibleCount":2}
+```
+
+No `transpile: false`, no prebuilt directory, no bundler alias, no copy of
+the module, no package manager change. `git diff --stat` on
+`packages/cellar-core` was empty.
+
+#### Why the probe was designed this way
+
+The snapshot was six hardcoded documents, arranged so that the two rules most
+likely to be broken by a bad bundle each have a distinct wrong answer:
+
+| Rule | If it were broken | Resulting state |
+| --- | --- | --- |
+| Authority beats recency (ADR 0006) | A critic claim two years newer wins | HOLD, window 2030 to 2035 |
+| Only accepted assessments resolve (ADR 0011) | The newest personal claim, still proposed, wins | HOLD, window 2040 to 2045 |
+| Correct behaviour | Personal accepted claim from 2023 wins | DRINKING, window 2024 to 2027 |
+
+Both failure modes read HOLD. A bundler shipping a shimmed, stale, or
+partially tree-shaken module could not accidentally produce the expected line.
+
+#### The finding: the documented model of bundling is wrong
+
+The docs describe two project-wide strategies:
+
+> For TypeScript Functions in a pnpm workspace, the CLI bundles inline using
+> Vite.
+
+> For npm or yarn projects that doesn't use TypeScript, the CLI externalizes
+> dependencies and ships them as a node_modules folder alongside the source.
+
+Both sentences describe what the CLI does to a project. In fact it decides per
+dependency, and this repo got both at once:
+
+- `@cellar/core` was inlined and tree-shaken into the uploaded asset, split
+  across numbered chunks. `buildCellar` landed in `index3.js`,
+  `resolvedWindow` in `index5.js`, the state machine in `index6.js`. There is
+  no `@cellar/core` directory anywhere in the bundle.
+- `@sanity/functions` was externalised into a real shipped `node_modules`,
+  with its `@aws-lite` and `aws4` transitives.
+
+The reason it works, in one sentence: a private workspace package never has to
+be installable, only resolvable at build time. The CLI's generated install
+manifest requests `@sanity/functions` and nothing else, so `@cellar/core` is
+never looked up in a registry and never gets the chance to 404. On Windows,
+npm links workspace members as junctions rather than POSIX symlinks, and the
+bundler followed the junction without complaint.
+
+This is more useful than a documentation gap. The gap suggests a missing
+paragraph; the reality is that the published model of the tool does not match
+how it behaves.
+
+- *Would have helped:* describing bundling as a per-dependency decision, with
+  the rule stated (workspace-local packages inline, registry dependencies
+  externalise), rather than as two mutually exclusive project modes.
+
+#### Two separate findings
+
+**A Function that does nothing still gets an editor token.** The probe
+constructs no client, runs no queries, and writes nothing. Deployment still
+provisioned a robot token labelled `Function: cellar-core-probe`, role
+editor, no expiry. It was removed cleanly by `blueprints destroy`, but Stage 4
+will create one per Function. A default that grants editor to code that never
+touches the dataset is worth auditing, and it has nothing to do with bundling.
+
+**The manifest inside the built asset is misleading.** The `package.json`
+copied into the bundle still lists `@cellar/core`, even though nothing
+installs it there and nothing imports it at runtime. Anyone debugging a bundle
+by reading that file gets a wrong answer about what shipped.
+
+#### Where the model's judgement beat mine
+
+I asked it to consider scoping the trigger at `production` with a filter on a
+`_type` that does not exist in the content model, to avoid creating and
+deleting a scratch dataset.
+
+It declined, with the right reason: scoping is safe, invoking is not. A
+deployed document Function can only be invoked by writing a document that
+matches its filter, so pointing at production would have meant creating a
+probe document there and deleting it afterwards, leaving both mutations in
+that dataset's history permanently. A scratch dataset deletes whole.
+
+That is the correct call and I had missed it. It said so plainly rather than
+complying.
+
+#### Teardown, verified rather than assumed
+
+| Check | Result |
+| --- | --- |
+| `blueprints stacks` | No stacks found, 0 of 3 used |
+| `tokens list` | No API tokens found |
+| `datasets list` | production only |
+| Function logs | deleted before the stack was destroyed |
+| `npm test` | 390 pass, 0 fail after adding `functions/*` to the workspace |
+
+Note for Stage 4: `.sanity/` had its `stackId` removed by the destroy, so the
+real blueprint starts from a fresh `blueprints init`.
+
+#### Spec-first, so far
+
+- **This was not a spec question, it was an empirical one.** No amount of
+  reading would have settled it; the docs are wrong, not merely silent. The
+  only way to know was to deploy something small and look.
+- **The prompt design mattered more than the specs here.** Requiring a
+  predetermined expected result, forbidding every route to a false pass
+  (aliases, copies, dependency edits, package manager changes), and asking for
+  exact error text on failure meant the answer could only be honest. A probe
+  that merely deployed and logged something would have proved considerably
+  less.
+- **Failure would have been a better story.** The prompt said so explicitly. A
+  precise reproduction of a documented gap is what a developer advocate files.
+  Getting Outcome A instead produced a finding about the documentation's model
+  being wrong, which is arguably better again.
+
+#### Transcripts
+
+Full prompts and outputs, unedited.
+
+##### Prompt 1: design the probe and state the expected result (3:29 to 3:37 pm)
 
 ```text
 Stage 4, first step: settle whether Sanity Functions can import `@cellar/core`.
@@ -108,7 +245,7 @@ module.
 This must run on Windows under PowerShell.
 ```
 
-Response:
+##### Prompt 1 output
 
 ```text
 PowerShell(cd C:\Users\kenal\Cellar; npx sanity blueprints init --help 2>&1 | Select-Object -First 40; Write-Output "=== ADD ==="; npx sanity functions add --help 2>&1 | S…)
@@ -267,28 +404,9 @@ PowerShell(cd C:\Users\kenal\Cellar; npx sanity blueprints init --help 2>&1 | Se
   Approve and I will create the files, deploy, invoke, and report — including which of A, B, or C we landed on, with exact error text preserved if anything fails.
 
 ✻ Brewed for 5m 10s
-
 ```
 
-End: 3:37 PM
-
-Findings:
-
-This is a well-designed probe. The snapshot is the good part: three assessments arranged so authority-beats-recency and accepted-only each have a distinct wrong answer, and both wrong answers read HOLD rather than DRINKING. A bundler that shipped a shimmed or stale module can't accidentally produce that exact log line.
-
-The workspace-membership call is correct and correctly flagged. Without it the install fails against the public registry before the bundler is ever involved, which would test npm rather than the question. It matches what studio/ and app/ already do.
-
-Two things to add before approving.
-
-The scratch dataset is a real object in your project. Creating and deleting a dataset is more footprint than the probe needs, and the removal path is one more thing to remember. Worth asking whether a dataset-scoped trigger can point at production with a filter that never matches, given the _type doesn't exist in your content model. If it can, no scratch dataset, no cleanup step. If it can't, the scratch dataset is fine.
-
-Stack limit. It notes three stacks per project. Stage 4 will want a real one, so confirm the probe stack is destroyed before that, and check the count after cleanup rather than assuming.
-
----
-
-Prompt #2
-
-Start 3:38
+##### Prompt 2: approval with three conditions (3:38 pm)
 
 ```text
 Approved, with three conditions.
@@ -315,7 +433,7 @@ CELLAR_PROBE {"state":"DRINKING","sourceType":"personal","assessmentId":"assess-
 Proceed.
 ```
 
-Response:
+##### Prompt 2 output
 
 ```text
 Bash(cd C:/Users/kenal/Cellar && git status --short && echo "=== CORE UNTOUCHED? ===" && git diff --stat -- packages/cellar-core && echo "(empty above = unmodified)")
@@ -413,25 +531,4 @@ Bash(cd C:/Users/kenal/Cellar && git status --short && echo "=== CORE UNTOUCHED?
   friction log. Closes the last unverified technical risk before Stage 4.
 
 ✻ Sautéed for 12m 4s
-
 ```
-
-End: 
-
-Findings:
-
-Outcome A, first attempt, exact match. The last unverified risk in the project is closed on day 5.
-
-And the finding is better than a pass. The documentation describes two project-wide bundling strategies; the CLI actually decides per dependency and this repo got both at once. `@cellar/core` was inlined and tree-shaken into the asset, split across numbered chunks, while `@sanity/functions` was externalised into a shipped `node_modules`. That's not a gap in the docs so much as a wrong model of how the tool works, which is a more useful thing to report. The reason it works is the sentence worth quoting: a private workspace package never has to be installable, only resolvable at build time.
-
-Two things it turned up that I'd treat as separate findings.
-
-**The robot token.** A Function that constructs no client, makes no queries, and writes nothing still got an `editor` token with no expiry. Stage 4 will create one per Function. That's worth raising on its own, since it's the kind of default that nobody notices until an audit, and it has nothing to do with bundling.
-
-**The misleading manifest.** The `package.json` copied into the built asset still lists `@cellar/core` even though nothing installs or imports it there. Anyone debugging a bundle by reading that file gets a wrong answer.
-
-Also worth recording: it declined my condition 2 and was right to. I suggested scoping the trigger to `production` with a filter that can't match, and missed that invoking a document Function requires writing a matching document. That would have put two mutations permanently in production's history to avoid creating a dataset that deletes whole. Its reasoning was better than mine, and it said so plainly rather than complying.
-
-Next steps: stage exactly what it listed, keep `sanity.blueprint.ts`, and delete the probe directory once you've had a look at the `.build/` output. The chunk split is the evidence for the finding, so it's worth two minutes with your own eyes before it goes.
-
-One thing to carry into Stage 4: `.sanity/` had its `stackId` removed by the destroy, so the real blueprint starts from a fresh `blueprints init`.
