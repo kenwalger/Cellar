@@ -15,7 +15,9 @@ from a bottle opened two years ago.
 Source type is an enum with a fixed authority order: personal, producer,
 critic, merchant, other. Resolution takes the highest tier that has any
 assessment visible as of T, then the most recent within that tier, with ties
-broken by creation timestamp.
+broken by creation timestamp and then by document id. (This record originally
+stopped at the creation timestamp; see the amendment below for why that was
+not sufficient.)
 
 No confidence scoring engine in V1. The `confidence` field is recorded and
 displayed but does not participate in resolution.
@@ -54,3 +56,11 @@ The seed data currently contains no same-tier, same-day ties, so nothing in
 the demo depends on this. It is recorded because the absence of a tie today is
 a property of the ledger, not a guarantee, and the expected-output table is
 written before the code.
+
+Both halves of this were checked against the imported dataset during Stage 2.
+All 161 assessments share a single `_createdAt` of `2026-09-21T22:26:40Z`, so
+on this data the second key resolves nothing and `_id` carries the entire
+tie-break. And all 161 have distinct wine, tier and `assessedAt` keys, so no
+tie arises to be broken. The rule is therefore correct, necessary, and
+currently unobservable, which is why the expected-output tables cannot cover
+it and `rules.test.mts` covers it on synthetic data instead.

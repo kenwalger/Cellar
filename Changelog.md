@@ -9,6 +9,25 @@ Stages refer to `docs/build-plan.md`.
 
 ## [Unreleased]
 
+### Stage 2: temporal resolution
+
+- `packages/cellar-core` (`@cellar/core`): the three predicates, window
+  resolution, the state machine, derived verdicts, missed opportunities, and
+  `wineDisplayName`. Framework-neutral — no client, no GROQ execution, no
+  clock reads
+- Repository is now an npm workspace so the Studio, the App, Functions and the
+  Next.js fallback can all import one copy of the rules. `sanity build`
+  confirmed the package bundles correctly with Studio auto-updates enabled
+- 389 tests, no dependencies beyond Node's test runner. 352 of them drive
+  three independently generated oracle tables — states and verdicts, missed
+  opportunities computed by evaluating every calendar day, and verdict drift
+  across all 294 consumptions. Every one passed on its first run against the
+  module
+- One spec error found and fixed: the missed-opportunities boundary set
+  omitted `assessedAt`, which made it possible to miss a peak entirely.
+  Recorded under "Changes during implementation" in
+  `docs/temporal-resolution.md`
+
 ### Stage 1: schemas and import (in progress)
 
 - Six document types in Studio: producer, wine, bottle, acquisition,

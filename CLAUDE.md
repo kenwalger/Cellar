@@ -56,7 +56,9 @@ project's central feature.
 3. **Windows resolve by authority, then recency.** Tier order is personal,
    producer, critic, merchant, other. Take the highest tier with any visible
    assessment, then the most recent within that tier. Ties break on
-   `_createdAt` descending.
+   `_createdAt` descending, then `_id` descending. The `_id` key is what makes
+   the ordering total; a bulk import stamps every document with the same
+   `_createdAt`. See ADR 0006.
 
 4. **Only accepted assessments resolve.** An assessment carries `reviewState`
    of proposed, accepted, or rejected. Agents create proposed. People accept.

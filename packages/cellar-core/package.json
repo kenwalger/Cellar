@@ -1,0 +1,30 @@
+{
+  "name": "@cellar/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Framework-neutral temporal resolution for The Cellar. No Sanity client, no GROQ execution, no clock reads.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "pretest": "npm run build && node ../../studio/scripts/build-ndjson.mts",
+    "test": "node --test \"test/**/*.test.mts\"",
+    "format": "prettier --write src test",
+    "format:check": "prettier --check src test"
+  },
+  "devDependencies": {
+    "prettier": "^3.5",
+    "typescript": "^5.8"
+  }
+}

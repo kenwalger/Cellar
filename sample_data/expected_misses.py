@@ -20,7 +20,7 @@ for name, start, end in PERIODS:
             continue
         if any(state(b, T)[0] == "DRINKING" for T in days):
             rows.append(dict(period=name, start=start, end=end, bottle=b, wine=acq[b][1]))
-with open("expected-missed.csv", "w", newline="", encoding="utf-8") as f:
+with open("expected-misses.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=["period", "start", "end", "bottle", "wine"])
     w.writeheader(); w.writerows(rows)
 from collections import Counter

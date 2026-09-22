@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {TagIcon} from '@sanity/icons/Tag'
+import {wineDisplayName} from '@cellar/core'
 
 type VarietalValue = {grape?: string; percentage?: number}
 
@@ -109,10 +110,10 @@ export const wine = defineType({
       appellation: 'appellation',
     },
     prepare({title, producerName, cuvee, vintageYear, appellation}) {
-      // `title` is optional. Compose the identity it would have spelled out.
-      const composed = [vintageYear, producerName, cuvee].filter(Boolean).join(' ')
+      // Composition lives in @cellar/core so the Studio, the App, and any
+      // Function all name a wine the same way.
       return {
-        title: title || composed || 'Untitled wine',
+        title: wineDisplayName({title, producerName, cuvee, vintageYear}),
         subtitle: appellation || undefined,
       }
     },

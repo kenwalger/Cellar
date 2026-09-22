@@ -1,0 +1,17 @@
+{
+  "name": "cellar-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "studio",
+    "web"
+  ],
+  "scripts": {
+    "build:core": "npm run build --workspace @cellar/core",
+    "test": "npm test --workspace @cellar/core",
+    "seed:build": "node studio/scripts/build-ndjson.mts"
+  }
+}

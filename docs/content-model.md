@@ -37,7 +37,7 @@ Vintage-specific identity. There is no separate vintage document. See ADR 0003.
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `title` | string | Optional. Display name, for example "2018 Cristom Louise Vineyard Pinot Noir". When absent the Studio preview composes producer, cuvee, and vintage. |
+| `title` | string | Optional. Display name, for example "2018 Cristom Louise Vineyard Pinot Noir". When absent, `wineDisplayName` composes vintage, producer, cuvee. |
 | `producer` | reference to `producer` | Required |
 | `cuvee` | string | Vineyard or bottling name |
 | `vintageYear` | number | Required. Range 1900 to current year. Non-vintage wines are out of scope. |
@@ -275,9 +275,11 @@ The refinements:
   read as two enums for one fact. The split now matches `sourceName` and
   `sourceType` on `assessment`. The ledger import mapping is recorded with
   the field.
-- **`wine.title` becomes optional.** The Studio preview composes producer,
-  cuvee, and vintage when it is absent, which is what the title would have
-  spelled out by hand anyway.
+- **`wine.title` becomes optional.** The Studio preview composes vintage,
+  producer, and cuvee when it is absent, which is what the title would have
+  spelled out by hand anyway. Stage 2 moved that composition into
+  `wineDisplayName` in `@cellar/core` so every surface names a wine the same
+  way; see `temporal-resolution.md`.
 - **`drinkUntil` is inclusive of `drinkFrom`.** Stage 1 first implemented
   this as strictly after, on the reading that a zero-length window is a data
   entry error. That was wrong in a way the normalization rules make obvious:
