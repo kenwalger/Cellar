@@ -1,0 +1,110 @@
+:root {
+  color-scheme: light dark;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --rule: #e0e0e0;
+  --bg: #ffffff;
+  --ok: #1c7c4a;
+  --bad: #b3261e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #ededed;
+    --muted: #9a9a9a;
+    --rule: #333333;
+    --bg: #141414;
+    --ok: #5ccb8b;
+    --bad: #ff8a80;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+.app-container {
+  padding: 2.5rem 2rem;
+}
+
+.loading {
+  color: var(--muted);
+}
+
+.health {
+  max-width: 28rem;
+}
+
+.health-header h1 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+
+.health-asof {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.health-total {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 400;
+}
+
+.health-total strong {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-right: 0.35rem;
+}
+
+.health-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.health-table th {
+  text-align: left;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.health-table td {
+  text-align: right;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 1.0625rem;
+}
+
+.health-table tfoot th,
+.health-table tfoot td {
+  color: var(--muted);
+  border-bottom: none;
+  padding-top: 0.75rem;
+}
+
+.health-table tfoot .ok {
+  color: var(--ok);
+}
+
+.health-table tfoot .mismatch {
+  color: var(--bad);
+  font-weight: 600;
+}
+
+.health-note {
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}

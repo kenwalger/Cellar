@@ -22,7 +22,7 @@ existed. That is not incidental. Path Two is judged first on the quality and
 honesty of the build process writeup, and the comparison between spec-first
 prompting and vibe-coding is what this entry has to say.
 
-The build starts now. Capture goes in `docs/friction-log.md` daily, not at
+The build starts now. Capture goes in `docs/friction-logs/friction-log.md` daily, not at
 the end.
 
 ## Documents
@@ -34,7 +34,7 @@ the end.
 | `docs/seed-data-plan.md` | Ledger design, volume targets, and the demo moments the data must guarantee |
 | `docs/build-plan.md` | Stage ladder, cut list, and how to adapt when the brief drops |
 | `docs/article-outline.md` | Structure and spine of "Your Content Has a Drinking Window" |
-| `docs/friction-log.md` | Live capture of surprises, confusions, and documentation gaps during the build |
+| `docs/friction-logs/friction-log.md` | Live capture of surprises, confusions, and documentation gaps during the build |
 | `docs/adr/` | Decision records, one per decision |
 
 ## Decision records

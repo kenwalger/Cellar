@@ -1,13 +1,27 @@
 # Changelog
 
 Milestone-level history of The Cellar. For decisions and their reasoning see
-`docs/ADRs/`. For the experience of building it see `docs/friction-log.md`.
+`docs/ADRs/`. For the experience of building it see `docs/friction-logs/friction-log.md`.
 For every change, see the git log.
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 Stages refer to `docs/build-plan.md`.
 
 ## [Unreleased]
+
+### Stage 3: the App (in progress)
+
+- **ADR 0010's day-four gate passed.** Cellar Health renders live production
+  data inside a Sanity App built with the App SDK, and its counts match the
+  Stage 2 oracle exactly. The Next.js fallback is not taken; `web/` stays as a
+  surviving option rather than a plan
+- `app/` joins the workspace as a fourth member, importing `@cellar/core` for
+  both resolution and display names. One `useQuery` runs `CELLAR_QUERY` on the
+  published perspective; every count is `bottleState()` evaluated per bottle
+- `now` switched from the fixed gate date to the viewer's calendar date. The
+  clock is read in the app, never in `@cellar/core`
+- App SDK moved from the template's pinned v2 to v3.4.0, and four
+  documentation defects found along the way are recorded in the friction log
 
 ### Stage 2: temporal resolution
 

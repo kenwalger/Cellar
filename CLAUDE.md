@@ -98,7 +98,7 @@ project's central feature.
   of explicit non-goals. No pairing engine, no chatbot, no vector search, no
   authentication. Do not add features that are not on the plan.
 - When something in Sanity is surprising, confusing, poorly documented, or
-  delightful, mention it. It goes in `docs/friction-log.md`, which feeds the
+  delightful, mention it. It goes in `docs/friction-logs/friction-log.md`, which feeds the
   first judging criterion.
 - When a stage in `docs/build-plan.md` completes, update `CHANGELOG.md`.
   Milestone level only: what the stage delivered and anything that changed the

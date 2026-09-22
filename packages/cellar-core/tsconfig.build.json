@@ -2,6 +2,12 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022"],
+    // No ambient type packages. Without this, TypeScript pulls in every
+    // @types/* hoisted to the workspace root — including DOM-dependent ones —
+    // and the build breaks depending on what a sibling workspace installed.
+    // It also enforces design rule 6 at compile time: this module cannot
+    // reach for a DOM or Node global, because neither is in scope.
+    "types": [],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,

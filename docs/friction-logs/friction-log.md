@@ -63,6 +63,156 @@ between a rant and a friction log.
 
 <!-- Newest last. Append during the build, do not tidy. -->
 
+### 22 September 2026, Stage 3 — the agent rule ships a command the CLI rejects
+
+Category:   friction
+Surface:    docs | CLI
+Elapsed:    ~5 minutes to catch, would have been longer to debug blind
+
+Expected:
+That the `app-sdk` rule served by Sanity's own MCP server — a document written
+specifically for coding agents — would contain a command that runs.
+
+Happened:
+It gives this:
+
+```
+npx sanity@latest init --template app-quickstart --organization <id> --output-path . --typescript --skip-mcp
+```
+
+`--skip-mcp` does not exist. `sanity init --help` on CLI 8.12.0 shows the flag
+is `--mcp` / `--no-mcp`. The same rule also shows v2-era config patterns that
+the v2→v3 migration guide has since superseded.
+
+Resolution:
+Ran `sanity init --help` and used `--no-mcp`.
+
+Would have helped:
+Nothing in the docs — this needs a test. A rule file shipped *for agents*, over
+a channel agents are told to trust more than their training data, is the one
+document that should be executable-checked in CI. An agent that trusts it gets
+a failed command; an agent that doesn't trust it has no reason to fetch it.
+
+### 22 September 2026, Stage 3 — `app-quickstart` is real but undocumented
+
+Category:   gap
+Surface:    docs | CLI
+Elapsed:    a cautious detour rather than lost time
+
+Expected:
+The CLI reference's "Available templates" list to be a list of available
+templates.
+
+Happened:
+[The init reference](https://www.sanity.io/docs/cli-reference/init) enumerates
+exactly three: `clean`, `moviedb`, `page-builder`. The App SDK quickstart tells
+you to pass `--template app-quickstart`, which appears in neither the reference
+nor `--help`. No way to tell from the docs whether it is current, renamed, or
+removed.
+
+Resolution:
+Scaffolded into a throwaway temp directory to find out. It works.
+
+Would have helped:
+One line in the init reference: "App templates: `app-quickstart`,
+`app-sanity-ui`." The two pages are maintained apart and the CLI page has not
+heard about apps.
+
+### 22 September 2026, Stage 3 — the app template is a major version behind
+
+Category:   surprise
+Surface:    CLI | docs
+Elapsed:    ~15 minutes, mostly spent checking whether it mattered
+
+Expected:
+A freshly scaffolded app from the official template to be on the current SDK.
+
+Happened:
+`app-quickstart` pins `"@sanity/sdk": "^2"` and `"@sanity/sdk-react": "^2"`,
+installing 2.20.2. Latest is 3.4.0 — a major release from August with breaking
+changes, its own migration guide, and a different set of exports. So the
+documented way to start a new app starts you one major version behind, and the
+reference docs you are pointed at describe the version you did not get.
+
+Resolution:
+Moved the dependencies to `^3` before writing anything. Nothing in this app
+touches the removed APIs, so it was the one-line upgrade the migration guide
+promises.
+
+Would have helped:
+The template tracking the current major, or the quickstart saying which version
+it scaffolds. A newcomer following the quickstart and then reading the
+reference is silently reading the wrong docs.
+
+### 22 September 2026, Stage 3 — where `perspective` lives took three sources to answer
+
+Category:   confusion
+Surface:    docs
+Elapsed:    ~20 minutes
+
+Expected:
+To find, in one place, whether an App SDK query can be pinned to the published
+perspective.
+
+Happened:
+Three sources, three answers. The [configuration
+guide](https://www.sanity.io/docs/app-sdk/sdk-configuration) lists
+`SanityConfig`'s properties as `projectId`, `dataset`, `studio` — no
+`perspective`. The [reference](https://reference.sanity.io/_sanity/sdk/index/QueryOptions/)
+lists `perspective` directly on `QueryOptions`. The shipped `.d.ts` declares
+`QueryOptions` with only `query` and `params`, which read as the reference being
+wrong.
+
+It is not wrong. `QueryOptions extends DatasetHandle`, `DatasetHandle extends
+ProjectHandle, PerspectiveHandle`, and `PerspectiveHandle` is where
+`perspective?: ClientPerspective | ReleasePerspective` actually lives. The
+reference flattens inherited members; the `.d.ts` does not; the prose guide
+omits it entirely.
+
+Resolution:
+Followed the interface chain through the installed types until the three
+agreed.
+
+Would have helped:
+The configuration guide saying "`SanityConfig` also accepts everything on
+`DatasetHandle`, including `perspective`." Reading a flattened reference against
+an unflattened source of truth is a good way to convince yourself a platform
+has a bug when it doesn't — and I nearly reported one.
+
+### 22 September 2026, Stage 3 — the documented path avoids the query the design needs
+
+Category:   friction
+Surface:    docs
+Elapsed:    a decision, not a delay
+
+Expected:
+Some documented way to run one GROQ query for a whole view.
+
+Happened:
+`useQuery` is absent from "React Hooks" and from "Fetching and handling
+content". It exists only in the API reference. The `app-sdk` rule lists it
+under "Ask first", and the skill shipped inside the template says "use
+sparingly; prefer handles plus projections". Every guide steers toward
+`useDocuments` + `useDocumentProjection`.
+
+That shape is right for a list of previews and wrong for an aggregate. Cellar
+Health needs every bottle, acquisition, consumption and accepted assessment to
+produce six numbers. Handles-plus-projections means roughly 1,500 hook
+instances and 1,500 round trips; `CELLAR_QUERY` is one. The whole Stage 2 data
+boundary exists so the App, Functions and the Next.js fallback share one query
+string — the documented path routes around the thing the architecture was
+designed around.
+
+Resolution:
+Used `useQuery`, deliberately, with the reasoning recorded here.
+
+Would have helped:
+A paragraph in "Fetching and handling content" naming the case: handles and
+projections for rendering documents, `useQuery` for aggregates and derived
+views over a whole dataset. "Use sparingly" without saying *when* reads as
+"you are doing something wrong", and the first thing a developer with a real
+aggregate to compute will do is doubt their design rather than the advice.
+
 ## Standing questions
 
 Revisit at the end of each build day rather than once at the end. Answers
@@ -274,7 +424,7 @@ npx create-next-app@latest web --tailwind --ts --app --src-dir --eslint \
   --import-alias "@/*"
 ```
 
-So a `web/` directory now exists. The one thing I did not run is the final
+So a `../../web` directory now exists. The one thing I did not run is the final
 agent prompt itself, which does two separate things: installs the
 `sanity-best-practices` skill from the Sanity Agent Toolkit, and wires the
 `web` app to Sanity. Both were declined on purpose.
@@ -305,9 +455,9 @@ clean first observation of how well spec-first instructions hold on their own.
 It can be added later as a deliberate second variable.
 
 **The Sanity wiring** conflicts with
-[ADR 0010](ADRs/0010-time-machine-as-sanity-app.md), dated before this
+[ADR 0010](../ADRs/0010-time-machine-as-sanity-app.md), dated before this
 session, which puts the temporal view in a Sanity App built on the App SDK and
-keeps Next.js as a day-four fallback. The `web/` app exists but is
+keeps Next.js as a day-four fallback. The `../../web` app exists but is
 deliberately unwired to Sanity. Keeping it costs nothing and removes a step if
 the gate ever trips.
 
@@ -317,7 +467,7 @@ rather than carrying forward what I told it.
 
 #### Next 16.3.5 makes the fallback more expensive than assumed
 
-The scaffold installed Next 16.3.5. It also generated `web/AGENTS.md` and
+The scaffold installed Next 16.3.5. It also generated `../../web/AGENTS.md` and
 `web/CLAUDE.md`, the latter containing nothing but `@AGENTS.md`, an import, so
 both agents read one source of truth. Worth stealing that pattern.
 
@@ -436,7 +586,7 @@ refinements.
    validator. The spec flagged this as unconfirmed; it was wrong.
 4. **Cross-document uniqueness** on `producer.name` has no declarative
    equivalent.
-5. **CLAUDE.md pointed at `docs/adr/`**; the directory is `docs/ADRs/`.
+5. **CLAUDE.md pointed at `docs/adr/`**; the directory is `../ADRs`.
 6. **`check.py` moment 4 tested a proxy.** It checked that a personal note
    shortened a window, not the `derivedFrom` chain the seed plan describes.
 7. **The `_createdAt` tie-break** in ADR 0006 is not deterministic against a
@@ -455,7 +605,7 @@ refinements.
   the CLI warns the positional dataset argument is deprecated in favor of
   `--dataset`.
 - **Working-directory assumption.** The import path `..\sample_data\...` only
-  works from `studio/`, mentioned once in passing. Run from the repo root it
+  works from `../../studio`, mentioned once in passing. Run from the repo root it
   resolved to `C:\Users\kenal\sample_data` and failed. About five minutes.
 
 #### Platform friction
@@ -949,7 +1099,7 @@ npx sanity dataset import ..\sample_data\cellar.ndjson production
  »   Error: Error: ENOENT: no such file or directory, open 'C:\Users\kenal\sample_data\cellar.ndjson'
 ```
 
-Second attempt, from `studio/`:
+Second attempt, from `../../studio`:
 
 ```text
 ✔ [100%] Reading/validating data file (257ms)
@@ -1064,7 +1214,7 @@ hand.
 #### Spec errors found in implementation
 
 1. **Missed-opportunity boundaries omitted `assessedAt`.** The spec's list was
-   incomplete. Recorded as a spec error in `docs/temporal-resolution.md`.
+   incomplete. Recorded as a spec error in `../temporal-resolution.md`.
 2. **CLAUDE.md rule 3 was stale.** It still broke ties on `_createdAt` alone,
    contradicting the Stage 1 amendment.
 3. **"Where this code lives" was stale.** It still described a separate
@@ -1083,7 +1233,7 @@ hand.
 
 - **Reported success with a failing command.** After building the new
   package, it reported prettier clean across the workspace. The following
-  round, prettier failed outright in `packages/cellar-core` and the summary
+  round, prettier failed outright in `../../packages/cellar-core` and the summary
   omitted it. When asked, it owned it plainly, added the dependency and a root
   config, and reformatted five files.
 - **Modified an oracle it was told not to touch.** While verifying the
@@ -1111,7 +1261,7 @@ a test deploy early in Stage 4.
   four combinations of package manager and language.
 
 **The Blueprints manifest drives repo layout early.** The manifest and lockfile
-must sit together at the repo root; putting them inside `studio/` is named as
+must sit together at the repo root; putting them inside `../../studio` is named as
 an anti-pattern. That forced the npm workspace restructure in Stage 2 rather
 than Stage 4, and it is not something the scaffold sets up.
 
@@ -1797,3 +1947,4 @@ Also update sample_data/expected_missed.py to write expected-misses.csv.
 
 ✻ Cogitated for 3m 21s
 ```
+

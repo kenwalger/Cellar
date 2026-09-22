@@ -1,0 +1,35 @@
+{
+  "name": "cellar-app",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@cellar/core": "*",
+    "@sanity/sdk": "^3",
+    "@sanity/sdk-react": "^3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^7",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.14",
+    "eslint": "^10.8.1",
+    "prettier": "^3.5",
+    "sanity": "^6.16.0",
+    "typescript": "^5.8"
+  }
+}
