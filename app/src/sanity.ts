@@ -14,9 +14,9 @@ export const DATASET = 'production'
  * yesterday's cellar all afternoon.
  *
  * Until the Stage 3 gate passed this returned a fixed 2026-09-18, matching
- * the date `check.py` computed its expected counts for. The asOf control
- * arrives later in Stage 3 and will make this a starting value rather than
- * the only one.
+ * the date `check.py` computed its expected counts for. Since the asOf
+ * control landed this is a starting value rather than the only one: `App`
+ * calls it once at mount to seed `asOf`, and the user moves it from there.
  */
 export function today(): string {
   const now = new Date()

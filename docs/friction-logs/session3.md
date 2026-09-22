@@ -12,7 +12,7 @@ Elapsed: 10:11 to about 11:00 am, roughly 50 minutes.
 
 The gate was deliberately written so the model could not declare it passed.
 It has no browser, so the pass condition was six numbers rendered on screen,
-confirmed by me. Screenshot: `docs/screen_shots/2026-09-22_10-53-44.png`.
+confirmed by me. Screenshot: `docs/screen_shots/gate1.png`.
 
 #### Timeline
 

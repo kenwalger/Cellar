@@ -213,6 +213,96 @@ views over a whole dataset. "Use sparingly" without saying *when* reads as
 "you are doing something wrong", and the first thing a developer with a real
 aggregate to compute will do is doubt their design rather than the advice.
 
+### 22 September 2026, Stage 3 — the same guidance shape, a third time
+
+Category:   gap
+Surface:    docs
+Elapsed:    no delay; a pattern worth naming
+
+Expected:
+Guidance on where component state belongs in an App SDK app.
+
+Happened:
+The `app-sdk` rule states, under **Never**, "Use `useState` for form values
+that should sync with Content Lake", and the skill bundled in the template
+says "Do not hold document field values in `useState` and save on submit".
+Both are right, and both are about *document fields*. The asOf control is a
+view-level value that is never written anywhere and has no document to go
+stale against, and nothing in either source draws that line. Read literally —
+which is how a **Never** is meant to be read — the rule argues for pushing a
+UI date into a document.
+
+Resolution:
+Used `useState`, with a comment in `AsOfControl.tsx` naming the distinction,
+because the next reader will otherwise think the rule was violated.
+
+Would have helped:
+Scoping the prohibition in its own sentence: "content state belongs in the
+Content Lake; ephemeral view state — filters, sort order, a selected date —
+belongs in React."
+
+**This is the third finding of the same shape in two sessions**, and the shape
+is the finding rather than any one instance:
+
+1. `useQuery` is steered away from ("use sparingly", "Ask first") without
+   naming the case it is *for*, which is aggregates over a whole dataset.
+2. `perspective` is documented in three places with three different answers,
+   none of which says which one a `useQuery` caller needs.
+3. `useState` is forbidden for content values, with no clause admitting that
+   view state exists.
+
+Each is correct for the common case — rendering and editing documents — and
+silent on the one in front of us. Individually they read as nitpicks.
+Together they describe an App SDK documentation set written for the shape of
+app the examples build, where anything else leaves you unable to tell whether
+you are off the documented path or off the *supported* one. That distinction
+matters most to exactly the developers the App SDK is trying to win, and it is
+the one the docs currently cannot answer.
+
+### 22 September 2026, Stage 3 — a 100x bug that only measurement could see
+
+Category:   model error
+Surface:    App SDK
+Elapsed:    found before it shipped; ~10 minutes to measure
+
+This one is ours, not the platform's, and it is recorded here rather than in a
+session block because it belongs beside the Stage 3 material it came out of.
+
+Expected:
+The `useMemo` written during the gate build was assumed correct. It computed
+the counts and it passed the gate.
+
+Happened:
+It was keyed `[data, asOf]` with `buildCellar()` inside it. At the gate that
+was invisible, because `asOf` was a constant: `useMemo(() => today(), [])`.
+The moment `asOf` became a control, every keystroke and every pixel of slider
+travel would have re-indexed the entire snapshot.
+
+Measured, on the seed data, 200 samples per date:
+
+- re-tallying all 542 bottles at a new date: **0.04–0.07 ms** p50
+- `buildCellar` from the same snapshot: **~6 ms**
+
+A hundredfold overcharge, per date change, for work whose inputs had not
+moved.
+
+Resolution:
+Split into two memos — `[data]` for the index, `[cellar, asOf]` for the tally.
+The measurement also answered the question it was run for: at 0.07 ms against
+a 16.7 ms frame budget, debouncing the control would have added lag and made
+the counts trail the slider, which is the one thing the demo cannot have.
+
+Would have helped:
+Nothing in the docs. This is a note about method. The bug was not visible by
+reading the code — the code is four lines and looks fine — and it was not
+visible in the gate, which passed. It became visible the moment the two costs
+were put beside each other as numbers, and the instinct it punishes is the
+common one: reaching for a debounce because 542 *sounds* like a lot, rather
+than measuring and discovering that the expensive thing was somewhere else
+entirely. Both the bug and the debounce would have been plausible-looking
+code. Worth remembering that "measure rather than guess" in the prompt is what
+produced both the fix and the decision not to add the wrong one.
+
 ## Standing questions
 
 Revisit at the end of each build day rather than once at the end. Answers

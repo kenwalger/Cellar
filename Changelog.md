@@ -22,6 +22,26 @@ Stages refer to `docs/build-plan.md`.
   clock is read in the app, never in `@cellar/core`
 - App SDK moved from the template's pinned v2 to v3.4.0, and four
   documentation defects found along the way are recorded in the friction log
+- **The asOf control.** One date drives the whole view, set two ways: a range
+  slider spanning 1996 to 2042 for the sweep, and a date field for exact days.
+  `asOf` is React state in `App`, passed to `bottleState()` as a parameter;
+  the clock is still read once, in the app, never in `@cellar/core`. Moving it
+  cannot refetch — `asOf` is not among `useQuery`'s options, because
+  `CELLAR_QUERY` is not filtered by date
+- Cellar Health reworked around the date. The headline total is now bottles
+  *in the cellar* on that date rather than the ledger's 542, which was a false
+  statement at any past date; states are grouped into in-cellar and outside-
+  the-cellar, with `NOT_YET_OWNED` muted rather than hidden; and wording
+  switches between "as of", a past-tense distance, and "projected to" with a
+  stated assumption when the date is in the future. `NOT_YET_OWNED` is
+  relabelled "Not yet acquired" in the view only — the state value in
+  `@cellar/core` is untouched, and the oracle CSVs still match
+- A performance bug from the gate build, found by measuring rather than
+  reading: one `useMemo` keyed `[data, asOf]` ran `buildCellar` on every date
+  change. Indexing costs ~6 ms, re-tallying 542 bottles costs ~0.07 ms, so the
+  control would have paid a hundredfold overcharge per keystroke. Split into
+  two memos. The same numbers ruled out debouncing, which at 0.07 ms against a
+  16.7 ms frame would only have made the counts trail the slider
 
 ### Stage 2: temporal resolution
 
