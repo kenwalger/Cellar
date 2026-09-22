@@ -1,10 +1,138 @@
 ### 22 September 2026, Session 4
 
-#### Stage 3: the App SDK gate
+#### Stage 3: the asOf control
 
-Start 11:08 AM
+IDE / tool: WebStorm + Claude Code v2.1.229, Opus 5 (1M context), Windows /
+PowerShell. Sanity MCP server connected.
+What I was trying to build: a date control that sets the asOf date for the
+whole view, so the cellar can be read at any point in its history.
+Outcome: built and verified against five dates. Two commits. A performance
+bug from the gate build found and fixed, and a date-arithmetic bug found,
+fixed, and covered by a new test suite.
+Elapsed: 11:08 to 11:45 am, about 37 minutes.
 
-Prompt:
+Same gate discipline as Session 3: the model cannot see the rendered view,
+so it produced a table of dates and expected counts and I confirmed them in
+the browser.
+
+#### Timeline
+
+| Time | Step | Model time |
+| --- | --- | --- |
+| 11:08 to 11:14 am | Prompt 1: measure, propose the control, stop | 3m 39s |
+| 11:15 to 11:28 am | Prompt 2: approved with three constraints; build it | 7m 57s |
+| 11:29 to 11:33 am | Prompt 3: commit | 40s |
+| 11:36 to 11:45 am | Prompt 4: add a test runner to `app/` | 4m 5s |
+
+(The recorded start and end for Prompt 3 read 11:33 and 11:32; the digits
+appear transposed.)
+
+#### What the control shows
+
+Three screenshots, all from one dataset and one control:
+
+| Date | In cellar | Drinking | Past window | Not yet acquired |
+| --- | --- | --- | --- | --- |
+| 1 June 1999 | 4 | 4 | 0 | 536 |
+| 22 September 2026 | 248 | 166 | 33 | 0 |
+| 23 July 2035 (projected) | 248 | 62 | 182 | 0 |
+
+The 1999 view is the entire cellar at that date: four Mouton bottles in the
+rack and two already opened. The 2035 projection is the argument the project
+exists to make, since 182 of the 248 bottles held today will be past window
+by then, and the count of bottles in the cellar does not fall, because a
+projection adds no consumptions. Bottles do not leave the cellar in the
+future, they stop being worth opening.
+
+#### The finding worth keeping
+
+The date-arithmetic module had a real bug: `calendarDelta` did field-wise
+subtraction with a single borrow, so 31 January to 1 March borrowed 28 days
+out of February, came up two days short, and silently dropped the remainder.
+
+**All five verification dates pass under the buggy version.** The bug was
+unreachable from every date the view is normally driven to, which is exactly
+why it survived into a working component. The oracle dates could not have
+caught it. What caught it was a property test across all 17,167 slider
+positions, asserting that
+`addMonths(from, wholeMonths) <= to < addMonths(from, wholeMonths + 1)`.
+
+Demo-driven verification is not verification. It proves the paths you already
+walk.
+
+#### What worked
+
+- **It measured instead of guessing.** Asked how to keep 542 bottles
+  re-evaluating smoothly, it benchmarked: a full re-tally is 0.07 ms p50
+  against a 16.7 ms frame budget, while `buildCellar` is 6.4 ms. That
+  produced a concrete answer, memoize the build and do not debounce the
+  input, rather than a plausible one.
+- **The measurement found a bug in the gate build.** The existing `useMemo`
+  was keyed `[data, asOf]` with `buildCellar` inside it, so every date change
+  would have taken the 100x path. Four lines of correct-looking code that had
+  already passed the gate.
+- **It improved the design brief.** I asked whether `NOT_YET_OWNED` should be
+  shown differently on past dates. It answered better than the question:
+  split the table into "in the cellar on this date" and "outside the cellar
+  on this date", and move the headline total to `inCellar()`, because
+  "542 bottles" at 1999-06-01 is a false statement when you owned four.
+- **It proved the new tests can fail.** After writing the suite, it restored
+  the buggy implementation and re-ran: 14 pass, 4 fail, naming exactly the
+  cases the bug broke. Second time this project it has used mutation testing
+  rather than asserting coverage.
+- **It kept the offline pre-check honest.** It ran the five dates through the
+  module on the NDJSON fixture, reported that all five matched, and said
+  plainly that this was a prior and not the verification asked for.
+- **It flagged its own gap.** `app/` had no test runner and `dates.ts` had
+  real logic in it, so the fix for a known bug was unguarded. It raised that
+  rather than leaving it.
+
+#### Model behaviour worth noting
+
+- **It introduced the `calendarDelta` bug and caught it itself,** with a
+  throwaway check script rather than by reading the code.
+- **It committed a directory without asking.** Three screenshots were staged
+  into the commit as evidence. Reasonable, correct in this case, and
+  disclosed immediately with the command to undo it.
+
+#### Platform friction
+
+**App SDK guidance, third instance.** The bundled rule says never to use
+`useState` for values that sync with Content Lake, and lists `useQuery` under
+"ask first". Both are right for content. Neither covers a view-level control
+whose value is never persisted, and followed literally the rule would push
+`asOf` toward a document. Taken with the two findings from Session 3, the
+pattern is guidance that is correct for the common case and silent on the one
+at hand, with no way to tell whether you are off the documented path or off
+the supported one.
+
+- *Would have helped:* a short section on view-local state, distinguishing
+  "not documented" from "not supported".
+
+**ESLint does not cover `.mts` test files** in either `app/` or
+`packages/cellar-core`. `npx eslint src test` errors with no matching
+configuration, so the files are silently ignored rather than linted. Left
+alone as pre-existing and cosmetic.
+
+#### Spec-first, so far
+
+- **This stage had no spec to check against.** ADR 0010 and a build-plan
+  line, nothing more. What carried it was the verification method rather than
+  the specification: a table of dates and expected counts, computed before the
+  view existed, with the confirmation in my hands.
+- **The model's design judgement beat mine once,** on the in-cellar split. An
+  open question in the prompt produced a better answer than a prescribed one
+  would have.
+- **The lesson that generalizes.** Two bugs this session, both invisible to
+  the verification that was designed for the feature. One needed a
+  measurement, the other needed a property test over the whole input domain.
+  Oracles catch wrong answers to the questions you thought to ask.
+
+#### Transcripts
+
+Full prompts and outputs, unedited.
+
+##### Prompt 1: measure and propose (11:08 to 11:14 am)
 
 ```text
 Stage 3, next view: the asOf control.
@@ -59,10 +187,9 @@ rather than working around it silently.
 This must run on Windows under PowerShell.
 ```
 
-Response:
+##### Prompt 1 output
 
 ```text
-
 ● Bash(cd /c/Users/kenal/cellar/sample_data && node -e "
       const fs=require('fs');…)
   ⎿  acquiredAt  1996-05-18  ..  2026-09-14
@@ -214,20 +341,9 @@ Response:
   Awaiting your approval before writing anything.
 
 ✻ Baked for 3m 39s
-
 ```
 
-End 11:14 AM
-
-Findings: 
-
-Strong proposal, and it found a real bug in the gate build: the existing useMemo is keyed on [data, asOf] with buildCellar inside it, so every date change would have taken the 6ms path instead of the 0.07ms one. That's a performance bug introduced during the gate that only measurement caught. Worth logging as such rather than folding silently into the diff.
-
-The NOT_YET_OWNED design answer is better than mine too. I was thinking about whether to show it; splitting the table into "in cellar" versus "outside the cellar on this date" answers the question the right way, and making the primary total move with the date fixes a genuinely false statement.
-
-## Prompt #2
-
-Start: 11:15 AM
+##### Prompt 2: approval with constraints (11:15 to 11:28 am)
 
 ```text
 Approved. Three constraints and one note.
@@ -256,7 +372,7 @@ that is correct for the common case and silent on the one at hand.
 Proceed.
 ```
 
-Response
+##### Prompt 2 output
 
 ```text
 PowerShell(Set-Location 'C:\Users\kenal\cellar'; git status --short)
@@ -357,23 +473,7 @@ PowerShell(Set-Location 'C:\Users\kenal\cellar'; git status --short)
 ✻ Churned for 7m 57s
 ```
 
-Findings:
-
-Both match exactly. 1999 shows four bottles in the cellar with 536 not yet acquired, today shows 248, and the sum holds at 542 in both.
-
-Those two screenshots are the article. One dataset, one control, and the difference between "4 bottles" and "248 bottles" is entirely a question of when you ask. The grouped table does real work too: "in the cellar on this date" versus "outside the cellar on this date" is a framing no inventory system would produce, because inventory has no concept of a date you're asking about.
-
-Two things before you move on.
-
-Check the middle three dates. You've confirmed the endpoints, which are the ones you'll publish, but 2019-12-31, 2023-03-15 and 2025-06-01 are where the interesting states live. 2023 should read 198 in cellar with 122 drinking, and it's the Missed Opportunities date, so it's worth knowing it's right now. Also drag the slider past today once to confirm the "projected to" wording and the assumption line appear, since that's a requirement you approved and nothing else tests it.
-
-Say yes to the app test runner. It flagged that dates.ts is unprotected, and it found a real bug in there: a month-subtraction borrow that broke on 31 January to 1 March. That bug was caught by a scratch script that isn't in the repo, which means the fix is currently unguarded. Twenty minutes for node --test in app/ is cheap insurance, and "the module with a known past bug has no tests" is not a sentence you want in the writeup. Ask it to commit the 25 checks it already wrote, including the 17,167-position round trip.
-
-End: 11:28 
-
-## Prompt 3
-
-Start: 11:33 AM
+##### Prompt 3: commit (about 11:33 am)
 
 ```text
 Stage 3: asOf control, cellar state at any date
@@ -385,7 +485,7 @@ Fixed a 100x perf bug from the gate build where buildCellar ran per date
 change, found by measurement.
 ```
 
-Response:
+##### Prompt 3 output
 
 ```text
 Committed as 1c422e9 on main, 13 files, +1058/−52.
@@ -403,17 +503,58 @@ Committed as 1c422e9 on main, 13 files, +1058/−52.
   Nothing was pushed. git push when you're ready.
 ```
 
-End: 11:32 AM
-
-Findings:
-
-
-Prompt 
-
-Start: 11:36 AM
+##### Prompt 4: test runner for app/ (11:36 to 11:45 am)
 
 ```text
 Yes to node --test in app/. Commit the checks you already wrote, including                                                                                                                                                                                                                                        
   the 17,167-position round trip and the calendarDelta cases that caught the                                                                                                                                                                                                                                        
   borrow bug. Add the fourth screenshot in that commit.                  
+```
+
+##### Prompt 4 output
+
+```text
+PowerShell(Set-Location 'C:\Users\kenal\cellar'; git commit -F commit-message.txt; if ($?) { git log --oneline -3; Write-Output '--- trailing status ---'; git status --sho…)
+  ⎿  [main ba5c084] Stage 3: tests for the asOf control's date arithmetic
+      7 files changed, 285 insertions(+), 5 deletions(-)
+      create mode 100644 app/test/dates.test.mts
+     … +5 lines (ctrl+o to expand)
+
+● Committed as ba5c084, working tree clean. No attributions in the message or the code.
+
+  What's in it
+
+  app/test/dates.test.mts — 18 tests on Node's test runner, no dependencies, mirroring @cellar/core's setup. npm test --workspace cellar-app.
+  
+  - All 17,167 slider positions, not a sample: each maps to a well-formed ISO date, strictly increasing, round-tripping back to its own index.
+  - calendarDelta — the borrow case that started this, plus short-month clamping, leap-day anniversaries, and the identity against itself.
+  - The anchor identity across 5,568 date pairs spanning the whole domain: addMonths(from, wholeMonths) <= to < addMonths(from, wholeMonths + 1), days never negative, remainder closes the gap exactly. This is the property the bug violated.
+  - Date-input guards, en-GB/UTC formatting, and the exact wording the view renders at each of the five verification dates.
+
+  calendarDelta and CalendarDelta are now exported, with a comment saying it's for the tests and stating the anchor property.
+
+  Proving the suite catches the bug
+
+  I restored the original field-wise-subtraction implementation and re-ran:
+
+  tests 18 · pass 14 · fail 4
+  ✖ borrows correctly out of a month shorter than the start day
+  ✖ clamps to the end of a short month rather than overshooting
+  ✖ handles a leap day anniversary
+  ✖ satisfies the anchor identity across the slider domain
+
+  Then restored from a backup and confirmed 18/18 and a 6-line diff against HEAD~1 — the two export keywords and the doc comment, nothing else.
+
+  The detail worth keeping for the writeup: all five verification dates still pass under the buggy version. The bug was unreachable from every date the view is normally driven to, which is exactly why it survived into a working component. That's now in the commit message and the changelog.
+
+  Checks: 18/18 app, 390/390 core, tsc clean, prettier clean, sanity build succeeds.
+
+  Two things to flag
+
+  ESLint doesn't cover test/. npx eslint src test errors — no matching configuration for .mts, so the files are ignored rather than linted. @cellar/core's tests have the same gap. I left it alone rather than fitting a parser into @sanity/eslint-config-studio, since the inconsistency is pre-existing and
+  fixing it properly is its own change. Say the word if you want it closed.
+
+  Your earlier commit re-hashed (1c422e9 → 5c562af), so the amend landed. Nothing pushed yet.
+
+✻ Crunched for 4m 5s
 ```
