@@ -109,6 +109,12 @@ project's central feature.
   `git push`. Read-only inspection (`git status`, `git log`, `git diff`,
   `git check-ignore`) is fine. When work is ready to commit, write the
   commit message and tell me what should be staged. I run the commands.
+- **Reverting is not an exception to that.** The file tools are the only way
+  to undo a change, including undoing your own edits from the current session.
+  `git checkout --` and `git restore` are prohibited for reverting exactly as
+  they are for staging: both discard working-tree state that git has no record
+  of, so there is nothing to recover from if the guess about what was yours
+  turns out to be wrong. Rewrite the file to what it should be instead.
 
 ## About the writeup
 

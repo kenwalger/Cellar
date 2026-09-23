@@ -35,6 +35,15 @@ function App() {
         */}
         <header className="masthead">
           <h1>The Cellar</h1>
+          {/*
+            Which cellar these numbers came from, shown only when it is not the
+            real one. Silence means production, and a label on every screen
+            would train the reader to stop seeing it. The Studio and the App
+            take their dataset from different mechanisms — see the comment on
+            DATASET — so "am I looking at the dataset I just wrote to?" is a
+            question worth answering on the screen rather than from memory.
+          */}
+          {DATASET !== 'production' && <p className="masthead-dataset">dataset: {DATASET}</p>}
           <AsOfControl value={asOf} today={todayDate} onChange={setAsOf} />
         </header>
 

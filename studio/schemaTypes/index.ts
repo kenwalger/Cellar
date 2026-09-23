@@ -2,6 +2,7 @@ import {acquisition} from './acquisition'
 import {assessment} from './assessment'
 import {bottle} from './bottle'
 import {consumption} from './consumption'
+import {bottleDerived, wineDerived} from './derived'
 import {producer} from './producer'
 import {varietal} from './varietal'
 import {wine} from './wine'
@@ -12,8 +13,21 @@ import {wine} from './wine'
  *   Entities  producer, wine, bottle      identify things, nothing temporal
  *   Events    acquisition, consumption    what happened, and when
  *   Claims    assessment                  what someone believed, and when
- *   Projections                           not yet; Stage 4
+ *   Projections  wine.derived,            what appears true now; cache, never
+ *                bottle.derived           truth, maintained by Function
  *
- * `varietal` is a supporting object type, not a document type.
+ * `varietal`, `wineDerived` and `bottleDerived` are supporting object types,
+ * not document types. All three are registered rather than declared inline
+ * because `sanity graphql deploy` rejects anonymous objects.
  */
-export const schemaTypes = [producer, wine, bottle, acquisition, consumption, assessment, varietal]
+export const schemaTypes = [
+  producer,
+  wine,
+  bottle,
+  acquisition,
+  consumption,
+  assessment,
+  varietal,
+  wineDerived,
+  bottleDerived,
+]

@@ -9,8 +9,9 @@ type VarietalValue = {grape?: string; percentage?: number}
  * (ADR 0003). Metadata only, nothing temporal.
  *
  * Deliberately absent: `drinkFrom` and `drinkUntil`. Drinking windows are
- * claims and live on `assessment` (ADR 0002). Also absent: the projection
- * fields in content-model.md, which arrive in Stage 4.
+ * claims and live on `assessment` (ADR 0002). The projection fields are
+ * present from Stage 4 and live under `derived`, where the wrapper marks them
+ * as cache rather than truth.
  */
 export const wine = defineType({
   name: 'wine',
@@ -99,6 +100,15 @@ export const wine = defineType({
       title: 'Notes',
       type: 'text',
       rows: 4,
+    }),
+    // Maintained by Function, never by hand. `readOnly` is a Studio form
+    // setting and not enforcement — the Function writes through the API, which
+    // the Content Lake accepts without consulting the schema at all.
+    defineField({
+      name: 'derived',
+      title: 'Derived',
+      type: 'wineDerived',
+      readOnly: true,
     }),
   ],
   preview: {

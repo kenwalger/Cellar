@@ -101,7 +101,43 @@ export const assessment = defineType({
       type: 'reference',
       to: [{type: 'consumption'}],
       description:
-        'Set when this claim was extracted from a tasting note. Agents create such assessments as proposed.',
+        'The consumption whose tasting note this claim came from. Says which note, not who read it.',
+    }),
+    /**
+     * How the window got into this document. See ADR 0012.
+     *
+     * `derivedFrom` does not answer this. Thirty-eight seeded assessments
+     * carry it and every one was written by hand from a note the cellar owner
+     * had already read, so the reference says "this claim came from that
+     * bottle" and nothing about whether a model did the reading.
+     *
+     * Both facts are true of an accepted proposal and both belong in the
+     * record: accepting a claim makes it the owner's, at the personal tier,
+     * outranking every producer and critic claim for that wine — and that a
+     * model drafted it stays true afterwards. A project whose argument is that
+     * claims carry their provenance cannot leave the two indistinguishable.
+     *
+     * Absence means `authored`. The 161 imported assessments predate this
+     * field and backfilling them is a write to production, deferred until
+     * Stage 4b makes its first ones. Only `extracted` is ever rendered.
+     */
+    defineField({
+      name: 'sourceMethod',
+      title: 'Source method',
+      type: 'string',
+      description:
+        'How this claim was drafted. Authored means a person wrote it; extracted means a model read a tasting note and proposed it. Not the same question as the authority tier, which says whose claim it is.',
+      options: {
+        list: [
+          {title: 'Authored', value: 'authored'},
+          {title: 'Extracted from a tasting note', value: 'extracted'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'authored',
+      // A record of how the document came to exist. The code that creates it
+      // knows; an editor revising it later would only be guessing.
+      readOnly: true,
     }),
     defineField({
       name: 'reviewState',
@@ -121,6 +157,22 @@ export const assessment = defineType({
       // Studio mechanism and does not apply to API writes, so the agent and
       // the ledger import must both set this explicitly.
       initialValue: 'accepted',
+      /**
+       * The Accept and Reject document actions are the only way to move this.
+       *
+       * A workflow you can bypass with a radio button is decorated rather than
+       * modelled, and ADR 0011 exists to model it. `readOnly` is a form
+       * setting: it disables the input and does not touch the mutation layer,
+       * so the actions' own patches are unaffected — `OperationsAPI['patch']`
+       * in the installed types carries no readOnly among its disabled reasons,
+       * where `publish` enumerates five of its own.
+       *
+       * Consequence, accepted deliberately: an assessment authored in the
+       * Studio is born `accepted` and cannot be demoted. ADR 0011 defines two
+       * transitions, both out of `proposed`, and this is what having only
+       * those two looks like.
+       */
+      readOnly: true,
       validation: (rule) => rule.required(),
     }),
   ],
@@ -131,13 +183,21 @@ export const assessment = defineType({
       drinkFrom: 'drinkFrom',
       drinkUntil: 'drinkUntil',
       reviewState: 'reviewState',
+      sourceMethod: 'sourceMethod',
     },
-    prepare({sourceName, sourceType, drinkFrom, drinkUntil, reviewState}) {
+    prepare({sourceName, sourceType, drinkFrom, drinkUntil, reviewState, sourceMethod}) {
       // Store dates, display years.
       const window = `${displayYear(drinkFrom)}–${displayYear(drinkUntil)}`
       return {
         title: [sourceName || 'Unattributed', window].join(' · '),
-        subtitle: [sourceType, reviewState].filter(Boolean).join(' · ') || undefined,
+        // Only `extracted` is rendered. Absence of `sourceMethod` means
+        // authored, which is what the 161 imported assessments are, and
+        // labelling the ordinary case would put a word on every row to say
+        // nothing.
+        subtitle:
+          [sourceType, reviewState, sourceMethod === 'extracted' ? 'extracted' : null]
+            .filter(Boolean)
+            .join(' · ') || undefined,
       }
     },
   },

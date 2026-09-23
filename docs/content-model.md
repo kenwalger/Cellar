@@ -58,10 +58,14 @@ a `derived` object rather than at the top level:
 | --- | --- | --- |
 | `derived.bottlesOnHand` | number | |
 | `derived.bottlesConsumed` | number | |
-| `derived.windowFrom` | date | Resolved window, as of now |
+| `derived.windowFrom` | date | Resolved window, as of `derived.asOf` |
 | `derived.windowUntil` | date | |
 | `derived.windowSourceType` | string | Which authority tier won |
-| `derived.cellarState` | string | See the state machine in the temporal spec |
+| `derived.asOf` | datetime | When this projection was computed. See ADR 0012. |
+
+There is no `derived.cellarState`. A wine holds bottles in several states at
+once and nothing collapses them into one value; state is per bottle. See
+ADR 0012.
 
 The `derived` object is the naming convention signalling derived data. A
 leading underscore was the original proposal and is not available: Sanity
@@ -86,7 +90,8 @@ Projection field, in the same `derived` object as on `wine`:
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `derived.status` | string | Current state. Cache of `state(bottle, now)`. |
+| `derived.status` | string | Cache of `state(bottle, derived.asOf)`. |
+| `derived.asOf` | datetime | When this projection was computed. See ADR 0012. |
 
 The Studio preview shows the bottle's wine. Preview `select` follows
 references with dot notation, so `wine.title` resolves without a custom
@@ -141,12 +146,20 @@ document type and the one the article is built around.
 | `drinkUntil` | date | Required. Must be on or after `drinkFrom`. |
 | `confidence` | string | low, medium, high |
 | `notes` | text | |
-| `derivedFrom` | reference to `consumption` | Optional. Set when an assessment was extracted from a tasting note. |
+| `derivedFrom` | reference to `consumption` | Optional. Which tasting note this claim came from. Says nothing about who read it. |
+| `sourceMethod` | string | authored, extracted. Absence means authored. See ADR 0012. |
 | `reviewState` | string | proposed, accepted, rejected. Required. Default accepted for hand-authored, proposed for agent-created. See ADR 0011. |
 
 `derivedFrom` closes the feedback loop. You open a bottle, write a note, and
 that note becomes a new claim that changes the window on the bottles still in
-the rack. It is also where the Agent Action output records its own provenance.
+the rack.
+
+`derivedFrom` does not record that a model was involved, and this document
+used to say it did. Thirty-eight seeded assessments carry it and all of them
+were written by hand from a note the owner had already read. `sourceMethod` is
+the field that distinguishes them, because both facts about an accepted
+proposal are true at once: it is now the owner's claim, at the personal tier,
+and a model drafted it.
 
 ## Validation rules
 
@@ -216,11 +229,15 @@ Two consequences, both load-bearing for the seed import:
 - A bottle's entire life is: acquired, optionally consumed. There is no
   intermediate mutable state.
 - The set of assessments only ever grows. Nothing overwrites a window.
-- Every projection field is reproducible from events and claims alone. If a
-  projection cannot be recomputed from scratch, it is a bug in the model, not
-  in the Function.
+- Every projection field is reproducible from events, accepted claims, and the
+  date it was computed at. If a projection cannot be recomputed from scratch
+  given those three, it is a bug in the model, not in the Function.
 
-That last one is the test to run against any field added later.
+That last one is the test to run against any field added later. It named two
+inputs until Stage 4, and two is one short: the state machine compares against
+a date, so a projection of it is only reproducible if that date is stored
+beside it. That is what `derived.asOf` is for, and ADR 0012 records why the
+rule moved rather than the code.
 
 ## Deliberately out of scope for V1
 
@@ -317,3 +334,56 @@ section titled "Preview using fields from referenced documents" showing dot
 notation across a reference. `bottle` now previews its wine directly. Only
 single-hop resolution is documented, so nothing here depends on two hops
 through to `wine.producer.name`.
+
+### 2026-09-23, Stage 4a
+
+The review workflow met the Studio, and the projection fields were declared for
+the first time. Three changes, two of them errors in this document, all
+recorded in ADR 0012.
+
+**Spec error: `wine.derived.cellarState` does not exist and cannot.** It was
+listed with the note "See the state machine in the temporal spec". That state
+machine is `state(bottle, T)` and is defined per bottle. A wine holds bottles
+in several states at once — three CONSUMED and three PAST_WINDOW on the same
+day, for the wine used in the Stage 4 tests — and no rule anywhere collapses
+them into one value. The field is removed. `bottle.derived.status` carries
+state at the level where it is defined.
+
+**Spec error: the projection invariant named two inputs and needs three.**
+"Every projection field is reproducible from events and claims alone" is not
+true of anything that reads a clock, and both `bottle.derived.status` and the
+three `wine.derived.window*` fields do. A bottle reading HOLD today reads
+DRINKING on 1 January with no event, no new claim, and nothing to trigger a
+recomputation, because Functions fire on document events and the passage of
+time is not one. Both projections now carry `derived.asOf`, and the invariant
+names the date as an input rather than pretending it isn't one.
+
+**`derivedFrom` was described as where the agent records its provenance.** It
+is not, and it cannot be: 38 of the 161 seeded assessments carry it, all
+hand-written from notes the owner had already read. `sourceMethod` is added to
+distinguish them. The field table's description of `derivedFrom` is corrected
+to say what it actually records — which note a claim came from, not who read
+it.
+
+The refinements:
+
+- **`reviewState` and `sourceMethod` are `readOnly` in the Studio form.** The
+  Accept and Reject document actions are the only path through the workflow,
+  which is what makes it modelled rather than decorated. Neither setting is
+  enforcement: this document's own "Validation runs in Studio only" section is
+  the reason, and it is the same reason the import writes `reviewState`
+  explicitly. Verified in the installed types rather than assumed —
+  `OperationsAPI['patch']` declares no disabled reasons of its own, where
+  `publish` enumerates five.
+- **A Studio-authored assessment is born `accepted` and cannot be demoted.**
+  A consequence of `readOnly` plus ADR 0011 defining two transitions, both out
+  of `proposed`. Accepted deliberately: the workflow exists for proposals.
+- **The seed builder emits `sourceMethod: 'authored'` explicitly**, for the
+  same reason it emits `reviewState: 'accepted'` explicitly. `initialValue`
+  does not fire on import. Absence would be read correctly anyway, but a
+  re-import should state the fact rather than lean on a default that never
+  runs.
+- **`wineDerived` and `bottleDerived` are registered top-level object types**,
+  not inline anonymous ones, for the reason `varietal` already established:
+  the Studio accepts an anonymous object and `sanity graphql deploy` does not.
+

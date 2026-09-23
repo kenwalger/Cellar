@@ -16,6 +16,7 @@
 import assert from 'node:assert/strict'
 import {describe, test} from 'node:test'
 import {
+  addMonths,
   bottleState,
   buildCellar,
   consumptionVerdict,
@@ -354,7 +355,86 @@ describe('missed opportunities use exact state-change boundaries', () => {
     assert.deepEqual(missed[0]?.peakIntervals, [{from: '2024-06-15', until: '2024-06-30'}])
   })
 
-  test('a bottle opened during the period is not a missed opportunity', () => {
+  /**
+   * The `minus opened(period)` clause, isolated.
+   *
+   * The spec defines the regret set as three independent conditions: peaked in
+   * the period, minus opened in the period, restricted to past window now. For
+   * any period ending at or before `now` the middle one never fires — a bottle
+   * opened inside such a period reads CONSUMED at `now`, and CONSUMED is not
+   * PAST_WINDOW, so the third condition has already excluded it. That is the
+   * session 7 finding, and the test below records it.
+   *
+   * The clause is live in exactly one situation: a period that extends past
+   * the `now` being asked about. This fixture is that situation, built
+   * entirely from dates in the past so that nothing here is data the content
+   * model forbids. `now` is a parameter, not the clock; asking "as of June
+   * 2024, what had I missed that year?" is an ordinary call.
+   *
+   *   2024-01-01  period opens. Producer 2020-2023 resolves, so PAST_WINDOW.
+   *   2024-06-01  the `now` being asked about. Still PAST_WINDOW, and the
+   *               bottle has not been opened yet, so the state gate lets it
+   *               through.
+   *   2024-08-01  a personal claim of 2020-2030 becomes visible and outranks
+   *               the producer. DRINKING — the bottle peaks inside the period.
+   *   2024-10-01  opened, inside the period and after `now`.
+   *
+   * Every other condition is satisfied, so the clause is the only thing that
+   * can exclude it. Delete the clause and this test fails, which is the
+   * property the previous fixture did not have.
+   */
+  test('the opened-in-period clause excludes a bottle when the period runs past now', () => {
+    const localNow = '2024-06-01'
+    const openedLate = buildCellar(
+      snapshot(
+        [
+          assessment({
+            id: 'a-producer',
+            sourceType: 'producer',
+            assessedAt: '2020-01-01',
+            drinkFrom: '2020-01-01',
+            drinkUntil: '2023-12-31',
+          }),
+          assessment({
+            id: 'a-personal',
+            sourceType: 'personal',
+            assessedAt: '2024-08-01',
+            drinkFrom: '2020-01-01',
+            drinkUntil: '2030-12-31',
+          }),
+        ],
+        {consumptions: [{id: 'con-b', bottleId: 'b', consumedAt: '2024-10-01T12:00:00Z'}]},
+      ),
+    )
+
+    // The three conditions the clause is not responsible for, stated rather
+    // than assumed. If any of these drifts the test stops isolating anything.
+    assert.equal(bottleState(openedLate, 'b', localNow).state, 'PAST_WINDOW', 'state at now')
+    assert.deepEqual(
+      drinkingIntervals(openedLate, 'b', period),
+      [{from: '2024-08-01', until: '2024-09-30'}],
+      'peaked inside the period',
+    )
+    assert.ok(period.start <= '2024-10-01' && '2024-10-01' <= period.end, 'opened in the period')
+
+    assert.deepEqual(missedOpportunities(openedLate, period, localNow), [])
+  })
+
+  /**
+   * The ordinary case, asserting what is actually true about it.
+   *
+   * This is the fixture the suite had, and its assertion held for a reason its
+   * name did not describe: with `now` after the period, the bottle reads
+   * CONSUMED and the state gate excludes it before the opened-in-period clause
+   * is consulted. Deleting the clause left the old test green.
+   *
+   * So the state is named here instead of left implicit. What this records is
+   * that for every period the views can actually ask about — they all end at
+   * or before `now` — exclusion comes from the state machine, and the spec's
+   * second condition is a restatement of its third. See "A spec that states
+   * three conditions where the data has two" in docs/friction-logs/session7.md.
+   */
+  test('for a period ending before now, the state gate is what excludes an opened bottle', () => {
     const opened = buildCellar(
       snapshot(
         [
@@ -367,6 +447,11 @@ describe('missed opportunities use exact state-change boundaries', () => {
         ],
         {consumptions: [{id: 'con-b', bottleId: 'b', consumedAt: '2024-05-01T12:00:00Z'}]},
       ),
+    )
+    assert.equal(
+      bottleState(opened, 'b', NOW).state,
+      'CONSUMED',
+      'not PAST_WINDOW, so the gate bites',
     )
     assert.deepEqual(missedOpportunities(opened, period, NOW), [])
   })
@@ -456,11 +541,30 @@ describe('display bucket and wine names', () => {
     assert.equal(isDrinkSoon(result, NOW, 3), false)
   })
 
-  test('a HOLD bottle is never drink-soon', () => {
+  /**
+   * The window has to close *inside* the horizon for this to test anything.
+   *
+   * It first used 2030–2031, which is HOLD at `NOW` and also more than twelve
+   * months from closing — so it returned false for two reasons and isolated
+   * neither. Deleting the state guard from `isDrinkSoon` left it green, which
+   * means it proved only that a far-future window is not imminent, something
+   * nothing disputes.
+   *
+   * 2026-11-01 to 2026-12-31 at a `NOW` of 2026-09-18 is HOLD, because the
+   * window has not opened, and closes well within the twelve-month horizon.
+   * The date arithmetic alone says drink-soon; only the state check says no.
+   */
+  test('a HOLD bottle is never drink-soon, even when its window closes inside the horizon', () => {
     const cellar = buildCellar(
-      snapshot([assessment({id: 'a', drinkFrom: '2030-01-01', drinkUntil: '2031-12-31'})]),
+      snapshot([assessment({id: 'a', drinkFrom: '2026-11-01', drinkUntil: '2026-12-31'})]),
     )
-    assert.equal(isDrinkSoon(bottleState(cellar, 'b', NOW), NOW), false)
+    const result = bottleState(cellar, 'b', NOW)
+    assert.equal(result.state, 'HOLD', 'fixture no longer produces HOLD')
+    assert.ok(
+      result.window!.drinkUntil <= addMonths(NOW, 12),
+      'fixture no longer closes inside the horizon, so the state guard is not what is under test',
+    )
+    assert.equal(isDrinkSoon(result, NOW), false)
   })
 
   test('wineDisplayName prefers an explicit title', () => {

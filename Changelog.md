@@ -9,6 +9,62 @@ Stages refer to `docs/build-plan.md`.
 
 ## [Unreleased]
 
+### Stage 4a: the review workflow (in progress)
+
+- **Assessment review is a workflow you cannot bypass.** Accept and Reject
+  document actions are the only transitions, both out of `proposed`, and
+  `reviewState` is `readOnly` in the form. A rejected claim stays in the
+  dataset recorded as rejected, per ADR 0011 — the undo for a mistaken
+  acceptance is another claim-state change, not a delete
+- A review queue in Studio structure, three lists by state, Proposed first.
+  Everything else stays where it was; organising the whole Studio by state is
+  Stage 5
+- **Projection fields declared for the first time**, as registered
+  `wineDerived` and `bottleDerived` object types. Two spec errors found and
+  recorded in ADR 0012 and in `content-model.md`: `wine.derived.cellarState`
+  cannot exist, because the state machine is defined per bottle and a wine
+  holds bottles in several states at once; and design rule 1 named two inputs
+  where it needs three, since a projection of a clock-dependent state is only
+  reproducible if the date it was computed at is stored beside it. Both
+  projections now carry `derived.asOf`
+- `assessment.sourceMethod` records whether a window was authored or
+  extracted. `derivedFrom` does not distinguish them — 38 seeded assessments
+  carry it and all were written by hand. Both facts about an accepted proposal
+  are true at once: it is the owner's claim, and a model drafted it
+- 16 new tests in `@cellar/core`, 406 in total. The workflow claim is checked
+  where it has to hold rather than on a fixture: adding a proposed assessment
+  changes none of 542 bottle states at six dates, no resolved window on any of
+  98 wines, and no verdict on any of 294 consumptions — and accepting the same
+  document changes exactly the six bottles of its own wine. The second half is
+  what stops the first from passing vacuously, which it briefly did
+- The Studio reads its dataset from `SANITY_STUDIO_DATASET`, so Stage 4b's
+  writes can be rehearsed against a copy before production sees them. The App
+  does **not**: the same variable, the same `sanity build`, and the App bundle
+  ignores it silently while the Studio folds it to a literal. Its dataset is a
+  hand-edited constant instead, and the masthead shows the name whenever it is
+  not production — the failure being guarded against is the Studio writing to
+  one cellar while the App reports another, with every number consistent and
+  wrong
+- `studio/scripts/seed-proposed-assessment.mts` generates one proposed
+  assessment for a non-production dataset, so the workflow can be exercised
+  before the agent that will normally create them exists. It is the 4b
+  pipeline with the model replaced by a literal: every system-fixed field is
+  derived exactly as 4b will derive it, and only the window, confidence and
+  note are hand-written. It refuses to name `production`, validates against
+  the rules the schema would apply, and prints the write command rather than
+  writing
+- An audit of the whole test suite for the shape the invariance test briefly
+  had — asserting no effect with nothing proving the effect exists. Two found,
+  both confirmed by deleting the clause they claim to test and watching them
+  pass, then rewritten with fixtures that isolate it and verified the same
+  way. `isDrinkSoon` now gets a HOLD bottle whose window closes *inside* the
+  twelve-month horizon, so only the state guard can return false. The
+  opened-in-period clause turned out to be isolable after all, under exactly
+  the condition session 7 predicted: a period extending past the `now` being
+  asked about. The original fixture is kept as a second test, renamed to say
+  what it actually proves — that for ordinary periods the state gate does the
+  excluding
+
 ### Stage 3: the App
 
 All four views of the stage are built: Cellar Health, the asOf control, Drink

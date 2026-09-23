@@ -7,8 +7,9 @@ import {BottleIcon} from '@sanity/icons/Bottle'
  *
  * There is no `acquiredAt` and no `consumedAt`. That absence is the design:
  * a bottle does not know when it was acquired, an acquisition does
- * (ADR 0004). A bottle also carries no status; state is derived by evaluating
- * events against an asOf date (ADR 0001).
+ * (ADR 0004). State is derived by evaluating events against an asOf date
+ * (ADR 0001); `derived.status` from Stage 4 is a cache of that evaluation at
+ * one instant and is not consulted by anything that needs the answer.
  */
 export const bottle = defineType({
   name: 'bottle',
@@ -60,6 +61,14 @@ export const bottle = defineType({
       type: 'text',
       rows: 3,
       description: 'Provenance oddities, damaged label, questionable fill',
+    }),
+    // See the note on `wine.derived`. Maintained by Function; `readOnly` keeps
+    // it out of the form, not out of the API.
+    defineField({
+      name: 'derived',
+      title: 'Derived',
+      type: 'bottleDerived',
+      readOnly: true,
     }),
   ],
   // `select` does follow references with dot notation, so a bottle can show
