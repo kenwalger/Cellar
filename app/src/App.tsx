@@ -3,6 +3,8 @@ import {type SanityConfig} from '@sanity/sdk'
 import {SanityApp} from '@sanity/sdk-react'
 import {AsOfControl} from './AsOfControl'
 import {CellarHealth} from './CellarHealth'
+import {CellarProvider} from './CellarProvider'
+import {DrinkSoon} from './DrinkSoon'
 import {DATASET, PROJECT_ID, today} from './sanity'
 import './App.css'
 
@@ -35,9 +37,16 @@ function App() {
           <AsOfControl value={asOf} today={todayDate} onChange={setAsOf} />
         </header>
 
-        {/* SDK data hooks suspend, so every fetching component needs a boundary. */}
+        {/*
+          SDK data hooks suspend, so every fetching component needs a boundary.
+          The provider is the only thing that fetches now: one query and one
+          `buildCellar` for every view below it, rather than one each.
+        */}
         <Suspense fallback={<p className="loading">Reading the cellar…</p>}>
-          <CellarHealth asOf={asOf} />
+          <CellarProvider>
+            <CellarHealth asOf={asOf} />
+            <DrinkSoon asOf={asOf} />
+          </CellarProvider>
         </Suspense>
       </SanityApp>
     </div>

@@ -1,16 +1,6 @@
 import {useMemo} from 'react'
-import {useQuery} from '@sanity/sdk-react'
-import {
-  bottleState,
-  buildCellar,
-  CELLAR_QUERY,
-  inCellar,
-  toCellarSnapshot,
-  type BottleState,
-  type IsoDate,
-  type RawCellarResult,
-} from '@cellar/core'
-import {DATASET, PROJECT_ID} from './sanity'
+import {bottleState, inCellar, type BottleState, type IsoDate} from '@cellar/core'
+import {useCellar} from './CellarProvider'
 
 /**
  * Cellar Health.
@@ -21,7 +11,9 @@ import {DATASET, PROJECT_ID} from './sanity'
  *
  * The full path is Content Lake -> useQuery(CELLAR_QUERY) ->
  * toCellarSnapshot -> buildCellar -> bottleState, with no step skipped and
- * no number precomputed anywhere.
+ * no number precomputed anywhere. The first three steps moved to
+ * `CellarProvider` when Drink Soon became a second consumer of the same index;
+ * the path is unchanged, only its first half is now shared.
  *
  * `asOf` arrives as a prop and is passed straight through as a parameter.
  * The clock is read once in `App`, and never in `@cellar/core`.
@@ -65,26 +57,12 @@ export interface CellarHealthProps {
 }
 
 export function CellarHealth({asOf}: CellarHealthProps) {
-  // One query for the whole cellar. The published perspective is explicit:
-  // an unpublished draft assessment must not change what the cellar says
-  // before anyone published it.
-  //
-  // `asOf` is deliberately absent from these options. CELLAR_QUERY fetches the
-  // entire ledger unfiltered by date, so moving the control cannot invalidate
-  // this subscription — there is nothing date-shaped for it to invalidate.
-  const {data} = useQuery<RawCellarResult>({
-    query: CELLAR_QUERY,
-    projectId: PROJECT_ID,
-    dataset: DATASET,
-    perspective: 'published',
-  })
-
-  // Two memos, not one, and the split is load-bearing. Indexing the snapshot
-  // costs ~6ms; re-tallying all 542 bottles at a new date costs ~0.07ms. Both
-  // in one memo keyed on [data, asOf] makes every drag of the slider pay the
-  // 6ms, which is a hundredfold overcharge for work whose inputs did not
-  // change.
-  const cellar = useMemo(() => buildCellar(toCellarSnapshot(data ?? {})), [data])
+  // The indexed cellar, built once in the provider and shared. The split
+  // between indexing and tallying is load-bearing and survived the move:
+  // indexing the snapshot costs ~6ms, re-tallying all 542 bottles at a new
+  // date costs ~0.07ms, and keying both on [data, asOf] would make every drag
+  // of the slider pay the 6ms for work whose inputs did not change.
+  const cellar = useCellar()
 
   const {counts, inCellarCount, ledgerTotal, violations} = useMemo(() => {
     const tally = new Map<BottleState, number>(

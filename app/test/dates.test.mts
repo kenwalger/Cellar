@@ -7,8 +7,11 @@ import {
   ASOF_SPAN_DAYS,
   calendarDelta,
   clampToRange,
+  describeApproxSpan,
   describeAsOf,
+  describeRemaining,
   formatLongDate,
+  formatShortDate,
   fromDayIndex,
   parseDateInput,
   toDayIndex,
@@ -163,6 +166,57 @@ describe('formatLongDate', () => {
     assert.equal(formatLongDate('1999-06-01'), '1 June 1999')
     assert.equal(formatLongDate('2019-12-31'), '31 December 2019')
     assert.equal(formatLongDate('2026-01-01'), '1 January 2026')
+  })
+})
+
+describe('formatShortDate', () => {
+  it('formats the provenance date without shifting it', () => {
+    assert.equal(formatShortDate('2025-04-05'), '5 Apr 2025')
+    assert.equal(formatShortDate('2022-06-12'), '12 Jun 2022')
+    assert.equal(formatShortDate('2018-11-13'), '13 Nov 2018')
+    assert.equal(formatShortDate('2025-12-05'), '5 Dec 2025')
+  })
+})
+
+describe('describeApproxSpan and describeRemaining', () => {
+  /**
+   * No day precision, and that is a statement about the inputs rather than
+   * about brevity. `drinkUntil` is 31 December because normalization put it
+   * there — nobody wrote that date — so "3 months, 13 days" would report a
+   * resolution the claim does not have.
+   */
+  it('never reports days', () => {
+    assert.equal(describeApproxSpan('2026-09-18', '2026-12-31'), '3 months')
+    assert.equal(describeApproxSpan('2025-06-01', '2025-12-31'), '6 months')
+    assert.equal(describeApproxSpan('2023-03-15', '2024-12-31'), '1 year, 9 months')
+    assert.equal(describeApproxSpan('2019-12-31', '2026-12-31'), '7 years')
+    assert.equal(describeApproxSpan('1999-06-01', '2012-12-31'), '13 years, 6 months')
+  })
+
+  it('falls back below a month rather than rounding to zero', () => {
+    assert.equal(describeApproxSpan('2026-12-05', '2026-12-31'), 'less than a month')
+    assert.equal(describeApproxSpan('2026-12-31', '2026-12-31'), 'less than a month')
+  })
+
+  it('reads as time left in a window', () => {
+    assert.equal(describeRemaining('2026-09-18', '2026-12-31'), 'about 3 months left')
+    assert.equal(describeRemaining('2025-06-01', '2025-12-31'), 'about 6 months left')
+    assert.equal(describeRemaining('2026-01-01', '2026-12-31'), 'about 11 months left')
+    assert.equal(describeRemaining('2026-12-05', '2026-12-31'), 'less than a month left')
+  })
+
+  /**
+   * `drinkUntil` is inclusive — a bottle is DRINKING through it — so the two
+   * dates being equal is the last day, not an expired window.
+   */
+  it('calls the closing day the last day rather than nothing left', () => {
+    assert.equal(describeRemaining('2026-12-31', '2026-12-31'), 'today is the last day')
+  })
+
+  it('singularises a unit of one', () => {
+    assert.equal(describeApproxSpan('2026-01-01', '2026-02-01'), '1 month')
+    assert.equal(describeApproxSpan('2026-01-01', '2027-01-01'), '1 year')
+    assert.equal(describeApproxSpan('2026-01-01', '2027-02-01'), '1 year, 1 month')
   })
 })
 

@@ -10,6 +10,10 @@
   /* One column width for the masthead and the table, so the date, the control
      and every count sit inside a single frame in a screen recording. */
   --col: 34rem;
+  /* Drink Soon carries a wine name, a count and a window on one line, and the
+     provenance beneath. It needs more room than a two-column tally, and still
+     has to sit in the same frame. */
+  --col-wide: 46rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -240,4 +244,148 @@ body {
   margin-top: 1.25rem;
   color: var(--muted);
   font-size: 0.875rem;
+}
+
+/* Drink Soon */
+
+.soon {
+  max-width: var(--col-wide);
+  margin-top: 3rem;
+}
+
+.soon h2 {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.soon-total {
+  margin: 0.75rem 0 0;
+  font-size: 1.0625rem;
+  font-weight: 400;
+}
+
+.soon-total strong {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-right: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.soon-ledger {
+  margin: 0.125rem 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.soon-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.soon-table thead th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.soon-table thead th:nth-child(2) {
+  text-align: right;
+  width: 5rem;
+}
+
+.soon-table thead th:nth-child(3) {
+  text-align: right;
+  width: 12rem;
+}
+
+.soon-table tbody th,
+.soon-table tbody td {
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.soon-table tbody th {
+  text-align: left;
+  font-weight: 400;
+}
+
+/* The wine and its provenance stack; the count and the window align right
+   against them. Two lines per row rather than five columns, because the
+   provenance is a sentence and a sentence does not fit in a cell. */
+.soon-wine,
+.soon-provenance,
+.soon-through,
+.soon-left {
+  display: block;
+}
+
+.soon-wine {
+  font-size: 1.0625rem;
+}
+
+.soon-provenance {
+  margin-top: 0.1875rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.soon-sep {
+  opacity: 0.5;
+}
+
+.soon-count {
+  text-align: right;
+  font-size: 1.0625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.soon-window {
+  text-align: right;
+}
+
+.soon-through {
+  font-size: 1.0625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.soon-left {
+  margin-top: 0.1875rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.soon-note {
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Empty is a normal reading of this view, so it is set as a statement rather
+   than as a greyed-out apology. */
+.soon-empty {
+  margin-top: 1rem;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.soon-empty-head {
+  margin: 0;
+  font-size: 1.0625rem;
+}
+
+.soon-empty-body {
+  margin: 0.375rem 0 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
 }

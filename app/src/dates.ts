@@ -88,6 +88,24 @@ export function formatLongDate(date: IsoDate): string {
   return LONG_DATE.format(new Date(`${date}T00:00:00Z`))
 }
 
+/**
+ * "5 Apr 2025". Same locale and timezone reasoning as `formatLongDate`.
+ *
+ * The short form is for the provenance line in Drink Soon, where the
+ * assessment date is supporting evidence rather than the subject of the row
+ * and the long form would outweigh the wine it belongs to.
+ */
+const SHORT_DATE = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
+export function formatShortDate(date: IsoDate): string {
+  return SHORT_DATE.format(new Date(`${date}T00:00:00Z`))
+}
+
 export interface CalendarDelta {
   years: number
   months: number
@@ -146,6 +164,43 @@ function describeDelta(delta: CalendarDelta): string {
   }
   if (days > 0) return plural(days, 'day')
   return ''
+}
+
+/**
+ * "3 months", "1 year, 9 months", "7 years", "less than a month".
+ *
+ * Coarsest two units and no days, which is a statement about the inputs rather
+ * than about brevity. Every window bound in the dataset is a normalization
+ * artifact: `drinkUntil` given as a year becomes 31 December, so the day is a
+ * consequence of the rule in `docs/temporal-resolution.md` and not something
+ * anybody claimed. "3 months, 13 days" would report a resolution the claim
+ * does not have. `describeDelta` keeps its day precision because the dates it
+ * measures — `asOf` against today — are both real.
+ */
+export function describeApproxSpan(from: IsoDate, to: IsoDate): string {
+  const {years, months} = calendarDelta(from, to)
+  if (years > 0) {
+    return months > 0
+      ? `${plural(years, 'year')}, ${plural(months, 'month')}`
+      : plural(years, 'year')
+  }
+  if (months > 0) return plural(months, 'month')
+  return 'less than a month'
+}
+
+/**
+ * How much of a drinking window is left: "about 3 months left".
+ *
+ * `until` is inclusive — a bottle is DRINKING through `drinkUntil` itself — so
+ * the two dates being equal is the last day rather than no time at all. The
+ * view carries that inclusivity in the word "through"; this carries the case
+ * where there is nothing left to round.
+ */
+export function describeRemaining(from: IsoDate, until: IsoDate): string {
+  if (from >= until) return 'today is the last day'
+  const {years, months} = calendarDelta(from, until)
+  if (years === 0 && months === 0) return 'less than a month left'
+  return `about ${describeApproxSpan(from, until)} left`
 }
 
 export type AsOfTense = 'past' | 'present' | 'future'

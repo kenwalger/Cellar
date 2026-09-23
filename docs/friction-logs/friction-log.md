@@ -412,6 +412,102 @@ Having project-scoped commands fall back to `.sanity/blueprint.config.json`
 when no Studio config is in scope, or naming that file in the error's "try
 this" list so the fix is obvious rather than inferred.
 
+### 23 September 2026, Stage 3 — a month-based horizon over year-quantized windows
+
+Category:   click
+Surface:    the model, not the platform
+Elapsed:    found while proposing, ~15 minutes to measure
+
+Ours rather than Sanity's, recorded here beside the Stage 3 material it came
+out of, like the memo bug above.
+
+Expected:
+`isDrinkSoon` takes `withinMonths`, so the obvious reading is that the Drink
+Soon horizon is a continuous dial and that exposing it would let a reader ask
+"what closes in the next six months" as easily as twelve.
+
+Happened:
+It isn't continuous, because of a rule two documents away. Normalization in
+`docs/temporal-resolution.md` turns a window given as a year into 1 January to
+31 December, and **all 161 accepted assessments in the seed data are bounded
+that way** — not most, all. Closing dates therefore only exist on one day a
+year, and the count is a step function with at most one step per year:
+
+```
+date            1mo   3mo   6mo  12mo  18mo  24mo  36mo  60mo
+2023-03-15        0     0     0     0     0     9    33    59
+2025-06-01        0     0     0    10    10    30    63    77
+2026-09-18        0     0    23    23    49    49    67   106
+```
+
+At 2026-09-18 the answer is 23 for every horizon from four months to fourteen.
+A slider across that range would be flat for most of its travel.
+
+Two consequences fall out of it. A 12-month horizon means exactly "closes this
+calendar year", since `asOf + 12 months` always lands in the next year but
+short of its 31 December — except on 31 December itself, where it reaches the
+following one and the view takes in two years at once. 2019-12-31 is one of
+the five verification dates and sits precisely on that edge; the count there
+is 0 either way, because the nearest closing window is seven years off, so the
+edge is real but invisible in the table that would have caught it.
+
+Resolution:
+Horizon fixed at 12 months and stated in the view rather than offered as a
+control, and the 31 December discontinuity left in place. Quantizing the
+horizon to whole years would remove it, but it would be solving a cosmetic
+problem with a model change, and the honest description of what the view shows
+— "closing this year" — is already accurate on every other day. Both facts are
+asserted in `drinkSoonRows.test.mts`, including the edge that does not show up
+in the counts.
+
+Would have helped:
+Nothing in the docs; this is an interaction between two of our own decisions.
+But it is the clearest argument so far for the spec-first question the writeup
+has to answer. The normalization rule was written on day one for a different
+reason entirely — avoiding off-by-one-year bugs in the state machine — and it
+silently determined, weeks later, that a UI control several layers up should
+not exist. Neither document connects them, and no amount of reading would have
+surfaced it. Measuring the distribution did, in about fifteen minutes.
+
+### 23 September 2026, Stage 3 — two filenames differing only in case
+
+Category:   friction
+Surface:    TypeScript, Windows
+Elapsed:    caught by `tsc`, ~5 minutes
+
+Expected:
+`DrinkSoon.tsx` for the component and `drinkSoon.ts` for the pure logic behind
+it. The repo already separates presentation from arithmetic this way, and the
+casing convention — PascalCase components, camelCase modules — is the one the
+app was already using.
+
+Happened:
+```
+src/App.tsx(7,9): error TS2724: '"./DrinkSoon"' has no exported member named
+  'DrinkSoon'. Did you mean 'DrinkSoonRow'?
+src/App.tsx(7,25): error TS1149: File name '.../src/DrinkSoon.ts' differs from
+  already included file name '.../src/drinkSoon.ts' only in casing.
+```
+
+`import {DrinkSoon} from './DrinkSoon'` resolved to `drinkSoon.ts` — the wrong
+file — because Windows does not distinguish the two. The first error is the
+confusing one and the second is the cause; read in order, the first sends you
+looking for a missing export that is right there in the file you meant.
+
+Resolution:
+Renamed the module to `drinkSoonRows.ts`. `forceConsistentCasingInFileNames`
+was already on in `app/tsconfig.json`, which is the only reason this surfaced
+at authoring time instead of as a CI failure on Linux, where the two names are
+different files and the import would have resolved to the other one.
+
+Would have helped:
+Nothing to fix — the flag did its job. Worth recording because the development
+environment here is Windows and the deployment target is not, and a naming
+convention that is safe on a case-sensitive filesystem is not automatically
+safe on the machine the code is written on. The conventional fix in other
+ecosystems is a kebab-case module name; this repo uses camelCase, so the
+collision is a standing hazard for any component with a logic file beside it.
+
 ## Standing questions
 
 Revisit at the end of each build day rather than once at the end. Answers

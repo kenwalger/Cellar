@@ -61,3 +61,22 @@ the end.
 The word "only" is load-bearing. Most systems should store current state. The
 architectural decision is recognizing when historical truth is itself a
 requirement.
+
+## Run the Sanity App
+
+From the project root:
+
+```text
+npm run build:core
+npm run dev --workspace cellar-app
+```
+
+Open the Dashboard URL
+
+-or-
+
+Run the Sanity Studio app
+
+```text
+npm run dev --workspace studio
+```
