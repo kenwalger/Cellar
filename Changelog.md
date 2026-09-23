@@ -9,8 +9,41 @@ Stages refer to `docs/build-plan.md`.
 
 ## [Unreleased]
 
-### Stage 3: the App (in progress)
+### Stage 3: the App
 
+All four views of the stage are built: Cellar Health, the asOf control, Drink
+Soon, and Missed Opportunities.
+
+- **Missed Opportunities.** Bottles that were at peak during a period, were
+  never opened, and are past window today. The period is the twelve months
+  ending at `asOf`, derived rather than chosen so the app keeps one date
+  control. The calendar year containing `asOf` was measured and rejected:
+  every `drinkUntil` normalizes to 31 December, so no window closes mid-year,
+  so the regret set for the current calendar year is empty by construction —
+  that design would have been empty on load every time. Twelve months ending
+  on 31 December is that calendar year, so the control reaches the oracle's
+  periods exactly
+- `now` is today and the period comes from `asOf`, and the view states both
+  dates unconditionally. Binding `now` to `asOf` was measured too: it reads
+  zero across the whole interesting stretch of the ledger and then climbs into
+  the future, because dragging forward retroactively ruins bottles that might
+  still be drunk
+- Rows group by wine, as Drink Soon does. Each carries the lost count against
+  the wine's at-peak total, what became of the rest, the window's provenance,
+  and when inside the period the bottles were at peak — compressed to a
+  phrase, because the raw intervals are seventeen identical date ranges in the
+  oracle's 2023 period and a late start is the only informative case
+- 101 new tests in `app/`, in two files kept apart on purpose: the oracle
+  tests assert that the rendered rows expand back to exactly the bottle set in
+  `expected-misses.csv`, one assertion per row and a complete set comparison
+  per period, and the derivation tests cover the period arithmetic at every
+  one of the slider's 17,168 positions. `@cellar/core` already drives that
+  oracle against the predicate, so the app suite checks the layer core cannot
+  see: grouping, counting, partitioning and ordering
+- The app's `tsconfig.json` gains `allowImportingTsExtensions` and `noEmit`.
+  `node --test` runs the view modules from source and Node's ESM resolver
+  needs explicit extensions on relative imports; `sanity build` was never
+  using `tsc` to emit anything
 - **ADR 0010's day-four gate passed.** Cellar Health renders live production
   data inside a Sanity App built with the App SDK, and its counts match the
   Stage 2 oracle exactly. The Next.js fallback is not taken; `web/` stays as a

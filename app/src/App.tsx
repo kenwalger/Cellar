@@ -5,6 +5,7 @@ import {AsOfControl} from './AsOfControl'
 import {CellarHealth} from './CellarHealth'
 import {CellarProvider} from './CellarProvider'
 import {DrinkSoon} from './DrinkSoon'
+import {MissedOpportunities} from './MissedOpportunities'
 import {DATASET, PROJECT_ID, today} from './sanity'
 import './App.css'
 
@@ -46,6 +47,12 @@ function App() {
           <CellarProvider>
             <CellarHealth asOf={asOf} />
             <DrinkSoon asOf={asOf} />
+            {/*
+              The only view given two dates. `asOf` chooses the period it looks
+              at; `todayDate` is where the bottles actually are, and it does not
+              follow the slider. See the `today` prop.
+            */}
+            <MissedOpportunities asOf={asOf} today={todayDate} />
           </CellarProvider>
         </Suspense>
       </SanityApp>

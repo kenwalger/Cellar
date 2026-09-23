@@ -106,6 +106,31 @@ export function formatShortDate(date: IsoDate): string {
   return SHORT_DATE.format(new Date(`${date}T00:00:00Z`))
 }
 
+/** "5 Apr", for the leading end of a span that states its year once. */
+const DAY_MONTH = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  timeZone: 'UTC',
+})
+
+export function formatDayMonth(date: IsoDate): string {
+  return DAY_MONTH.format(new Date(`${date}T00:00:00Z`))
+}
+
+/**
+ * "12 May – 31 Dec 2024", or "1 Jul 2024 – 4 May 2025" when the span crosses a
+ * year.
+ *
+ * The year is stated once when both ends share it. Missed Opportunities prints
+ * a span on every row and the repeated year is the least informative thing on
+ * the line — the period is already named in full in the subhead above, so the
+ * row only has to say where inside it the bottle was at peak.
+ */
+export function formatDateSpan(from: IsoDate, until: IsoDate): string {
+  const sameYear = from.slice(0, 4) === until.slice(0, 4)
+  return `${sameYear ? formatDayMonth(from) : formatShortDate(from)} – ${formatShortDate(until)}`
+}
+
 export interface CalendarDelta {
   years: number
   months: number

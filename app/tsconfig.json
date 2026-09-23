@@ -10,7 +10,14 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    // `node --test` runs `src/*.ts` directly and Node's ESM resolver does not
+    // guess extensions, so view modules a test imports must write `./dates.ts`
+    // rather than `./dates`. Vite, which is what actually builds this app,
+    // accepts both. `noEmit` states what was already true: tsc is a checker
+    // here and `sanity build` does the bundling.
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
