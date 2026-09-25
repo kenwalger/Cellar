@@ -7,10 +7,13 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "sanity build",
+    "build:public": "vite build -c vite.public.config.ts",
     "deploy": "sanity deploy",
     "dev": "sanity dev",
+    "dev:public": "vite -c vite.public.config.ts",
     "start": "sanity start",
     "test": "node --test \"test/**/*.test.mts\"",
+    "test:live": "node --test \"test/**/*.live.mts\"",
     "format": "prettier --write src test",
     "format:check": "prettier --check src test"
   },
@@ -19,6 +22,7 @@
   ],
   "dependencies": {
     "@cellar/core": "*",
+    "@sanity/client": "^8.6.2",
     "@sanity/sdk": "^3",
     "@sanity/sdk-react": "^3",
     "react": "^19.2.4",
@@ -31,6 +35,7 @@
     "eslint": "^10.8.1",
     "prettier": "^3.5",
     "sanity": "^6.16.0",
-    "typescript": "^5.8"
+    "typescript": "^5.8",
+    "vite": "^8.3.0"
   }
 }

@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 import {type IsoDate, type Period, type SourceTier} from '@cellar/core'
-import {useCellar} from './CellarProvider'
+import {useCellar} from './cellarContext'
 import {describeApproxSpan, formatLongDate, formatShortDate} from './dates'
 import {
   describePeakSpan,

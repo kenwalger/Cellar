@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 import {type IsoDate, type SourceTier} from '@cellar/core'
-import {useCellar} from './CellarProvider'
+import {useCellar} from './cellarContext'
 import {describeApproxSpan, describeRemaining, formatLongDate, formatShortDate} from './dates'
 import {
   DRINK_SOON_MONTHS,

@@ -9,7 +9,14 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "isolatedModules": true,
-    "jsx": "preserve",
+    // `react-jsx`, not `preserve`. tsc is still only a checker here — `noEmit`
+    // is set and the bundlers do the transform — but this setting is read by
+    // more than tsc. Vite 8 bundles through rolldown/oxc, which takes its JSX
+    // handling from tsconfig and refuses the syntax outright under `preserve`
+    // ("JSX syntax is disabled and should be enabled via the parser options").
+    // The public build is the surface that surfaced it; `sanity build` was
+    // re-run after this change and is unaffected.
+    "jsx": "react-jsx",
     "incremental": true,
     // `node --test` runs `src/*.ts` directly and Node's ESM resolver does not
     // guess extensions, so view modules a test imports must write `./dates.ts`

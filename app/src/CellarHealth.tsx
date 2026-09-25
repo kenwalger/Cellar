@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 import {bottleState, inCellar, type BottleState, type IsoDate} from '@cellar/core'
-import {useCellar} from './CellarProvider'
+import {useCellar} from './cellarContext'
 
 /**
  * Cellar Health.

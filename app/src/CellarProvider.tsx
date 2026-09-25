@@ -1,16 +1,11 @@
-import {createContext, useContext, useMemo, type ReactNode} from 'react'
+import {useMemo, type ReactNode} from 'react'
 import {useQuery} from '@sanity/sdk-react'
-import {
-  buildCellar,
-  CELLAR_QUERY,
-  toCellarSnapshot,
-  type Cellar,
-  type RawCellarResult,
-} from '@cellar/core'
+import {buildCellar, CELLAR_QUERY, toCellarSnapshot, type RawCellarResult} from '@cellar/core'
+import {CellarContext} from './cellarContext'
 import {DATASET, PROJECT_ID} from './sanity'
 
 /**
- * One query and one index, shared by every view.
+ * One query and one index, shared by every view. The App SDK surface.
  *
  * Each view could run `CELLAR_QUERY` itself and rely on the App SDK to
  * recognise two identical subscriptions and serve both from one fetch. It very
@@ -23,11 +18,12 @@ import {DATASET, PROJECT_ID} from './sanity'
  * each. Sharing the index is structural here rather than a guess about caching.
  *
  * The provider suspends, because `useQuery` does. It therefore belongs inside
- * the Suspense boundary in `App`, below the masthead — the asOf control must
- * never be inside a boundary that can re-suspend underneath it.
+ * the Suspense boundary in `CellarShell`, below the masthead — the asOf control
+ * must never be inside a boundary that can re-suspend underneath it.
+ *
+ * `PublicCellarProvider` is the other half of this pair and suspends too, so
+ * the shell's boundary means the same thing on both surfaces.
  */
-
-const CellarContext = createContext<Cellar | null>(null)
 
 export interface CellarProviderProps {
   children: ReactNode
@@ -52,14 +48,4 @@ export function CellarProvider({children}: CellarProviderProps) {
   const cellar = useMemo(() => buildCellar(toCellarSnapshot(data ?? {})), [data])
 
   return <CellarContext.Provider value={cellar}>{children}</CellarContext.Provider>
-}
-
-/**
- * The indexed cellar. Date-independent: every view takes `asOf` as a prop and
- * passes it to `@cellar/core`, which is where all the temporal reasoning is.
- */
-export function useCellar(): Cellar {
-  const cellar = useContext(CellarContext)
-  if (!cellar) throw new Error('useCellar() was called outside <CellarProvider>')
-  return cellar
 }

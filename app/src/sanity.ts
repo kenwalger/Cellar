@@ -23,6 +23,28 @@ export const PROJECT_ID = 'aos9nze5'
 export const DATASET = 'production'
 
 /**
+ * The API version the public build pins.
+ *
+ * The App SDK chooses its own; this is only for `@sanity/client` in
+ * `publicClient.ts`, which has no such default worth relying on. A date here
+ * rather than `'X'` or `'v1'`: the published bundle outlives the session that
+ * built it, and an unpinned version is a query whose meaning can change after
+ * the page is deployed and nobody is watching.
+ */
+export const API_VERSION = '2024-01-01'
+
+/**
+ * The origin the public build is served from.
+ *
+ * Recorded here because it is not decorative: a public dataset is exempt from
+ * authentication but *not* from origin checking, and this exact string has to
+ * be on the project's CORS allowlist or every query the public build makes
+ * returns 403. The live transport check asserts it, so the allowlist entry
+ * cannot be silently removed without a test going red.
+ */
+export const PUBLIC_ORIGIN = 'https://kenwalger.github.io'
+
+/**
  * Today, as a calendar date in the viewer's own timezone.
  *
  * The clock is read here, in the app, and never in `@cellar/core` — `asOf`
