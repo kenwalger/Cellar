@@ -165,8 +165,20 @@ app/tsconfig.json
 app/package.json
 ```
 
-`app/dist-public/` is build output and is already covered by the `dist`
-entries in `.gitignore`. It must not be committed — the workflow builds it.
+**Correction, 26 September.** An earlier version of this line said
+`app/dist-public/` was "already covered by the `dist` entries in
+`.gitignore`". It was not. Those rules match a directory named exactly `dist`;
+this one is `dist-public`, and six built files were committed as a result.
+`.gitignore` now names it explicitly, and the tracked copies have to be removed
+from the index once:
+
+```powershell
+git rm -r --cached app/dist-public
+```
+
+The files stay on disk; only the tracking stops. This matters beyond tidiness:
+the stated reason for choosing Actions over a `gh-pages` branch was to keep
+build output out of the repository, and the repository had build output in it.
 
 Pushing to `main` triggers the workflow. The first run also creates the
 `github-pages` environment.

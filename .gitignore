@@ -248,6 +248,12 @@ sample_data/cellar.ndjson
 # Compiled output of the shared packages
 packages/*/dist
 
+# The public build's output. Needs naming explicitly: the `dist` rules above
+# match a directory called exactly `dist`, and this one is `dist-public`, so it
+# was tracked for a day before anyone noticed. The GitHub Pages workflow builds
+# it; it is never committed.
+app/dist-public/
+
 # Sanity Functions
 functions/**/.env*
 functions/**/.build/

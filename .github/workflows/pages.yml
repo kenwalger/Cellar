@@ -1,0 +1,101 @@
+name: Public build
+
+# The public surface of the App, served from GitHub Pages.
+#
+# It exists because the App SDK has no anonymous-read mode: `AuthBoundary`
+# redirects a logged-out visitor to a login page before any query is issued, so
+# the deployed Dashboard app cannot be shown to anyone outside the
+# organization. This builds the same views without the SDK and publishes them
+# at https://kenwalger.github.io/Cellar/.
+#
+# The page reads the production dataset directly from the browser. That needs
+# two separate things to be true, and they are configured in different places:
+# the dataset must be public (it is, since 18 September) and the origin
+# https://kenwalger.github.io must be on the project's CORS allowlist (added
+# 25 September, with --no-credentials). Neither is visible from this file.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Required by actions/deploy-pages, not stylistic. Without `id-token: write`
+# the deploy step fails with a permissions error rather than a useful one.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time. Two pushes in quick succession would otherwise
+# race, and the loser could be the newer one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 22, because that is the floor the installed toolchain actually states:
+      # vite 8.3.0 and rolldown both require ^20.19.0 || >=22.12.0, and
+      # @sanity/client 8.6.2 requires >=22.12.0. Development runs on 26; this
+      # is the oldest version every dependency agrees to, which is the version
+      # worth testing against rather than the newest.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Installs every workspace, including the Studio and the unused Next.js
+      # scaffold, neither of which this build needs. Scoping it with
+      # `--workspace` would be faster and is a smaller, less obvious guarantee;
+      # the whole install is about a minute and is what `package-lock.json` is
+      # verified against.
+      - run: npm ci
+
+      # `@cellar/core` is consumed as compiled ESM from `dist/`, which is
+      # gitignored, so a fresh checkout has none. Nothing below can resolve
+      # `@cellar/core` until this runs. `build:core` is declared in the root
+      # package.json and forwards to `tsc -p tsconfig.build.json`.
+      - run: npm run build:core
+
+      - run: npm run build:public --workspace cellar-app
+
+      # Two failures that are invisible in the built output until someone opens
+      # the page, checked here instead.
+      #
+      # The base path is the one that produces a blank page with nothing in the
+      # UI to explain it: Vite's default `base` of `/` emits `/assets/...`,
+      # which on Pages resolves to the wrong path and 404s in the console only.
+      #
+      # The credential scan uses {40,} rather than {20,} because the looser
+      # pattern matches `skipCrossDatasetReferenceValidation` inside
+      # @sanity/client and therefore fires on every clean build. A check that
+      # always fails gets waved through.
+      - name: Verify the built bundle
+        run: |
+          set -euo pipefail
+          test -f app/dist-public/index.html
+          grep -q '/Cellar/assets/' app/dist-public/index.html \
+            || { echo "::error::base path is wrong; index.html does not reference /Cellar/assets/"; exit 1; }
+          if grep -rEq 'sk[A-Za-z0-9]{40,}' app/dist-public/assets/; then
+            echo "::error::a token-shaped string is in the published bundle"
+            exit 1
+          fi
+          echo "base path and credential scan both clean"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist-public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
