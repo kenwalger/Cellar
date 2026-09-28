@@ -143,11 +143,11 @@ From `docs/stage-5-polish.md`, adjusted for what checking the code found.
 
 | Item | Cost | Do it? | Completed |
 | --- | ---: | --- | :-: |
-| Bottle list preview showing the producer | 15 min | Yes. It is a defect, not polish: 542 rows collapse to 70 labels | |
+| Bottle list preview showing the producer | 15 min | Yes. It is a defect, not polish: <br>&nbsp;&nbsp;&nbsp;&nbsp; - 542 rows collapse to 70 labels | |
 | Counts beside the review queue lists | 20 to 40 min | Yes. Screenshot 7 sits on it | |
-| App icon for the Dashboard entry | 15 to 30 min | Yes. One line plus an SVG | X | 
-| Save `deployment.appId` to `app/sanity.cli.ts` | 2 min | Yes, and not optional. Without it a later deploy creates a second app | X |
-| App tab title and favicon | 10 min | Yes. It is in every screenshot | |
+| App icon for the Dashboard entry | 15 to 30 min | Yes. One line plus an SVG | ✅ | 
+| Save `deployment.appId` to `app/sanity.cli.ts` | 2 min | Yes, and not optional. <br> Without it a later deploy creates a second app | ✅ |
+| App tab title and favicon | 10 min | Yes. It is in every screenshot | ✅ |
 | Description on the empty `derived` panel | 20 min | Only if the Function is cut | |
 | Structure organized by ledger facts | 45 min | If time | | 
 | Drinking-window bar input | 2 to 4 h | No. Cut, as the polish doc argues | |
