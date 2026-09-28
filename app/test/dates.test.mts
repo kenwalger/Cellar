@@ -9,11 +9,12 @@ import {
   clampToRange,
   describeApproxSpan,
   describeAsOf,
+  describeOutOfRange,
   describeRemaining,
   formatLongDate,
   formatShortDate,
   fromDayIndex,
-  parseDateInput,
+  readDateInput,
   toDayIndex,
 } from '../src/dates.ts'
 
@@ -68,22 +69,114 @@ describe('slider index', () => {
 })
 
 describe('date input handling', () => {
-  it('ignores a partly typed date rather than moving the view', () => {
-    assert.equal(parseDateInput(''), null)
-    assert.equal(parseDateInput('2026-09-'), null)
-    assert.equal(parseDateInput('2026'), null)
-    assert.equal(parseDateInput('not a date'), null)
+  /**
+   * The bug this replaced, and the reason the old contract could not express
+   * the fix.
+   *
+   * `parseDateInput` returned a date or null, and tested "is this a usable
+   * ISO date" to decide which. That test cannot tell a keystroke from an
+   * answer, because a native date input never reports partial text — it
+   * reports a complete, well-formed date whose year is the digits typed so
+   * far, zero-padded. Typing the year of 31 December 2023 emits `0002-12-31`,
+   * `0020-12-31`, `0202-12-31`, `2023-12-31`, and the first three are valid
+   * ISO dates that clamped to the floor and were committed.
+   *
+   * The old suite asserted `parseDateInput('1901-01-01') === ASOF_FLOOR`, which
+   * passed, and was the behaviour that broke typing. The clamp itself is not
+   * wrong; doing it on every keystroke and writing the result back into the
+   * field is.
+   */
+  it('holds a year that is still being typed, rather than committing it', () => {
+    // The exact sequence the demo video types on camera.
+    for (const keystroke of ['0002-12-31', '0020-12-31', '0202-12-31']) {
+      assert.deepEqual(
+        readDateInput(keystroke),
+        {status: 'incomplete'},
+        `${keystroke} was treated as an answer; it is a year mid-flight`,
+      )
+    }
+
+    // And the keystroke that finishes it does commit.
+    assert.deepEqual(readDateInput('2023-12-31'), {status: 'commit', date: '2023-12-31'})
   })
 
-  it('clamps out-of-range dates to the slider domain', () => {
-    assert.equal(parseDateInput('1901-01-01'), ASOF_FLOOR)
-    assert.equal(parseDateInput('2099-01-01'), ASOF_CEILING)
+  /**
+   * The companion assertion. Without it, "nothing is committed while typing"
+   * is satisfied by a reader that commits nothing at all — the vacuous shape
+   * session 8 found twice in `@cellar/core`.
+   */
+  it('commits every verification date on the keystroke that completes it', () => {
+    for (const date of VERIFICATION_DATES) {
+      assert.deepEqual(readDateInput(date), {status: 'commit', date})
+    }
+  })
+
+  it('still ignores genuinely unusable input', () => {
+    for (const raw of ['', '2026-09-', '2026', 'not a date']) {
+      assert.deepEqual(readDateInput(raw), {status: 'incomplete'}, raw)
+    }
+  })
+
+  /**
+   * A complete date outside the domain is a third case, and having somewhere
+   * to put it is the point of the change. It is reported rather than silently
+   * clamped, so the view can say what it did.
+   */
+  it('reports an out-of-range date instead of silently snapping', () => {
+    assert.deepEqual(readDateInput('1901-01-01'), {
+      status: 'outOfRange',
+      date: '1901-01-01',
+      clamped: ASOF_FLOOR,
+      bound: 'floor',
+    })
+    assert.deepEqual(readDateInput('2099-01-01'), {
+      status: 'outOfRange',
+      date: '2099-01-01',
+      clamped: ASOF_CEILING,
+      bound: 'ceiling',
+    })
+  })
+
+  /** The domain's own endpoints are inside it, not out of it. */
+  it('accepts both endpoints of the slider domain', () => {
+    assert.deepEqual(readDateInput(ASOF_FLOOR), {status: 'commit', date: ASOF_FLOOR})
+    assert.deepEqual(readDateInput(ASOF_CEILING), {status: 'commit', date: ASOF_CEILING})
+  })
+
+  /**
+   * The boundary between "mid-flight" and "an answer I disagree with". 1995 is
+   * a year someone can mean and the control cannot reach, so it earns a
+   * message; 0995 is four keystrokes into typing one.
+   */
+  it('separates a four-digit year from a year still being typed', () => {
+    assert.equal(readDateInput('0999-06-01').status, 'incomplete')
+    assert.equal(readDateInput('1000-06-01').status, 'outOfRange')
+    assert.equal(readDateInput('1995-12-31').status, 'outOfRange')
+  })
+
+  it('clamps to the nearest bound, which is what settling on blur commits', () => {
     assert.equal(clampToRange('1901-01-01'), ASOF_FLOOR)
     assert.equal(clampToRange('2099-01-01'), ASOF_CEILING)
   })
 
-  it('passes a usable date through unchanged', () => {
-    for (const date of VERIFICATION_DATES) assert.equal(parseDateInput(date), date)
+  /**
+   * The message is the legible half of the fix, so it is asserted rather than
+   * left to inspection: it has to name both the date refused and the date
+   * shown, or it explains nothing.
+   */
+  it('names both dates when it refuses one', () => {
+    const outcome = readDateInput('2099-01-01')
+    assert.equal(outcome.status, 'outOfRange')
+    if (outcome.status !== 'outOfRange') return
+
+    const message = describeOutOfRange(outcome)
+    assert.match(message, /1 January 2099/, 'does not name the date that was refused')
+    assert.match(message, /31 December 2042/, 'does not name the date being shown')
+    assert.match(message, /after the last/, 'does not say which end of the domain')
+
+    const low = readDateInput('1901-01-01')
+    if (low.status !== 'outOfRange') return
+    assert.match(describeOutOfRange(low), /before the first/)
   })
 })
 

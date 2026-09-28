@@ -58,14 +58,76 @@ export function clampToRange(date: IsoDate): IsoDate {
 }
 
 /**
- * Accepts a value from a date input, which is `''` while a date is partly
- * typed and can be out of range even with `min` and `max` set. Returns null
- * for anything that is not a usable date so the caller can leave `asOf` alone
- * rather than snapping the whole view to a half-entered year.
+ * The lowest year that can be a finished entry rather than a keystroke.
+ *
+ * A native `<input type="date">` does not report partial text. It reports a
+ * complete, well-formed date whose year is whatever digits have been typed so
+ * far, zero-padded to four: typing 2023 into the year of 31 December emits
+ * `0002-12-31`, then `0020-12-31`, then `0202-12-31`, then `2023-12-31`. All
+ * four match `/^\d{4}-\d{2}-\d{2}$/` and all four are real dates.
+ *
+ * So "is this a usable date" cannot separate a keystroke from an answer, and
+ * the previous guard — which tested exactly that, and clamped whatever passed —
+ * turned the first three into `1996-01-01` and wrote it back into the field
+ * being typed into.
+ *
+ * The domain runs 1996 to 2042, so no date the control can reach has a year
+ * below 1000. A sub-1000 year is therefore never something a person is asking
+ * for; it is only ever a year mid-flight. That is the distinction this
+ * threshold draws, and it is a claim about the domain rather than a guess about
+ * browsers: it holds whatever intermediate values the input chooses to emit,
+ * because anything with four significant digits is treated as an answer and
+ * everything below is treated as unfinished.
  */
-export function parseDateInput(value: string): IsoDate | null {
-  if (!isIsoDate(value)) return null
-  return clampToRange(value)
+const MIN_COMPLETE_YEAR = 1000
+
+export type RangeBound = 'floor' | 'ceiling'
+
+export type DateInputOutcome =
+  /** Not an answer yet. Hold the text, change nothing, say nothing. */
+  | {status: 'incomplete'}
+  /** A complete date inside the domain. Safe to commit on the keystroke. */
+  | {status: 'commit'; date: IsoDate}
+  /** A complete date the control cannot reach. Say so; commit only on settle. */
+  | {status: 'outOfRange'; date: IsoDate; clamped: IsoDate; bound: RangeBound}
+
+/**
+ * Classifies a raw value from the date input.
+ *
+ * Deliberately returns three cases rather than a date-or-null. The old
+ * two-valued contract had nowhere to put "this is a real date and the answer is
+ * no", so out-of-range input was folded into the same silent clamp as a
+ * half-typed year — which is why 2043 snapped to the ceiling with nothing on
+ * screen to say it had.
+ */
+export function readDateInput(raw: string): DateInputOutcome {
+  if (!isIsoDate(raw)) return {status: 'incomplete'}
+  if (Number(raw.slice(0, 4)) < MIN_COMPLETE_YEAR) return {status: 'incomplete'}
+  if (raw < ASOF_FLOOR) {
+    return {status: 'outOfRange', date: raw, clamped: ASOF_FLOOR, bound: 'floor'}
+  }
+  if (raw > ASOF_CEILING) {
+    return {status: 'outOfRange', date: raw, clamped: ASOF_CEILING, bound: 'ceiling'}
+  }
+  return {status: 'commit', date: raw}
+}
+
+/**
+ * What to put on screen when a typed date is outside the domain.
+ *
+ * Names the date that was asked for and the date being shown instead, because
+ * the failure this replaces was the view moving without saying why.
+ */
+export function describeOutOfRange(outcome: {
+  date: IsoDate
+  clamped: IsoDate
+  bound: RangeBound
+}): string {
+  const side = outcome.bound === 'floor' ? 'before the first' : 'after the last'
+  return (
+    `${formatLongDate(outcome.date)} is ${side} date the cellar covers. ` +
+    `Showing ${formatLongDate(outcome.clamped)}.`
+  )
 }
 
 /**

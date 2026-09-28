@@ -1,11 +1,13 @@
+import {useState} from 'react'
 import {type IsoDate} from '@cellar/core'
 import {
   ASOF_CEILING,
   ASOF_FLOOR,
   ASOF_SPAN_DAYS,
   describeAsOf,
+  describeOutOfRange,
   fromDayIndex,
-  parseDateInput,
+  readDateInput,
   toDayIndex,
 } from './dates'
 
@@ -34,6 +36,63 @@ export interface AsOfControlProps {
 
 export function AsOfControl({value, today, onChange}: AsOfControlProps) {
   const {tense, date, distance} = describeAsOf(value, today)
+
+  /**
+   * The text in the date field while it is being edited, or null when the
+   * field is showing the committed `value`.
+   *
+   * This exists because the field is controlled and the control was fighting
+   * the typist. Every keystroke in the year produces a complete, valid date
+   * (`0002-12-31` on the way to `2023-12-31`), the old handler clamped it into
+   * range and committed it, and React then wrote `1996-01-01` back over the
+   * year being typed. Holding the raw text means the value React writes back
+   * is the value the input already has, so the edit survives.
+   */
+  const [draft, setDraft] = useState<string | null>(null)
+
+  /** Why the field refused a date, or null. Cleared by any successful commit. */
+  const [notice, setNotice] = useState<string | null>(null)
+
+  /** A date chosen by the slider or the Today button abandons any pending edit. */
+  function commit(next: IsoDate) {
+    setDraft(null)
+    setNotice(null)
+    onChange(next)
+  }
+
+  function handleTyping(raw: string) {
+    const outcome = readDateInput(raw)
+
+    if (outcome.status === 'commit') {
+      setDraft(null)
+      setNotice(null)
+      onChange(outcome.date)
+      return
+    }
+
+    // Held, not committed. An out-of-range date says so straight away; an
+    // unfinished one says nothing, because it is not wrong yet.
+    setDraft(raw)
+    setNotice(outcome.status === 'outOfRange' ? describeOutOfRange(outcome) : null)
+  }
+
+  /**
+   * Blur and Enter. A date the control cannot reach is clamped *here* rather
+   * than on the keystroke, with the notice left on screen to say what happened;
+   * an unfinished entry is abandoned and the field returns to the committed
+   * date.
+   */
+  function settle() {
+    if (draft === null) return
+    const outcome = readDateInput(draft)
+    setDraft(null)
+
+    if (outcome.status === 'outOfRange') {
+      onChange(outcome.clamped)
+      return
+    }
+    setNotice(null)
+  }
 
   return (
     <div className="asof">
@@ -69,8 +128,12 @@ export function AsOfControl({value, today, onChange}: AsOfControlProps) {
           min={0}
           max={ASOF_SPAN_DAYS}
           step={1}
+          // Reads the committed date, never the draft. While a date is being
+          // typed the slider sits where the cellar actually is, which is
+          // correct: nothing has been chosen yet. It catches up on the
+          // keystroke that completes the date.
           value={toDayIndex(value)}
-          onChange={(event) => onChange(fromDayIndex(Number(event.currentTarget.value)))}
+          onChange={(event) => commit(fromDayIndex(Number(event.currentTarget.value)))}
           aria-label="As of date"
         />
 
@@ -81,21 +144,36 @@ export function AsOfControl({value, today, onChange}: AsOfControlProps) {
               type="date"
               min={ASOF_FLOOR}
               max={ASOF_CEILING}
-              value={value}
-              // A date input reads `''` mid-entry and can hold an out-of-range
-              // value even with min and max set. Ignore anything unusable
-              // rather than snapping the view to a half-typed year.
-              onChange={(event) => {
-                const parsed = parseDateInput(event.currentTarget.value)
-                if (parsed) onChange(parsed)
+              // The draft while one is in flight, otherwise the committed date.
+              // `min` and `max` mark the field invalid outside the domain but
+              // do not stop the value arriving, so the range is enforced in
+              // `readDateInput` rather than by the attributes.
+              value={draft ?? value}
+              onChange={(event) => handleTyping(event.currentTarget.value)}
+              onBlur={settle}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') settle()
               }}
+              aria-describedby={notice ? 'asof-notice' : undefined}
             />
           </label>
-          <button type="button" onClick={() => onChange(today)} disabled={value === today}>
+          <button type="button" onClick={() => commit(today)} disabled={value === today}>
             Today
           </button>
         </div>
       </div>
+
+      {/*
+        The date the control refused and the one it is showing instead. The
+        behaviour it replaces was the same clamp with nothing on screen: type
+        2043 and the view moved to 2042 without comment, which reads as the
+        field ignoring you.
+      */}
+      {notice && (
+        <p className="asof-notice" id="asof-notice" role="status">
+          {notice}
+        </p>
+      )}
     </div>
   )
 }

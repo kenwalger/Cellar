@@ -112,6 +112,17 @@ body {
   font-style: italic;
 }
 
+/*
+  Shown when a typed date falls outside 1996–2042. Accent rather than muted:
+  it is the answer to something the reader just did, and the failure it
+  replaces was the view moving with nothing on screen to explain it.
+*/
+.asof-notice {
+  margin: 0.5rem 0 0;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
 .asof-controls {
   margin-top: 1rem;
 }
