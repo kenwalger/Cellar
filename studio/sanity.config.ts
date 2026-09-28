@@ -2,6 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {AcceptAssessmentAction, RejectAssessmentAction} from './actions/reviewActions'
+import {ProposeWindowAction} from './actions/proposeWindowAction'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 
@@ -42,9 +43,19 @@ export default defineConfig({
      * Publish takes that slot everywhere else, which is right: reviewing is
      * what you came to a proposed assessment to do.
      */
-    actions: (prev, context) =>
-      context.schemaType === 'assessment'
-        ? [AcceptAssessmentAction, RejectAssessmentAction, ...prev]
-        : prev,
+    actions: (prev, context) => {
+      if (context.schemaType === 'assessment') {
+        return [AcceptAssessmentAction, RejectAssessmentAction, ...prev]
+      }
+      /**
+       * The agent lives on `consumption`, because a tasting note is what it
+       * reads. It returns `null` when the document has no note, so a
+       * consumption recorded without one shows the built-in actions alone.
+       */
+      if (context.schemaType === 'consumption') {
+        return [ProposeWindowAction, ...prev]
+      }
+      return prev
+    },
   },
 })

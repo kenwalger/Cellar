@@ -10,7 +10,15 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    // `node --test` and `node scripts/*.mts` run these files directly, and
+    // Node's ESM resolver does not guess extensions, so anything they import
+    // from `lib/` has to be written `../lib/agentProposal.ts`. `sanity build`
+    // accepts both. `noEmit` states what was already true — tsc is a checker
+    // here and the Sanity CLI does the bundling — and is required by
+    // `allowImportingTsExtensions`. Same pair as `app/tsconfig.json`.
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
   "exclude": ["node_modules"]

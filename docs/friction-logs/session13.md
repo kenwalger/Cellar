@@ -184,10 +184,15 @@ docs/style-guide.md written. Nothing styled changed — the only App.css diff is
 
 Findings:
 
-End:
+The contrast finding is the useful part. Your accent is
+#7a1f3d and garnet is
+#6E1A2B, a ratio of 1.13, which is the worst possible distance: different enough to see on a hard cut, close enough that nobody reads it as intentional. You said move the card, and the numbers agree, since garnet on cream is 9.91 against your current 10.04 on white. Contrast-neutral swap for the cards, and leave the app alone.
 
+End: 06:48 AM
 
 ### Prompt 4b
+
+Start: 06:52 AM
 
 ```text
 Stage 4b: the Agent Action. The Function is cut, and that decision needs
@@ -256,8 +261,185 @@ schema deploy.
 
 Standing rules: no git commands that change the repo, write the commit
 message and tell me what to stage. Friction log entries go to
-docs/friction-logs/session13.md.
+docs/friction-logs/session13.md add too that document, don't overwrite.
 ```
+Response:
+
+```text
+No code written. ADR 0012 amended in place, session 13's log appended to.
+
+  Two things to correct before the rest
+
+  The schemaId contradiction is resolved, and it removes a production write from the plan. Both pages are still live and still disagree verbatim. But PromptRequestBase in @sanity/client 8.6.2 declares exactly four members — instruction, instructionParams?, temperature?, format — and schemaId appears zero 
+  times in it, while being required on the other action types four times in the same file.
+  
+  So the troubleshooting page isn't just wrong, it's backwards: "omitting it is only a TypeScript error locally" describes the opposite of the shipped type. No schema deploy is needed for Stage 4b. It sat on the plan for five days as a production write awaiting your approval, to be robust against a
+  contradiction the type file settles in a minute.
+
+  Your premise (c) needs correcting. It's not in session 7, it's in docs/temporal-resolution.md, and it says expressing authority-tiered resolution in GROQ is "possible and unreadable, and it would need rewriting the first time a tier is added." Not impossible. That changes the argument from capability to
+  duplication — a second implementation of the load-bearing rule, in a second language, where the tests don't reach. Still real, still blocks polish 5 and 6, but it's a maintainability argument and the amendment states it that way.
+
+  Part 1 and 2 — recorded
+
+  Cut, and the fields removed rather than left empty. The removal is free: no Function ever ran, so no document has a derived key. No migration, no test breaks, the App never read them, and with no schema deployed it isn't a production write.
+
+  What else assumes they exist: studio/schemaTypes/derived.ts (whole file), the derived field on wine.ts and bottle.ts, the import and header comment in index.ts, four passages in content-model.md, the Stage 4 line in build-plan.md, polish items 5 and 6, and the orphaned sanity.blueprint.ts +
+  functions/cellar-core-probe/. Nothing in app/, packages/cellar-core/, or any test.
+
+  Your scale reading is right, and now quantified. Measured against production today: 1,637 docs, 211.9 KB, ~400 bytes/bottle.
+
+  ┌──────────────────────┬──────────┬─────────┬──────────────┐
+  │                      │  Today   │  ×100   │ 1.5M bottles │
+  ├──────────────────────┼──────────┼─────────┼──────────────┤
+  │ CELLAR_QUERY payload │ 211.9 KB │ 20.7 MB │     572.6 MB │
+  ├──────────────────────┼──────────┼─────────┼──────────────┤
+  │ Full state tally     │  0.07 ms │   ~7 ms │      ~200 ms │
+  └──────────────────────┴──────────┴─────────┴──────────────┘
+
+  The fetch becomes impractical near 20 MB — around 50,000 bottles, two orders of magnitude before the scan matters. And a projection wouldn't have helped with the half that breaks. WINE_SCOPED_QUERY already exists, so the scale answer was in the codebase before the Function was proposed.
+
+  Part 3 — the proposal
+
+  1. Invocation: confirm both, and the first is now forced. Document action on consumption, labelled "Propose a drinking window"; disabled when there's no tastingNote or a proposal already exists. A publish trigger would need a Function, and Functions are what we just cut — so the document action is the
+  only option that doesn't reinstate the cut. It also spends credits per click rather than on all 240 noted consumptions.
+
+  Withholding the resolved window: confirm, with an added reason. An assessment is an independent claim, and handing the model the window it might replace invites copying. It also makes the rubric meaningful — shown the incumbent, you couldn't tell extraction from mimicry.
+
+  It's given: the tasting note, the consumption date, the wine's display name and vintage year.
+
+  2. Fields. System fixes wine (from bottle→wine), derivedFrom (the consumption), reviewState: 'proposed', sourceType: 'personal', sourceName: 'me', sourceMethod: 'extracted', and assessedAt. Model fills supportsWindow, drinkFromYear, drinkUntilYear, confidence, notes.
+
+  assessedAt = consumedAt + 1 day: confirm. Resolution is assessedAt <= T and a verdict resolves the window as of consumedAt. Dated the same day, the claim would be visible to the verdict on the very bottle its note came from — the verdict would agree with the note because it is the note, and the check
+  becomes a restatement. Dated the day after, it's invisible to that bottle and visible to every one opened later, which is what "open a bottle, write a note, and it changes the window on the bottles still in the rack" actually means. All 38 seeded derivedFrom assessments already do this.
+
+  3. Schema deploy: not required. See above. Still needed: an authenticated client at apiVersion: 'vX'. Whether the Studio's useClient() session token carries agent-action authorisation is the one thing I'd verify before building rather than assume — the docs describe a SANITY_API_TOKEN, and a Studio
+  document action has a user session instead.
+
+  4. Testing. Staging first, as in session 8. A dry-run script modelled on the existing seed-proposed-assessment.mts — which already validates against the rules the Content Lake won't apply and prints the write command rather than writing. Prompt performs no writes by construction, so tuning the instruction
+  against real notes costs credits and nothing else.
+
+  5. Verification. Mechanically assertable on any output: reviewState === 'proposed'; both references resolve to the expected documents; sourceType/sourceName/sourceMethod literals; assessedAt === consumedAt + 1 day; drinkFrom ends -01-01 and drinkUntil ends -12-31; drinkUntil >= drinkFrom; years in range;
+  confidence in the enum or absent; abstention writes no document at all; and adding the result to the cellar moves no count.
+
+  Judgement only: whether the window is plausible, whether notes quotes the right phrase, whether confidence is honest, and where the abstain line falls on borderline notes.
+
+  The rubric makes most of that mechanical: ~12 of the 38 distinct notes across four categories, with the direction asserted even when the years aren't — past-peak closes before the consumption year, at-peak contains it, too-young opens after it, no-signal abstains. Runs from the dry-run script against the
+  live API, never in CI.
+
+  6. Cost. 1 AI credit per Agent Action request, $0.05. Every organisation gets a free monthly allowance. Bounded by clicks, because there's no automatic trigger — the strongest practical argument for the document action. The full 12-note rubric is 12 credits, $0.60. A monthly spending cap is settable in
+  Manage under Settings → Spending limits.
+
+  To stage: docs/ADRs/0012-projections-carry-their-date-claims-carry-their-method.md, docs/friction-logs/session13.md. Commit message in commit-message.txt.
+
+  Stopping here for approval. Nothing writes to production, and the schema deploy is no longer on the list at all.
+
+✻ Cogitated for 5m 13s
+
+```
+Findings:
+
+Two corrections in there worth having, and one of them removes a production write from the plan.
+
+The schemaId contradiction is settled by the type file. Both doc pages are still live and still disagree, but PromptRequestBase in the installed client declares four members and schemaId isn't one, while it's required four times on the other action types in the same file. So the troubleshooting page isn't just wrong, it's backwards. A schema deploy sat on the plan for five days as a production write awaiting your approval, against a contradiction the .d.ts resolves in a minute. That's the same pattern as the App SDK auth enumeration and the Functions bundling probe: the answer was in the installed packages the whole time.
+
+My premise (c) was wrong and it correctly narrowed it. I said GROQ cannot express authority-then-recency. The spec says it's possible and unreadable, and would need rewriting whenever a tier is added. That changes the argument from capability to duplication: a second implementation of the load-bearing rule, in a second language, where your tests don't reach. Still a real reason to want projections, and a weaker one than I gave you. Worth fixing in the submission draft, since v6's cut section leans on my version.
+
+The scale numbers are also better quantified than my estimate. The fetch becomes impractical around 50,000 bottles, two orders of magnitude before the scan matters, and WINE_SCOPED_QUERY already existed.
+
+Prompt:
+
+```text
+Approved. Build it.
+
+One thing to verify before writing the action, not assume: whether the
+Studio's useClient() session token carries agent-action authorisation. You
+flagged it; settle it first, and if it does not, stop and tell me rather
+than reaching for a token.
+
+Two corrections go into the submission draft as well as the ADR, so remind
+me at the end: the schemaId resolution, and that the GROQ argument is
+duplication rather than impossibility.
+
+Everything else as proposed. Staging first, dry run against real notes
+before any write, and the twelve-note rubric.
+```
+
+Response:
+
+```text
+Built. Nothing written to any dataset.
+
+  The auth question — settled before writing code, and it removed a second production write
+
+  The evidence chain had three links and the first two were discouraging. The HTTP reference says "All endpoints require: BearerAuth", so cookie auth is out. And the Studio does support cookie auth — loginMethod appears 86 times in the built package with 'cookie'/'token'/'dual' branches — so "logged in"
+  didn't settle it.
+  
+  The answer is in the AI Assist custom field actions guide, which isn't a page about authentication. It shows the pattern twice, in complete examples:
+
+  const client = useClient({apiVersion: 'vX'})
+  await client.agent.action.transform({ … })
+
+  No token anywhere. So yes — the Studio session carries it, and I proceeded.
+
+  Two things about that: the authoritative page stated the constraint that made the question hard and said nothing about which clients satisfy it, while the page that answers does so by example, with no sentence anywhere saying "the Studio session authorises Agent Actions." And that page carries a "paid
+  feature — Growth plan" banner that applies to AI Assist's plugin mechanism, not to what I copied from it. The real gate is org-level.
+
+  Combined with the schemaId finding, Stage 4b now needs zero production writes. Both had been scheduled as prudence against docs that were wrong in one case and silent in the other.
+
+  What was built
+
+  studio/lib/agentProposal.ts holds everything deterministic — instruction, validation, document assembly, checks — with no React, no client, no network. Four callers share it: the document action, the dry run, the rubric, and the tests.
+
+  That's what turns the claims into assertions rather than comments:
+  - "never creates an accepted assessment" → feeds the parser a reply containing reviewState: 'accepted' and checks it's discarded
+  - "abstention writes nothing" → buildProposal throws rather than emitting empty bounds
+  - "withholds the resolved window" → a regex against the built instruction
+
+  Document action on consumption, useClient({apiVersion: 'vX'}), Prompt at temperature: 0, deterministic ids so a second run collides. The rubric asserts direction (past-peak closes before the opened year, etc.) because direction is checkable on a non-deterministic reply and years aren't — with six
+  borderline notes deliberately excluded, since a judgement call in a rubric is just a failing test.
+
+  One config gap: studio/tsconfig.json lacked allowImportingTsExtensions, which the app fixed in Stage 3. Nothing surfaced it because the studio's scripts only imported bare specifiers until now.
+
+  407 core / 124 app / 35 studio tests. Studio typechecks, lints, formats, builds.
+
+  Next, in order
+
+  1. SANITY_API_TOKEN=… node studio/scripts/propose-window.mts con-farm-on-golden-hill-rose-2024-b staging — dry run, writes nothing
+  2. node studio/scripts/rubric.mts — 12 credits, $0.60. Add --borderline for 6 more
+  3. Then one real proposal in staging, and only then a conversation about production
+
+  The two corrections for the submission draft
+
+  You asked me to remind you — both are in ADR 0012 and the session 13 log, and both belong in the writeup:
+
+  1. The schemaId contradiction is resolved, and the installed types resolved it. Session 8 concluded "one of them is wrong and reading more carefully will not reveal which." PromptRequestBase reveals which. The troubleshooting page isn't just wrong, it's backwards — omitting schemaId from a Prompt is
+  correct, including it is the type error.
+  2. The GROQ argument is duplication, not impossibility. docs/temporal-resolution.md says expressing authority-tiered resolution in GROQ is "possible and unreadable, and it would need rewriting the first time a tier is added." The draft's "GROQ cannot express it" overstates it, and the honest version is
+  the better argument anyway: a second implementation of the load-bearing rule, in a second language, where the tests don't reach.
+
+  To stage: the nine studio files plus the two docs — full list at the bottom of commit-message.txt.
+
+✻ Brewed for 9m 15s
+
+```
+
+Findings:
+
+Both production writes are gone, and neither was ever needed. The schema deploy was prudence against a doc page that turns out to be backwards, and the token was prudence against a page that states the constraint without saying which clients satisfy it. The answer to the second came from an AI Assist guide that demonstrates the pattern in a complete example without a sentence anywhere saying the Studio session authorises Agent Actions.
+
+That detail is the sharpest documentation finding of the project. The authoritative page created the difficulty; the page that resolves it does so incidentally, by example, on a page about something else, under a plan banner that doesn't apply to the part being copied.
+
+The structure it chose is also the right one. Putting everything deterministic in agentProposal.ts with no React, no client and no network means the claims in your writeup are assertions rather than assurances. "Never creates an accepted assessment" is now a test that feeds the parser a reply containing reviewState: 'accepted' and checks it's discarded. "Withholds the resolved window" is a regex against the built instruction. Those are the two claims a skeptical reader would most want evidence for.
+
+Excluding the six borderline notes from the rubric is correct too: a judgement call in a rubric is a failing test with extra steps.
+
+Next steps are its three, in order. The dry run costs nothing, the rubric costs 60 cents, and neither touches a dataset. Worth reading the twelve rubric outputs yourself rather than only the pass or fail, since how it words the abstentions is the part you'll quote in the post.
+
+Commit before the dry run. Nine studio files plus two docs is a clean unit, and the dry run may produce edits to the instruction.
+
+End: 07:17 AM
+
+
 ---
 
 #### The bug
@@ -400,3 +582,218 @@ committed, whatever the input emits. The remaining confirmation is one run of
 the dev server, typing `2023-12-31` left to right.
 
 End:
+
+---
+
+### Stage 4b: planning the Agent Action, and cutting the Function
+
+Read-only session. Nothing written to any dataset, no schema deployed, no code.
+
+#### The doc contradiction from session 8 is resolved, and the installed types resolved it
+
+Session 8 found two current pages disagreeing about whether Agent Actions
+Prompt needs a `schemaId`, and concluded: "One of them is wrong and reading
+more carefully will not reveal which."
+
+Both pages are still live and still disagree, verbatim, five days later. The
+troubleshooting page: *"Every Agent Actions request needs `schemaId`. The client
+doesn't validate it, so omitting it is only a TypeScript error locally."* The
+Prompt quick start now carries **five** complete examples, none of which passes
+one.
+
+The installed types settle it. In `@sanity/client` 8.6.2,
+`PromptRequestBase` declares exactly four members — `instruction`,
+`instructionParams?`, `temperature?` and `format` — and the string `schemaId`
+appears **zero times** in it. It appears as a *required* member on the other
+action request types, four separate times in the same file.
+
+So the quick start is right and the troubleshooting page is wrong, and it is
+wrong in a specific way worth naming: its claim is not merely inaccurate, it is
+**backwards**. "Omitting it is only a TypeScript error locally" describes the
+opposite of the shipped type, where omitting `schemaId` is correct and
+*including* it is the type error.
+
+Two things follow.
+
+**A doc defect that survives a week of being noticed is a different class from
+one that is merely wrong.** Session 8 recorded this, the project worked around
+it by planning a schema deploy "to be robust either way", and the deploy was
+carried on the plan for five days as a production write awaiting approval. The
+cost of the contradiction was not a broken request; it was a scheduled write to
+the real dataset that was never needed.
+
+**This is the fifth time this project has answered a documentation question by
+reading `node_modules`**, after the App SDK `perspective` option, `readOnly`
+reaching the mutation layer, the two env-var bundles, and Vite 8's JSX
+handling. The pattern is now stable enough to state as a rule rather than an
+observation: where the docs and the installed package disagree, the package is
+the answer, and checking costs about a minute.
+
+#### A premise checked, and corrected
+
+The brief for this session stated that session 7 established GROQ cannot
+express authority-then-recency resolution.
+
+Two corrections. It is not in session 7, it is in `docs/temporal-resolution.md`,
+and it does not say that. The spec says expressing authority-tiered resolution
+in a single GROQ query is *"possible and unreadable, and it would need
+rewriting the first time a tier is added."*
+
+The difference matters for the decision it was supporting. "GROQ cannot express
+it" makes the projection the only route to queryable state. "Possible and
+unreadable" makes the projection the *readable* route, and turns the objection
+into duplication — a second implementation of the load-bearing rule, in a second
+language, somewhere the test suite does not reach. That is still a real cost and
+it still blocks the same two polish items, but it is an argument about
+maintainability rather than capability, and the amendment says so.
+
+Worth recording because the drift happened inside this repository, between a
+spec and a prompt, over about six days. The spec was precise; the restatement
+was not; and the restatement was the version that nearly went into an ADR.
+
+#### What breaks first at scale, measured rather than assumed
+
+The defence of a projection is usually that it will matter once the cellar is
+large. Measured against production:
+
+| | Today | ×100 | ×2767 |
+| --- | ---: | ---: | ---: |
+| Bottles | 542 | 54,200 | 1,499,714 |
+| `CELLAR_QUERY` payload | 211.9 KB | 20.7 MB | 572.6 MB |
+| Full state tally | 0.07 ms | ~7 ms | ~200 ms |
+
+1,637 documents, 211.9 KB, about 400 bytes per bottle.
+
+The arithmetic in the brief was right: 0.07 ms across 542 bottles is about
+200 ms at 1.5 million. The conclusion drawn from it was right too, and is now
+quantified. At that size the scan is slow enough to feel on a drag and not
+slow enough to break; the fetch is **572 MB of JSON into a browser**, which does
+not work at all. The fetch becomes impractical near 20 MB, around 50,000
+bottles — roughly two orders of magnitude earlier.
+
+The part worth keeping is that a projection would not have helped with the
+thing that actually breaks. It changes what the fetch returns, and what has to
+change is how much of the ledger crosses the network at once. `WINE_SCOPED_QUERY`
+already exists in `@cellar/core`, so the answer at scale was already in the
+codebase before the Function was proposed.
+
+#### The cut is free, which is what makes it the right call
+
+No Function ever ran, so no document in the dataset has a `derived` key. The
+removal touches no data, needs no migration, breaks no test, and is not a
+production write because no schema is deployed. The App never read the fields.
+
+That is worth separating from the argument for cutting. The design reasons stand
+on their own, but the reason it can be done *now*, three days before the
+deadline, is that eight declared fields with nothing behind them cost exactly
+one file and two field declarations to remove.
+
+The concrete cost of leaving them is on screen rather than in the model: an
+always-empty greyed `Derived` panel on all 640 wines and bottles, on the surface
+the Stage 4a workflow is filmed on. An empty panel reads as broken, not as
+deferred — which was already recorded as polish item 9 before it became an
+argument for deletion.
+
+---
+
+### Stage 4b built: the Agent Action
+
+#### The auth question was settled by an example in a plugin's documentation
+
+The one thing flagged as needing verification before writing any code was
+whether the Studio's `useClient()` session carries agent-action authorisation,
+or whether a token has to be minted and stored.
+
+The evidence chain had three links and the first two were discouraging. The
+Agent Actions HTTP reference says **"All endpoints require: BearerAuth"**, so
+cookie auth is out. The Studio does support cookie auth — `loginMethod` appears
+86 times in the built package with `'cookie'`, `'token'` and `'dual'` branches,
+and `withCredentials: true` appears six times — so "the Studio is logged in"
+does not by itself mean "the Studio holds a bearer token". The Prompt quick
+start's prerequisites name "an API or personal token… store it in the
+environment", which reads like a script's requirement rather than a
+component's.
+
+The answer is in the AI Assist **custom field actions** guide, which is not a
+page about authentication at all. It shows the complete pattern twice:
+
+```ts
+const client = useClient({apiVersion: 'vX'})
+// ...
+await client.agent.action.transform({ … })
+```
+
+No token anywhere, in an official example of calling an Agent Action from
+inside a Studio component. The annotation beside it is the only place the
+version requirement is stated conversationally: *"Set up the client with
+`useClient`. Note: Agent Actions require using the `vX` API version at this
+time."*
+
+So the answer is yes, and the work proceeded. Two things about *how* it was
+found are worth more than the answer.
+
+**The authoritative page was the least useful one.** The HTTP reference states
+the constraint that made the question hard (bearer only) and says nothing about
+which clients satisfy it. The quick start describes a Node script and its
+prerequisites read as universal. The page that answers it is a guide to a
+different product's plugin feature, and it answers by example rather than by
+statement — there is no sentence anywhere saying "the Studio session
+authorises Agent Actions."
+
+**Two pages carry a paid-feature notice and only one of them means it.** The
+custom field actions guide is headed "This is a paid feature — available in the
+Growth plan". That applies to AI Assist's field actions, the plugin mechanism,
+not to Agent Actions reached directly from a document action. Reading the page
+for the auth pattern means reading past a banner that does not apply to the
+thing being copied from it. The real gate is elsewhere and is org-level: a 403
+with "AI features have been disabled at this organization's request".
+
+#### What that resolution removed from the plan
+
+Two production writes, both of which had been sitting on the plan awaiting
+approval for reasons that turned out not to exist.
+
+The schema deploy is unnecessary, because Prompt takes no `schemaId` — settled
+earlier this session from `PromptRequestBase`. And no API token needs minting
+or storing, because the Studio supplies one. Stage 4b therefore writes nothing
+but the proposal itself, and that write happens in staging first.
+
+Both were scheduled by session 8's plan as prudence against documentation that
+was wrong in one case and silent in the other. The pattern is worth naming: an
+unresolved doc contradiction does not merely cost the time to resolve it, it
+accretes defensive work that looks like diligence and is aimed at nothing.
+
+#### The shape the code took, and why the model is in one function
+
+Everything except the model's four-key JSON reply is deterministic, so all of
+it lives in `studio/lib/agentProposal.ts` with no React, no client and no
+network: build the instruction, validate the reply, assemble the document,
+check it. Four callers share it — the document action, the dry-run script, the
+rubric, and 35 tests that need neither a credit nor a token.
+
+That is what makes the claims assertable rather than argued. "The agent can
+never create an accepted assessment" is a test that feeds the parser a reply
+containing `reviewState: 'accepted'` and checks it is discarded. "Abstention
+writes nothing" is a test that `buildProposal` throws rather than producing a
+document with empty bounds. "The instruction withholds the resolved window" is
+a regex against the built instruction rather than a comment claiming it.
+
+The twelve-note rubric asserts **direction** rather than years: a past-peak
+note must close the window before the year the bottle was opened, whatever
+years it picks. Direction is mechanically checkable on a non-deterministic
+reply; the years are not, so they are printed for reading. Six further notes —
+"Settling down nicely", "Surprisingly good for what it cost", and four more —
+are recorded as borderline and deliberately excluded, because putting a
+judgement call in a rubric turns it into a failing test.
+
+#### A tsconfig gap the studio had and the app had already closed
+
+`studio/tsconfig.json` lacked `allowImportingTsExtensions`, so the new scripts
+and tests failed to typecheck the moment they imported from `lib/`. The app hit
+this in Stage 3 and fixed it then, with a comment explaining that `node --test`
+runs the files directly and Node's resolver does not guess extensions.
+
+Nothing surfaced it earlier because the studio's existing scripts import only
+bare package specifiers. The first shared module between a script and a test is
+what exposes it — which is to say the configuration was wrong for a week and
+the code that would have noticed had not been written yet.
