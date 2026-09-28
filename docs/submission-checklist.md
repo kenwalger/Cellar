@@ -1,54 +1,43 @@
 # Remaining work
 
-Date: 2026-09-25. Deadline: 4 October, 11:59pm PDT. Nine days.
+Updated: 2026-09-28. Deadline: 4 October, 11:59pm PDT. Six days.
 
 ## Status
 
-Done: Stages 1, 2, 3, and 4a. App deployed. Public page live at
-`kenwalger.github.io/Cellar/`. Submission draft v5 with three TODOs.
+Done: Stages 1 through 4 complete. App deployed. Public page live at
+`kenwalger.github.io/Cellar/`. Studio polish done. Submission draft v7 with
+three TODOs.
 
-Not done: Stage 4b, Stage 5 polish, the video, screenshots, the agent
-session upload.
+**The application is finished** unless something turns up. Everything left is
+artifacts and writing.
+
+Not done: screenshots, the video, the agent session upload, the final post.
 
 ---
 
-## What 4b is
+## Stage 4b, done
 
-The AI half of Stage 4, and the only remaining build work.
+**The Agent Action** is built. A document action on a consumption sends the
+tasting note, the date and the wine to the Prompt API and writes back a
+proposed assessment, with `derivedFrom` set and `assessedAt` the day after
+the consumption. It abstains and writes nothing when the note carries no
+temporal signal.
 
-**The Agent Action.** A document action on `consumption` labelled something
-like "Propose a drinking window". It sends the tasting note, the consumption
-date, and the wine's display name and vintage to Sanity's `prompt` API, and
-writes the result as an `assessment` with `reviewState: 'proposed'`,
-`sourceMethod: 'extracted'`, `derivedFrom` pointing at the consumption, and
-`assessedAt` set to the day after it. It abstains and writes nothing when the
-note carries no temporal signal, which is about a third of the distinct notes
-in the dataset.
+Verified against twelve real tasting notes, asserting direction rather than
+exact years. Twelve for twelve. Two captures recorded in Studio: an
+abstention and a proposal.
 
-**The `recompute-wine` Function.** Triggers on create or update of
-`assessment`, `acquisition` and `consumption`, resolves the affected wine,
-and patches the `derived` fields on that wine and every one of its bottles.
-Those fields are currently declared and empty on all 640 documents.
+**The `recompute-wine` Function is cut**, with the reasoning in ADR 0012: a
+projection is a cache, the cached computation is 0.07 ms for all 542 bottles,
+and a projection cannot answer the temporal question anyway, since a stored
+state is true as of one date. The scale answer is a scoped query rather than
+a projection, and the fetch becomes impractical around 50,000 bottles, two
+orders of magnitude before the scan matters.
 
-**Is it cuttable?** Yes, and this is a real decision.
-
-Arguments for cutting: the Workflows bonus is already satisfied by 4a. The
-App never reads the projections, so nothing visible breaks without the
-Function. The submission draft does not currently promise either. Nine days
-is comfortable but the writing is not done.
-
-Arguments against cutting: it is the only place an agent appears in a
-project whose review workflow exists to govern agent proposals, and the
-review queue currently has nothing that arrives in it by itself. The
-`sourceMethod: extracted` field, argued for in ADR 0012, is never exercised
-by an actual extraction. And polish items 5, 6 and 9 are blocked on the
-Function.
-
-**Recommendation:** do the Agent Action, cut the Function. The action is the
-demo and takes one session. The Function populates fields nothing reads, and
-its absence is honestly explainable as a scope decision. If the Function is
-cut, take polish item 9 (a description on the empty `derived` panel) so it
-does not read as unfinished.
+Two planned production writes turned out to be unnecessary. The schema deploy
+was insurance against a doc contradiction the installed types settle, and the
+API token was insurance against a page that states a constraint without
+saying which clients satisfy it.
 
 ---
 
@@ -143,12 +132,12 @@ From `docs/stage-5-polish.md`, adjusted for what checking the code found.
 
 | Item | Cost | Do it? | Completed |
 | --- | ---: | --- | :-: |
-| Bottle list preview showing the producer | 15 min | Yes. It is a defect, not polish: <br>&nbsp;&nbsp;&nbsp;&nbsp; - 542 rows collapse to 70 labels | |
-| Counts beside the review queue lists | 20 to 40 min | Yes. Screenshot 7 sits on it | |
+| Bottle list preview showing the producer | 15 min | Yes. It is a defect, not polish: <br>&nbsp;&nbsp;&nbsp;&nbsp; - 542 rows collapse to 70 labels | ✅ |
+| Counts beside the review queue lists | 20 to 40 min | Yes. Screenshot 7 sits on it | ✅ |
 | App icon for the Dashboard entry | 15 to 30 min | Yes. One line plus an SVG | ✅ | 
 | Save `deployment.appId` to `app/sanity.cli.ts` | 2 min | Yes, and not optional. <br> Without it a later deploy creates a second app | ✅ |
 | App tab title and favicon | 10 min | Yes. It is in every screenshot | ✅ |
-| Description on the empty `derived` panel | 20 min | Only if the Function is cut | |
+| Description on the empty `derived` panel | 20 min | Not needed. The fields were removed with the Function rather than left empty | n/a |
 | Structure organized by ledger facts | 45 min | If time | | 
 | Drinking-window bar input | 2 to 4 h | No. Cut, as the polish doc argues | |
 
@@ -158,19 +147,28 @@ Document type icons and previews turned out to be already done.
 
 ## Suggested order
 
-**Monday.** 4b Agent Action. One session, proposal first as usual.
+**Monday, done.** Stage 4b and both Studio polish items.
 
-**Tuesday.** Polish items 1 through 5 above, roughly 90 minutes. Then
-screenshots, all nine, in one sitting at a consistent width.
+**Tuesday.** Review the 50 minutes of staging footage and mark the six
+timestamps. Decide whether segment D is six usable clips or three, since that
+decides the shape of Wednesday. Then screenshots, all nine, one sitting, one
+window width.
 
-**Wednesday.** Re-record segments A, B, C and E. Pull the six clips from the
-staging footage. Rough assembly.
+**Wednesday.** Re-record segments A, B, C and E against the public page. Pull
+the marked clips. Rough assembly.
 
 **Thursday.** Voiceover and final edit. Agent session curation and upload.
 
-**Friday.** Submission post: drop in the screenshots, the video, the agent
-session, and update the Build Process section with whatever 4b produced.
+**Friday.** Submission post: screenshots, video, agent session, and the last
+corrections to the Build Process section.
 
 **Saturday 3 October.** Reserve. Publish.
 
 That leaves the 4th untouched, which is where it should be.
+
+## One deploy still owed
+
+The Dashboard app at `sanity.io/@opyntsvcl` was deployed before the date-input
+fix and before the Studio polish. The public page has both, because Pages
+rebuilds on push. Run `npx sanity deploy` from `app/` before filming, or the
+two surfaces disagree about a bug that is fixed in one of them.

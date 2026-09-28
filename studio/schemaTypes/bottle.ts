@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {BottleIcon} from '@sanity/icons/Bottle'
+import {wineDisplayName} from '@cellar/core'
 
 /**
  * Entity. The physical object, one document per bottle, which is what makes
@@ -71,24 +72,42 @@ export const bottle = defineType({
       readOnly: true,
     }),
   ],
-  // `select` does follow references with dot notation, so a bottle can show
-  // its wine without a custom preview component. Falls back to composing the
-  // vintage and cuvee, since `wine.title` is optional.
+  // `select` follows references at every segment, not only the first. The path
+  // observer recurses and re-tests each segment for a document id, so
+  // `wine.producer.name` resolves through bottle to wine to producer by the
+  // same code that resolves `wine.title` — there is no depth limit and no
+  // special case for the first hop. `createPathObserver` says so in its own
+  // note: a reference in the path "will be followed, allowing for selecting
+  // paths within the referenced document".
   //
-  // One hop only: the docs cover `wine.title`, but two hops through to
-  // `wine.producer.name` is not documented and is not relied on here.
+  // Session 6 composed the label by hand instead, on the assumption that the
+  // second hop was unavailable because it was undocumented. It is still
+  // undocumented and it has always worked. The assumption is what cost: with
+  // `wine.title` empty on all 98 wines, every bottle row fell back to vintage
+  // and cuvee, which collapses 98 wines into 70 distinct labels and leaves
+  // "2023 Pinot Noir" naming three different producers.
+  //
+  // Naming itself lives in @cellar/core, as it does on `wine`, so the Studio,
+  // the App and the scripts all name a wine the same way.
   preview: {
     select: {
       wineTitle: 'wine.title',
+      producerName: 'wine.producer.name',
       cuvee: 'wine.cuvee',
       vintageYear: 'wine.vintageYear',
       format: 'format',
       location: 'location',
     },
-    prepare({wineTitle, cuvee, vintageYear, format, location}) {
-      const wine = wineTitle || [vintageYear, cuvee].filter(Boolean).join(' ')
+    prepare({wineTitle, producerName, cuvee, vintageYear, format, location}) {
+      // A bottle with no wine selected yet is a bottle, not an untitled wine,
+      // so the shared name is only asked for once there is something to name.
+      // `wine._ref` cannot be the tell: the observer strips `_ref` from a
+      // reference before recursing, so that path comes back undefined.
+      const named = [wineTitle, producerName, cuvee, vintageYear].some(Boolean)
       return {
-        title: wine || 'Bottle',
+        title: named
+          ? wineDisplayName({title: wineTitle, producerName, cuvee, vintageYear})
+          : 'Bottle',
         subtitle: [format, location].filter(Boolean).join(' · ') || undefined,
       }
     },
