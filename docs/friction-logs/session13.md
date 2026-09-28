@@ -440,6 +440,184 @@ Commit before the dry run. Nine studio files plus two docs is a clean unit, and 
 End: 07:17 AM
 
 
+Dry Run
+
+```text
+Cellar on  main [⇡] via  v26.3.0 
+❯ node studio\scripts\propose-window.mts con-farm-on-golden-hill-rose-2024-b staging
+(node:14828) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/kenal/Cellar/studio/lib/agentProposal.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\kenal\Cellar\studio\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+This is an experimental API version
+which will change without warning and may have serious bugs.
+Dry run against staging. Nothing will be written.
+
+  consumption  con-farm-on-golden-hill-rose-2024-b
+  wine         2024 Farm on Golden Hill Rose
+  opened       2025-07-07
+  note         "Flat. Too old for a rose."
+
+Model reply:
+{
+  "supportsWindow": true,
+  "drinkFromYear": 2024,
+  "drinkUntilYear": 2024,
+  "confidence": "high",
+  "notes": "The phrases \"Flat\" and \"Too old for a rose\" indicate that the drinking window closed before it was opened in 2025."
+} 
+
+Would create:
+
+{
+  "_id": "assess-agent-con-farm-on-golden-hill-rose-2024-b",
+  "_type": "assessment",
+  "wine": {
+    "_type": "reference",
+    "_ref": "farm-on-golden-hill-rose-2024"
+  },
+  "sourceType": "personal",
+  "sourceName": "me",
+  "assessedAt": "2025-07-08",
+  "drinkFrom": "2024-01-01",
+  "drinkUntil": "2024-12-31",
+  "confidence": "high",
+  "notes": "The phrases \"Flat\" and \"Too old for a rose\" indicate that the drinking window closed before it was opened in 2025.",
+  "derivedFrom": {
+    "_type": "reference",
+    "_ref": "con-farm-on-golden-hill-rose-2024-b"
+  },
+  "sourceMethod": "extracted",
+  "reviewState": "proposed"
+}
+
+  id            assess-agent-con-farm-on-golden-hill-rose-2024-b  (deterministic)
+  assessedAt    2025-07-08  (the day after, deliberately)
+  reviewState   proposed  (resolves nothing until accepted)
+
+Nothing was written.
+
+Cellar on  main [⇡] via  v26.3.0 took 3s 
+❯ node studio\scripts\rubric.mts
+(node:54852) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/kenal/Cellar/studio/lib/agentProposal.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\kenal\Cellar\studio\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Rubric: 12 notes, opened 2024-06-15, vintage 2019.
+Direction is asserted. Years, notes and confidence are for reading.
+
+This is an experimental API version
+which will change without warning and may have serious bugs.
+✔ closes-before  "Dried out. Held it too long."
+            got closes-before  window 2019–2023
+            confidence high
+            says "The phrases "Dried out" and "Held it too long" indicate that the drinking window closed before it was opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2019,"drinkUntilYear":2023,"confidence":"high","notes":"The phrases \"Dried out\" and \"Held it too long\" indicate that the drinking window closed before it was opened in 2024."}
+
+✔ closes-before  "Flat. Too old for a rose."
+            got closes-before  window 2019–2023
+            confidence high
+            says "The phrases "Flat" and "Too old for a rose" indicate that the wine was past its best when opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2019,"drinkUntilYear":2023,"confidence":"high","notes":"The phrases \"Flat\" and \"Too old for a rose\" indicate that the wine was past its best when opened in 2024."}
+
+✔ closes-before  "Should have listened to myself. Thin and drying. Three left."
+            got closes-before  window 2019–2023
+            confidence medium
+            says "The phrases "Should have listened to myself" and "Thin and drying" indicate the wine was past its best when opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2019,"drinkUntilYear":2023,"confidence":"medium","notes":"The phrases \"Should have listened to myself\" and \"Thin and drying\" indicate the wine was past its best when opened in 2024."}
+
+✔ contains       "Much better. Blackberry, soft tannin. This is the peak."
+            got contains       window 2024–2024
+            confidence high
+            says "The phrase "This is the peak" strongly indicates that the wine was at its best when opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2024,"drinkUntilYear":2024,"confidence":"high","notes":"The phrase \"This is the peak\" strongly indicates that the wine was at its best when opened in 2024."}
+
+✔ contains       "Silky. Drinking well right now."
+            got contains       window 2024–2024
+            confidence high
+            says "The phrase "Drinking well right now" shows that the drinking window contains the 2024 opening year."
+            raw {"supportsWindow":true,"drinkFromYear":2024,"drinkUntilYear":2024,"confidence":"high","notes":"The phrase \"Drinking well right now\" shows that the drinking window contains the 2024 opening year."}
+
+✔ contains       "Great acid. Held up better than expected."
+            got contains       window 2024–2024
+            confidence medium
+            says "The phrase "Held up better than expected" indicates that the wine was still drinking well when opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2024,"drinkUntilYear":2024,"confidence":"medium","notes":"The phrase \"Held up better than expected\" indicates that the wine was still drinking well when opened in 2024."}
+
+✔ opens-after    "Opened too young. Fruit is there, structure is not resolved."
+            got opens-after    window 2025–2025
+            confidence high
+            says "The phrase "Opened too young" indicates that the drinking window opens after 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2025,"drinkUntilYear":2025,"confidence":"high","notes":"The phrase \"Opened too young\" indicates that the drinking window opens after 2024."}
+
+✔ opens-after    "Structured. Could have waited another two years."
+            got opens-after    window 2026–2026
+            confidence medium
+            says "The phrase "Could have waited another two years" indicates the window opens in 2026."
+            raw {"supportsWindow":true,"drinkFromYear":2026,"drinkUntilYear":2026,"confidence":"medium","notes":"The phrase \"Could have waited another two years\" indicates the window opens in 2026."}
+
+✔ opens-after    "Red cherry, forest floor, fine tannin. Still tight."
+            got opens-after    window 2025–2025
+            confidence medium
+            says "The phrase "Still tight" indicates the wine was too young when opened in 2024."
+            raw {"supportsWindow":true,"drinkFromYear":2025,"drinkUntilYear":2025,"confidence":"medium","notes":"The phrase \"Still tight\" indicates the wine was too young when opened in 2024."}
+
+✔ abstain        "Pear and citrus. Crisp."
+            got abstain        window —
+            confidence —
+            says "The note only describes flavours and texture and gives no signal about whether the wine was too young, drinking well, or past its best."
+            raw {"supportsWindow":false,"notes":"The note only describes flavours and texture and gives no signal about whether the wine was too young, drinking well, or past its best."}
+
+✔ abstain        "Needed a bottle for dinner and this was in front."
+            got abstain        window —
+            confidence —
+            says "The note only describes the occasion for opening the bottle and gives no signal about whether the wine was too young, drinking well, or past its best."
+            raw {"supportsWindow":false,"notes":"The note only describes the occasion for opening the bottle and gives no signal about whether the wine was too young, drinking well, or past its best."}
+
+✔ abstain        "Grocery store cab doing grocery store cab things."
+            got abstain        window —
+            confidence —
+            says "The note contains no indication that the wine was too young, drinking well, or past its best."
+            raw {"supportsWindow":false,"notes":"The note contains no indication that the wine was too young, drinking well, or past its best."}
+
+
+Direction agreement: 12/12
+
+Nothing was written.
+```
+Findings:
+
+12 of 12, and the outputs are better than the pass rate suggests. Four things worth reading closely.
+
+The abstentions are the best result. Three notes declined, each naming what the note actually contains rather than reciting a refusal. "The note only describes the occasion for opening the bottle" is a genuinely good sentence. Declining is the behaviour a model is least inclined toward, and it's the one your workflow most depends on, since a proposal with no window is noise in the queue.
+
+notes quotes rather than paraphrases. Every non-abstaining reply names the phrase it relied on, in quotes. That's what makes the claim auditable: a reviewer can see which five words produced a 2019 to 2023 window.
+
+Confidence varies, and sensibly. High on "This is the peak" and "Dried out," medium on "Held up better than expected" and "Could have waited another two years." It's tracking how directly the note states the thing, which is what you'd want.
+
+It arithmetics. "Could have waited another two years" from a 2024 opening produced 2026, not a generic "later." That's the one output where it did something beyond classification.
+
+One thing to look at before moving on, and it's not a failure: the windows are consistently one year wide, 2024 to 2024, 2025 to 2025. Only the past-peak cases give a range, and that's because the instruction pins drinkUntil before the opening year. That's defensible, since a single note supports a point rather than a span, but it's worth deciding whether you want it. A window of 2024 to 2024 accepted onto a wine is a strong claim: one year and done.
+
+Also note the Rosé came back differently in the two runs. The dry run gave 2024 to 2024, the rubric gave 2019 to 2023, because the rubric holds the vintage at 2019 and the opening at 2024. Same reasoning, different inputs. Worth confirming that's what happened rather than temperature drift at 0.
+
+If you're happy with the one-year windows, next is the single real proposal in staging, then accept it and watch the counts move.
+
+
+Captured from Video:
+
+
+Capture 1 "Proposal Message":
+
+No window proposed. The note gives only flavour and food-pairing impressions, with no signal about whether the wine was too young, drinking well, or past its best. Nothing was written. A note that does not support a window produces no claim rather than an empty one.
+
+Capture 2 "Proposal Message":
+
+Proposed 2026–2026 (high confidence). The phrase "Opened too young" indicates that the drinking window opens after 2025. It is in the review queue as proposed and resolves nothing until accepted.
+
+
+End: 07:55 AM
+
 ---
 
 #### The bug
