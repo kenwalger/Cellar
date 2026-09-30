@@ -10,7 +10,7 @@ A wine collection you can read at any date.
 
 **[Open the demo](https://kenwalger.github.io/Cellar/)** (no account needed) ·
 **[Watch the walkthrough](https://youtu.be/bb-9b_9k7WA)** ·
-**[Read the write-up](TODO-dev-to-post-url)**
+**[Read the write-up](https://dev.to/kenwalger/a-wine-cellar-that-remembers-what-you-used-to-believe-4i55)**
 
 ---
 
