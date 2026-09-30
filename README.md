@@ -14,7 +14,7 @@ A wine collection you can read at any date.
 
 ---
 
-![The Cellar at three dates: four bottles in 1999, 248 today, and 248 in 2035 of which 182 are past their drinking window](TODO-hero-image.png)
+![The Cellar at three dates: four bottles in 1999, 248 today, and 248 in 2035 of which 182 are past their drinking window](hero_image.png)
 
 Most cellar applications answer one question: what do I have right now? This
 one answers a harder one. What did the cellar look like on 1 June 1999? What
